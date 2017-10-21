@@ -1,1 +1,117 @@
-<h2>{{saludo}}</h2>
+<div>
+	<form ng-submit="agregar()">
+		<div class="form-group">
+			<label for="nombre">
+				Nombre:
+			</label>
+			<input required ng-model="emp.nombre" class="form-control" type="text" name="nombre">
+		</div>
+
+		<div class="form-group">
+			<label for="a_paterno">
+				Apellido Paterno:
+			</label>
+			<input required ng-model="emp.a_paterno" class="form-control" type="text" name="a_paterno">
+		</div>
+
+		<div class="form-group">
+			<label for="a_materno">
+				Apellido Materno:
+			</label>
+			<input required ng-model="emp.a_materno" class="form-control" type="text" name="a_materno">
+		</div>
+
+		<div class="form-group">
+			<label for="correo">
+				Correo:
+			</label>
+			<input required ng-model="emp.correo" class="form-control" type="email" name="correo">
+		</div>
+
+		<div class="form-group">
+			<label for="telefono">
+				Telefono:
+			</label>
+			<input required ng-model="emp.telefono" class="form-control" type="text" name="telefono">
+		</div>
+
+		<div class="form-group">
+			<label for="f_nac">
+				Fecha de nacimiento:
+			</label>
+			<input class="form-control" required ng-model="emp.f_nac" type="date" name="f_nac">
+		</div>
+
+		<div class="form-group">
+			<label for="f_ingreso">
+				Fecha de ingreso:
+			</label>
+			<input required ng-model="emp.f_ingreso" class="form-control" type="date" name="f_ingreso">
+		</div>
+
+		<div class="form-group">
+			<label for="puesto">
+				Puesto:
+			</label>
+			<input required ng-model="emp.puesto" class="form-control" type="text" name="puesto">
+		</div>
+
+		<div class="form-group">
+			<label for="calle">
+				Calle:
+			</label>
+			<input required ng-model="emp.calle" class="form-control" type="text" name="calle">
+		</div>
+
+		<div class="form-group">
+			<label for="colonia">
+				Colonia:
+			</label>
+			<input required ng-model="emp.colonia" class="form-control" type="text" name="colonia">
+		</div>
+
+		<div class="form-group">
+			<label for="num_domicilio_int">
+				Numero interior:
+			</label>
+			<input class="form-control" required ng-model="emp.num_domicilio_int" type="text" name="num_domicilio_int">
+		</div>
+
+		<div class="form-group">
+			<label for="num_domicilio_ext">
+				Numero exterior:
+			</label>
+			<input required ng-model="emp.num_domicilio_ext" class="form-control" type="text" name="num_domicilio_ext">
+		</div>
+
+		<div class="form-group">
+			<label for="cp">
+				Codigo postal:
+			</label>
+			<input class="form-control" required ng-model="emp.cp" type="text" name="cp">
+		</div>
+
+		<div class="form-group">
+			<label for="cve_ent">
+				Estado:
+			</label>
+			<select ng-change="cargarMunicipioPorCveEnt(emp.cve_ent);emp.cve_mun=undefined;" ng-model="emp.cve_ent" class="form-control">
+				<option ng-repeat="estado in estados" value="{{estado.cve_ent}}">{{estado.nom_ent}}</option>
+			</select>
+		</div>
+	
+		<div class="form-group">
+			<label for="cve_mun">
+				Clave municipio:
+			</label>
+			<select ng-show="emp.cve_ent != undefined" ng-model="emp.cve_mun" class="form-control">
+				<option ng-repeat="municipio in municipios" value="{{municipio.cve_mun}}">{{municipio.nom_mun}}</option>
+			</select>
+			<input ng-show="emp.cve_ent == undefined" class="form-control" type="text" value="Seleccione una entidad" disabled>
+		</div>
+
+		<div class="row">
+			<button class="btn btn-success col-sm-10 col-sm-offset-1">Guardar</button>
+		</div>
+	</form>
+</div>
