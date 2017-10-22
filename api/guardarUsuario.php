@@ -6,6 +6,7 @@
 	if($row = mysqli_fetch_assoc($res1)) {
 		$lastid = $row['lastid'] + 1;
 	}
+
 	$sql = "
 		INSERT INTO 
 		empleado VALUES (
@@ -23,10 +24,10 @@
 		'$request->num_domicilio_int',
 		'$request->num_domicilio_ext',
 		'$request->cp',
-		'$request->cve_num',
+		'$request->cve_mun',
 		'$request->cve_ent')";
 	$result = $con->query($sql);
-	//echoMessage("Insercion correcta");
+
 	if($result){ 
 		echoMessage("Insercion Correcta");
 	} else {

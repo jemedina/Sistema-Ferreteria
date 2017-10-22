@@ -7,17 +7,12 @@ var empleadosController = function($scope, $http) {
 			url: 'api/guardarUsuario.php',
 			method: 'POST',
 			data: $scope.emp
-		}).then(function ok(data) {
-			alert(data.msg);			
+		}).then(function ok(res) {
+			alert(res.data.msg);			
 		}, function err(error) {
-			alert(error.msg);
+			alert(error.data.msg);
 		});
 	}
-
-
-    $scope.test = function() {
-        alert(JSON.stringify($scope.emp));
-    }
 }
 
 empleadosController.$inject = ['$scope', '$http'];
