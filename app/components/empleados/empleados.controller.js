@@ -1,16 +1,20 @@
 
 var empleadosController = function($scope, $http) {
+	
 	$scope.emp = {};
+	
 	$scope.cargarEstados($scope);
+
 	$scope.agregar = function () {
 		$http({
 			url: 'api/guardarUsuario.php',
 			method: 'POST',
 			data: $scope.emp
 		}).then(function ok(res) {
-			alert(res.data.msg);			
+			swal(res.data.msg, { icon: "success" } );
+			$scope.emp = {};
 		}, function err(error) {
-			alert(error.data.msg);
+			swal(error.data.msg, { icon: "error" } );
 		});
 	}
 }

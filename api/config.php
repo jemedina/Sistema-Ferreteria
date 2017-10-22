@@ -13,9 +13,11 @@
 	}
 
 	function echoError($msg) {
+		header($_SERVER['SERVER_PROTOCOL'] . 'Internal Server Error', true, 500);
 		$response = array();
 		$response["msg"] = $msg;
 		echo json_encode($response);
+		exit();
 	}
 	function echoMessage($msg) {
 		$response = array();
