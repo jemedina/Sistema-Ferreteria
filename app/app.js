@@ -21,7 +21,6 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
             url: 'api/obtenerEstados.php'
         }).then(function ok(resp) {
             $scope.estados = resp.data;
-            console.log($scope.estados);
         },function err(argument) {
             $scope.estados = {};
         });
@@ -35,7 +34,6 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
         }).then(function ok(resp) {
             $scope.cve_mun = undefined;
             $scope.municipios = resp.data;
-            console.log($scope.municipios);
         },function err(argument) {
             $scope.municipios = {};
         });

@@ -28,7 +28,6 @@
 	function echoMysqlResults($result) {
 		$rows = array();
 		while($r = mysqli_fetch_assoc($result)) {
-		    $r = array_map('utf8_encode', $r);
 		    $rows[] = $r;
 		}
 		echo json_encode($rows);
@@ -57,6 +56,8 @@
 		echoError("No se pudo conectar con la base de datos");
 		exit();
 	}
+	mysqli_set_charset($con,"utf8");
+
 
 	$postdata = file_get_contents("php://input");
 	$request = json_decode($postdata);

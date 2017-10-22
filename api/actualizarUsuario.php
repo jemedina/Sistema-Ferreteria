@@ -3,6 +3,7 @@
 
 	//Checar que recibimos los parametros obligatorios
 	if(
+		!property_exists($request,'id') ||
 		!property_exists($request,'nombre') ||
 		!property_exists($request,'a_paterno') ||
 		!property_exists($request,'a_materno') ||
@@ -21,29 +22,20 @@
 		echoError("No se pudo guardar el usuario: Parametros incompletos");
 	}
 
-	//Obtener el último id
-	$res1 = $con->query("SELECT IFNULL( MAX(id_empleado), 0) as lastid FROM empleado;");
-	if($row = mysqli_fetch_assoc($res1)) {
-		$lastid = $row['lastid'] + 1;
-	}
 	$num_domicilio_int = "NULL";
 	if(property_exists($request,'num_domicilio_int')) {
 		$num_domicilio_int = "'".$request->num_domicilio_int."'";
 	}
-	$f_nac = new DateTime($request->f_nac);
-	$f_ingreso = new DateTime($request->f_ingreso);
 	$sql = "
-		INSERT INTO 
-		empleado
-		SET 
-		id_empleado = $lastid,
+		UPDATE 
+		empleado SET 
 		nombre='$request->nombre',
 		a_paterno='$request->a_paterno',
 		a_materno='$request->a_materno',
 		correo='$request->correo',
 		telefono='$request->telefono',
-		f_nac='".$f_nac->format('Y-m-d')."',
-		f_ingreso='".$f_ingreso->format('Y-m-d')."',
+		f_nac='$request->f_nac',
+		f_ingreso='$request->f_ingreso',
 		puesto='$request->puesto',
 		calle='$request->calle',
 		colonia='$request->colonia',
@@ -51,12 +43,13 @@
 		num_domicilio_ext='$request->num_domicilio_ext',
 		cp='$request->cp',
 		cve_mun='$request->cve_mun',
-		cve_ent='$request->cve_ent';";
+		cve_ent='$request->cve_ent' WHERE
+		id_empleado = $request->id";
 	$result = $con->query($sql);
 
 	if($result){ 
-		echoMessage("Insercion Correcta");
+		echoMessage("Cambios guardados correctamente");
 	} else {
-		echoError("Error al guardar el registro");
+		echoError("Error al guardar el registro: ".$sql);
 	}
 ?>

@@ -1,5 +1,23 @@
-<div>
-	<form ng-submit="agregar()">
+<div ng-show="empNuevo == false">
+	<div class="form-group">
+			<label for="nombre">
+				Buscar Empleado:
+			</label>
+			<input placeholder="Ingrese nombre a buscar" class="form-control" type="text" id="buscarEmpInput" name="">
+		</div>
+</div>
+<div class="row">
+	<button ng-click="alta()" ng-show="empNuevo == false" class="col col-xs-10 col-xs-offset-1 btn btn-primary">Dar de alta un nuevo empleado</button>
+</div>
+<div ng-show="selectedUserId != undefined || empNuevo">
+	<form ng-submit="agregar()" name="empForm">
+
+		<div class="form-group" ng-show="selectedUserId != undefined">
+			<label for="nombre">
+				ID:
+			</label>
+			<input readonly ng-model="selectedUserId" class="form-control" type="text"/>
+		</div>
 		<div class="form-group">
 			<label for="nombre">
 				Nombre(s):
@@ -116,7 +134,21 @@
 			</div>
 		</div>
 		<div class="row">
-			<button class="btn btn-success col-sm-10 col-sm-offset-1">Guardar</button>
+			<button ng-show="empNuevo" class="btn btn-success col-xs-10 col-xs-offset-1">Guardar</button>
 		</div>
+	<span isolate-click>
+		<div class="row">
+			<button ng-show="!empNuevo" class="btn btn-warning col-xs-10 col-xs-offset-1">Actualizar registro</button>
+		</div>
+		<br/>
+		<div class="row">
+			<button ng-click="cancelar($event);" class="col col-xs-10 col-xs-offset-1 btn btn-danger">Cancelar</button>
+		</div>
+		<br/>
+		<div ng-show="!empNuevo" class="row">
+			<button ng-click="eliminar($event);" class="col col-xs-10 col-xs-offset-1 btn">Eliminar</button>
+		</div>
+
+	</span>
 	</form>
 </div>
