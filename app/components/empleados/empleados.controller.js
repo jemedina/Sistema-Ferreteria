@@ -32,11 +32,10 @@ var empleadosController = function($scope, $http) {
 	    		data: {id:ui.item.id},
 	    		method: 'POST'
 	    	}).then(function ok(resp) {
-	    		resp.data[0].f_nac = new Date(resp.data[0].f_nac);
-	    		resp.data[0].f_nac.setDate(resp.data[0].f_nac.getDate()+1)
-	    		resp.data[0].f_ingreso = new Date(resp.data[0].f_ingreso);
-	    		resp.data[0].f_ingreso.setDate(resp.data[0].f_ingreso.getDate()+1)
-
+	    		//Convert timestamps to date
+	    		resp.data[0].f_nac = new Date(parseInt(resp.data[0].f_nac)*1000);
+	 	  		resp.data[0].f_ingreso = new Date(parseInt(resp.data[0].f_ingreso)*1000);
+	
 	    		$scope.cargarMunicipioPorCveEnt(resp.data[0].cve_ent);
 	    		$scope.emp = resp.data[0];
 	    	},function err(error) {
@@ -48,6 +47,9 @@ var empleadosController = function($scope, $http) {
 
 	$scope.agregar = function () {
 		$scope.emp.id = $scope.selectedUserId;
+		$scope.emp.f_nac_timestamp = $scope.emp.f_nac.getTime() / 1000;
+		$scope.emp.f_ingreso_timestamp = $scope.emp.f_ingreso.getTime() / 1000;
+
 		var endpointUrl = "api/guardarUsuario.php";
 		if($scope.selectedUserId != undefined) {
 			endpointUrl = "api/actualizarUsuario.php";
