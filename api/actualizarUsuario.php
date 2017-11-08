@@ -26,6 +26,10 @@
 	if(property_exists($request,'num_domicilio_int')) {
 		$num_domicilio_int = "'".$request->num_domicilio_int."'";
 	}
+	
+	$f_nac = new DateTime("@$request->f_nac_timestamp");
+    $f_ingreso = new DateTime("@$request->f_ingreso_timestamp");
+    
 	$sql = "
 		UPDATE 
 		empleado SET 
@@ -34,8 +38,8 @@
 		a_materno='$request->a_materno',
 		correo='$request->correo',
 		telefono='$request->telefono',
-		f_nac='$request->f_nac',
-		f_ingreso='$request->f_ingreso',
+		f_nac='".$f_nac->format("Y-m-d")."',
+		f_ingreso='".$f_ingreso->format("Y-m-d")."',
 		puesto='$request->puesto',
 		calle='$request->calle',
 		colonia='$request->colonia',
@@ -45,6 +49,7 @@
 		cve_mun='$request->cve_mun',
 		cve_ent='$request->cve_ent' WHERE
 		id_empleado = $request->id";
+
 	$result = $con->query($sql);
 
 	if($result){ 
