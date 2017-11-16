@@ -3,11 +3,11 @@ var app = angular.module('app', ['ngRoute']);
 app.config(function($routeProvider) {
     $routeProvider
     .when('/empleados', {
-        templateUrl: 'app/components/empleados/empleados.html',
+        templateUrl: 'app/controllers/empleados/empleados.html',
         controller: 'empleadosController'
     })
     .otherwise({
-        templateUrl: 'app/components/dashboard/dashboard.html',
+        templateUrl: 'app/controllers/dashboard/dashboard.html',
         controller: 'dashboardController'
     });
 });
