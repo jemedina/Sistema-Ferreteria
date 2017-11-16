@@ -23,6 +23,7 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
             $scope.estados = resp.data;
         },function err(argument) {
             $scope.estados = {};
+            $scope.errorInminente();
         });
     }
 
@@ -36,7 +37,15 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
             $scope.municipios = resp.data;
         },function err(argument) {
             $scope.municipios = {};
+            $scope.errorInminente();
         });
     }
 
+    $scope.errorInminente = function(msg) {
+        msg = msg || "Se produjo un error inminente! Estamos trabajando para solucionarlo...";
+        swal(msg, { icon: "error" } ).then(function() {
+        	window.location.pathname="Sistema-Ferreteria/login.php";
+        });
+        
+    }
 }]);
