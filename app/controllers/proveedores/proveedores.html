@@ -1,0 +1,125 @@
+<div ng-show="provNuevo == false">
+	<div class="form-group">
+			<label for="nombre">
+				Buscar Proveedor:
+			</label>
+			<input placeholder="Ingrese nombre a buscar" class="form-control" type="text" id="buscarProvInput" name="">
+		</div>
+</div>
+<div class="row">
+	<button ng-click="alta()" ng-show="provNuevo == false" class="col col-xs-10 col-xs-offset-1 btn btn-primary">Dar de alta un nuevo proveedor</button>
+</div>
+<div ng-show="selectedUserId != undefined || provNuevo">
+	<form ng-submit="agregar()" name="provForm">
+
+		<div class="form-group" ng-show="selectedUserId != undefined">
+			<label for="nombre">
+				RFC:
+			</label>
+			<input readonly ng-model="selectedUserId" class="form-control" type="text"/>
+		</div>
+		<div class="form-group">
+			<label for="nombre">
+				Nombre:
+			</label>
+			<input required ng-model="prov.nombre" class="form-control" type="text" name="nombre">
+		</div>
+		<div class="row">
+			<div class="col col-sm-6 form-group">
+				<label for="r_social">
+					Razón Social:
+				</label>
+				<input required ng-model="prov.r_social" class="form-control" type="text" name="r_social">
+			</div>
+
+			<div class="col col-sm-6 form-group">
+				<label for="tel">
+					Teléfono
+				</label>
+				<input required ng-model="prov.tel" class="form-control" type="text" name="tel">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col col-sm-6 form-group">
+				<label for="correo">
+					Correo:
+				</label>
+				<input required ng-model="prov.correo" class="form-control" type="email" name="correo">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col col-sm-4 form-group">
+				<label for="calle">
+					Calle:
+				</label>
+				<input required ng-model="prov.calle" class="form-control" type="text" name="calle">
+			</div>
+
+			<div class="col col-sm-8 form-group">
+				<label for="colonia">
+					Colonia:
+				</label>
+				<input required ng-model="prov.colonia" class="form-control" type="text" name="colonia">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col col-sm-3 form-group">
+				<label for="num_domicilio_int">
+					Numero interior:
+				</label>
+				<input class="form-control" ng-model="prov.num_domicilio_int" type="text" name="num_domicilio_int">
+			</div>
+
+			<div class="col col-sm-3 form-group">
+				<label for="num_domicilio_ext">
+					Numero exterior:
+				</label>
+				<input required ng-model="prov.num_domicilio_ext" class="form-control" type="text" name="num_domicilio_ext">
+			</div>
+
+			<div class="col col-sm-6 form-group">
+				<label for="cp">
+					Codigo postal:
+				</label>
+				<input class="form-control" required ng-model="prov.cp" type="text" name="cp">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col col-sm-6 form-group">
+				<label for="cve_ent">
+					Estado:
+				</label>
+				<select ng-change="cargarMunicipioPorCveEnt(prov.cve_ent);prov.cve_mun=undefined;" ng-model="prov.cve_ent" class="form-control">
+					<option ng-repeat="estado in estados" value="{{estado.cve_ent}}">{{estado.nom_ent}}</option>
+				</select>
+			</div>
+		
+			<div class="col col-sm-6 form-group">
+				<label for="cve_mun">
+					Municipio:
+				</label>
+				<select ng-show="prov.cve_ent != undefined" ng-model="prov.cve_mun" class="form-control">
+					<option ng-repeat="municipio in municipios" value="{{municipio.cve_mun}}">{{municipio.nom_mun}}</option>
+				</select>
+				<input ng-show="prov.cve_ent == undefined" class="form-control" type="text" value="Seleccione una entidad" disabled>
+			</div>
+		</div>
+		<div class="row">
+			<button ng-show="provNuevo" class="btn btn-success col-xs-10 col-xs-offset-1">Guardar</button>
+		</div>
+	<span isolate-click>
+		<div class="row">
+			<button ng-show="!provNuevo" class="btn btn-warning col-xs-10 col-xs-offset-1">Actualizar registro</button>
+		</div>
+		<br/>
+		<div class="row">
+			<button ng-click="cancelar($event);" class="col col-xs-10 col-xs-offset-1 btn btn-danger">Cancelar</button>
+		</div>
+		<br/>
+		<div ng-show="!provNuevo" class="row">
+			<button ng-click="eliminar($event);" class="col col-xs-10 col-xs-offset-1 btn">Eliminar</button>
+		</div>
+
+	</span>
+	</form>
+</div>

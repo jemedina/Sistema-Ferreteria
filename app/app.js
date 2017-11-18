@@ -6,6 +6,10 @@ app.config(function($routeProvider) {
         templateUrl: 'app/controllers/empleados/empleados.html',
         controller: 'empleadosController'
     })
+     .when('/proveedores', {
+        templateUrl: 'app/controllers/proveedores/proveedores.html',
+        controller: 'proveedoresController'
+    })
     .otherwise({
         templateUrl: 'app/controllers/dashboard/dashboard.html',
         controller: 'dashboardController'
