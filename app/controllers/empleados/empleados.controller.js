@@ -75,6 +75,7 @@ var empleadosController = function($scope, $http) {
 		$scope.selectedUserId = undefined;
 		$scope.emp = {};
 	} 
+    
 
 	$scope.cancelar = function($event) 
 	{ 	

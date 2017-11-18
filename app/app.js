@@ -51,5 +51,26 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
         	window.location.pathname="Sistema-Ferreteria/login.php";
         });
         
-    }
+    } 
+    
+   /* $scope.addUltimaVisitaFecha = function(fech,id_prov) {
+		var url = 'api/agregarUltimaFechaProveedor.php';
+		$http({
+			headers: { 'Content-Transfer-Encoding': 'utf-8' },
+			url: url,
+			method: 'POST',
+			data: {
+				id_prov: id_prov
+				fecha: fech
+			}
+		}).then(function ok(res) {
+			swal(res.data.msg, { icon: "success" } );
+			//El codigo que quieras meter cuando este ok la modificacion	
+           window.location.hash="#!/proveedores";
+		}, function err(error) {
+			swal(error.data.msg, { icon: "error" } );
+			//El codigo que quieras meter cuando falle la modificacion
+             window.location.hash="#!/proveedores";
+		});
+	} */ 
 }]);

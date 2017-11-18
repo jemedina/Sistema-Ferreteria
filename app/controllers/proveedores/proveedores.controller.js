@@ -71,6 +71,32 @@ var proveedoresController = function($scope, $http) {
 		$scope.provNuevo=true;
 		$scope.selectedUserId = undefined;
 		$scope.prov = {};
+	}  
+    
+   $scope.actualizarUltimaVisita = function($event) {
+		$event.preventDefault();
+		swal({
+			title: 'Seguro que quieres actualizar el registro?',
+			text: 'Se sobreescribira la fecha de ultima visita!!!',
+			icon:'warning',
+			buttons: ["Mmm... Mejor no!", true],}).then(
+				function(result) {
+					if(result) {
+						$http({
+							headers: { 'Content-Transfer-Encoding': 'utf-8' },
+							url: 'api/agregarUltimaFechaProveedor.php',
+							method: 'POST',
+							data: {id:$scope.selectedUserId}
+						}).then(function ok(res) {
+							swal("Registro actualizado!",
+								"El registro del proveedor fue actualizado.",
+								"success");
+							$scope.cancelar();
+						}, function err(error) {
+							swal(error.data.msg, { icon: "error" } );
+						});
+					}
+			});
 	} 
 
 	$scope.cancelar = function($event) 
@@ -111,4 +137,4 @@ var proveedoresController = function($scope, $http) {
 }
 
 proveedoresController.$inject = ['$scope', '$http'];
-app.controller('provedoresController', proveedoresController);
+app.controller('proveedoresController', proveedoresController);
