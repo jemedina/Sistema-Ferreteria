@@ -10,6 +10,10 @@ app.config(function($routeProvider) {
         templateUrl: 'app/controllers/proveedores/proveedores.html',
         controller: 'proveedoresController'
     })
+    .when('/catalogos', {
+        templateUrl: 'app/controllers/catalogos/catalogos.html',
+        controller: 'catalogoController'
+    })
     .otherwise({
         templateUrl: 'app/controllers/dashboard/dashboard.html',
         controller: 'dashboardController'
@@ -53,7 +57,7 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
         
     } 
     
-   /* $scope.addUltimaVisitaFecha = function(fech,id_prov) {
+   /*$scope.addUltimaVisitaFecha = function(fech,id_prov) {
 		var url = 'api/agregarUltimaFechaProveedor.php';
 		$http({
 			headers: { 'Content-Transfer-Encoding': 'utf-8' },
@@ -72,5 +76,18 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
 			//El codigo que quieras meter cuando falle la modificacion
              window.location.hash="#!/proveedores";
 		});
-	} */ 
+	} */  
+    
+     $scope.cargarProveedores = function() {
+        $http({
+            method: 'GET',
+            url: 'api/obtenerProveedores.php'
+        }).then(function ok(resp) {
+            $scope.provedores = resp.data;
+        },function err(argument) {
+            $scope.proveedores = {};
+            $scope.errorInminente();
+        });
+    }
+
 }]);
