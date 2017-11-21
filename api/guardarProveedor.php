@@ -3,7 +3,7 @@
 
 	//Checar que recibimos los parametros obligatorios
 	if(
-		!property_exists($request,'id_prov') ||
+		!property_exists($request,'id') ||
 		!property_exists($request,'nombre') ||
 		!property_exists($request,'r_social') ||
 		!property_exists($request,'telefono') ||
@@ -17,11 +17,6 @@
 		echoError("No se pudo guardar el usuario: Parametros incompletos");
 	}
 
-	//Obtener el último id
-	$res1 = $con->query("SELECT IFNULL( MAX(id_proveedor), 0) as lastid FROM proveedor;");
-	if($row = mysqli_fetch_assoc($res1)) {
-		$lastid = $row['lastid'] + 1;
-	} 
 
 	$num_domicilio_int = "NULL";
 	if(property_exists($request,'num_domicilio_int')) {
@@ -32,11 +27,10 @@
 		INSERT INTO 
 		proveedor
 		SET 
-		id_prov = $lastid,
+		id_prov = $request->id,
 		nombre='$request->nombre',
 		razon_social='$request->r_social',
-		telefono='$request->telefono',
-		correo='$request->correo',
+		email='$request->correo',
 		telefono='$request->telefono',
 		calle='$request->calle',
 		colonia='$request->colonia',
@@ -44,14 +38,13 @@
 		num_domicilio_int=$num_domicilio_int,
 		cp='$request->cp',
 		cve_mun='$request->cve_mun',
-		cve_ent='$request->cve_ent','
-        fecha_ultima_visita=NULL";
+		cve_ent='$request->cve_ent';"; 
 
 	$result = $con->query($sql);
 
 	if($result){ 
 		echoMessage("Insercion Correcta ");
 	} else {
-		echoError("Error al guardar el registro");
+		echoError("Error al guardar el registro ");
 	}
 ?>

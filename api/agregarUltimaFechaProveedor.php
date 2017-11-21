@@ -4,7 +4,7 @@
 	//Checar que recibimos los parametros obligatorios
 	if(
 		!property_exists($request,'id_prov') ||
-		!property_exists($request,'f_ultima__visita_timestamp') ||
+		!property_exists($request,'f_ultima_visita_timestamp') 
 	) {
 		echoError("No se pudo guardar el usuario: Parametros incompletos");
 	}
@@ -19,7 +19,7 @@
 	$result = $con->query($sql);
 
 	if($result){ 
-		echoMessage("Insercion Correcta ");
+		echoMessage("Actualizacion Correcta ");
 	} else {
 		echoError("Error al guardar el registro");
 	}

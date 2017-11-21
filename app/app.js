@@ -57,7 +57,7 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
         
     } 
     
-   /*$scope.addUltimaVisitaFecha = function(fech,id_prov) {
+   $scope.addUltimaVisitaFecha = function(fech,id_prov) {
 		var url = 'api/agregarUltimaFechaProveedor.php';
 		$http({
 			headers: { 'Content-Transfer-Encoding': 'utf-8' },
@@ -76,7 +76,7 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
 			//El codigo que quieras meter cuando falle la modificacion
              window.location.hash="#!/proveedores";
 		});
-	} */  
+	}   
     
      $scope.cargarProveedores = function() {
         $http({

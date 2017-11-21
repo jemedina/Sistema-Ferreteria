@@ -47,6 +47,7 @@ var empleadosController = function($scope, $http) {
 
 	$scope.agregar = function () {
 		$scope.emp.id = $scope.selectedUserId;
+        $scope.emp.nu; 
 		$scope.emp.f_nac_timestamp = $scope.emp.f_nac.getTime() / 1000;
 		$scope.emp.f_ingreso_timestamp = $scope.emp.f_ingreso.getTime() / 1000;
 

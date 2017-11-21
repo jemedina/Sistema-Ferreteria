@@ -3,11 +3,12 @@
 
 	//Checar que recibimos los parametros obligatorios
 	if(
-		!property_exists($request,'id_prov') ||
+		!property_exists($request,'id') ||
 		!property_exists($request,'nombre') ||
 		!property_exists($request,'r_social') ||
 		!property_exists($request,'telefono') ||
 		!property_exists($request,'calle') ||
+        !property_exists($request,'email') ||
 		!property_exists($request,'colonia') ||
         !property_exists($request,'num_domicilio_ext') ||
 		!property_exists($request,'cp') ||
@@ -27,19 +28,19 @@
 	$sql = "
 		UPDATE 
 		proveedor SET 
-		SET 
 		nombre='$request->nombre',
 		razon_social='$request->r_social',
 		telefono='$request->telefono',
-		correo='$request->correo',
-		telefono='$request->telefono',
+		email='$request->email',
 		calle='$request->calle',
 		colonia='$request->colonia',
         num_domicilio_ext='$request->num_domicilio_ext',
 		num_domicilio_int=$num_domicilio_int,
 		cp='$request->cp',
 		cve_mun='$request->cve_mun',
-		cve_ent='$request->cve_ent";
+		cve_ent='$request->cve_ent' WHERE
+		id_prov = $request->id";
+
 
 	$result = $con->query($sql);
 

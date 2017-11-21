@@ -11,18 +11,17 @@
 </div>
 <div ng-show="selectedUserId != undefined || provNuevo">
 	<form ng-submit="agregar()" name="provForm">
-
 		<div class="form-group" ng-show="selectedUserId != undefined">
 			<label for="nombre">
 				RFC:
 			</label>
-			<input readonly ng-model="selectedUserId" class="form-control" type="text"/>
+			<input readonly ng-model="prov.rfc" class="form-control" type="text" name="rfc_oculto" id="rfc_oculto"/>
 		</div>
-		<div class="form-group">
+		<div class="form-group" ng-show="provNuevo">
 			<label for="RFC">
 				RFC:
 			</label>
-			<input required ng-model="prov.rfc" class="form-control" type="text" name="rfc">
+			<input required ng-model="selectedUserId"  class="form-control" type="text" name="rfc" id="rfc">
 		</div>
 		<div class="row">
 		 <div class="col col-sm-6 form-group">
@@ -50,7 +49,7 @@
 				<label for="correo">
 					Correo:
 				</label>
-				<input required ng-model="prov.correo" class="form-control" type="email" name="correo">
+				<input required ng-model="prov.email" class="form-control" type="email" name="correo">
 			</div>
 
 			<div class="col col-sm-6 form-group">
@@ -126,10 +125,10 @@
 			<button ng-show="!provNuevo" class="btn btn-warning col-xs-10 col-xs-offset-1">Actualizar registro</button>
 		</div>
 		<br/>
-		<div class="row">
-			<button ng-show="actualizarUltimaVisita($event);" class="btn btn-warning col-xs-10 col-xs-offset-1">Actualizar fecha de última visita</button>
-		</div>
-		<br/>
+	<div ng-show="!provNuevo" class="row">
+			<button class="col col-xs-10 col-xs-offset-1 btn" onclick="seleccionarFecha()">Actualizar la fecha de última visita</button>
+			<br/>
+		</div> 
 		<div class="row">
 			<button ng-click="cancelar($event);" class="col col-xs-10 col-xs-offset-1 btn btn-danger">Cancelar</button>
 		</div>
