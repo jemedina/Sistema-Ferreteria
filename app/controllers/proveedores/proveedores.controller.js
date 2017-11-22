@@ -5,6 +5,8 @@ var proveedoresController = function($scope, $http) {
 	$scope.cargarEstados();
 
 	$scope.provNuevo = false;
+    
+    $scope.mostrar = false; 
 
 	$scope.mostrarDatePikerActalizarFecha = false;
 
@@ -35,9 +37,7 @@ var proveedoresController = function($scope, $http) {
 	    		method: 'POST'
 	    	}).then(function ok(resp) {
 	    		//Convert timestamps to date
-	    		resp.data[0].f_nac = new Date(parseInt(resp.data[0].fecha_ultima_visita)*1000);
-
-	
+	    		//resp.data[0].f_nac = new Date(parseInt(resp.data[0].fecha_ultima_visita)*1000);
 	    		$scope.cargarMunicipioPorCveEnt(resp.data[0].cve_ent);
 	    		$scope.prov = resp.data[0];
 	    	},function err(error) {
@@ -46,11 +46,12 @@ var proveedoresController = function($scope, $http) {
 	    	
 	    }
 	});
-
-	$scope.agregar = function () {
-		$scope.prov.id_prov = $scope.selectedUserId;
+    
+$scope.agregar = function () {
+		$scope.prov.id = $scope.selectedUserId;
 		var endpointUrl = "api/guardarProveedor.php";
 		if($scope.selectedUserId != undefined) {
+            $scope.prov.id = $scope.prov.rfc;
 			endpointUrl = "api/actualizarProveedor.php";
 		}
 		$http({
@@ -68,11 +69,11 @@ var proveedoresController = function($scope, $http) {
 		});
 	}
 
-
 	$scope.alta = function() {
 		$scope.provNuevo=true;
 		$scope.selectedUserId = undefined;
 		$scope.prov = {};
+        $scope.mostrar=false; 
 	}  
     
    $scope.actualizarUltimaVisita = function($event) {
@@ -114,6 +115,7 @@ var proveedoresController = function($scope, $http) {
 		if($event)
 			$event.preventDefault();
 		$scope.provNuevo=false;
+        $scope.mostrar=false; 
 		$scope.selectedUserId = undefined;
 		$("#buscarProvInput").val("");
 	} 
@@ -144,7 +146,17 @@ var proveedoresController = function($scope, $http) {
 			});
 			
 	}
-}
+} 
+
+ // Esta función abre una ventana con tu propio contenido
+$scope.seleccionarFecha = function() {
+      var newWindow = window.open('', '', 'width=250, height=120'); 
+      newWindow.document.write('<p>Ingrese nueva fecha:</p>');    
+      newWindow.document.write('<input type="date" id="fecha">');
+      var rfc=document.getElementById("rfc_oculto").value;        
+      var fecha=newWindow.document.getElementById("fecha").value;    
+      newWindow.document.write('<button ng-click="addUltimaVisitaFecha(fecha,rfc);" class="col col-xs-10 col-xs-offset-1 btn">Actualizar</button>');      
+    }
 
 proveedoresController.$inject = ['$scope', '$http'];
 app.controller('proveedoresController', proveedoresController);

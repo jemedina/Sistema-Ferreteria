@@ -1,25 +1,23 @@
-var empleadosController = function($scope, $http) {
+var catalogoController = function($scope, $http) {
 	
-	$scope.emp = {};
+	$scope.cat = {};
 	
-	$scope.cargarEstados();
+	$scope.catNuevo = false;
 
-	$scope.empNuevo = false;
-
-	$("#buscarEmpInput").autocomplete({
+	$("#buscarCatInput").autocomplete({
 		source: function (request, response)
 	    {
 	        $.ajax(
 	        {
-	            url: 'api/obtenerNombresEmpleados.php',
+	            url: 'api/obtenerNombresCatalogos.php',
 	            dataType: "json",
 	            data:
 	            {
-	                keyword: $("#buscarEmpInput").val(),
+	                keyword: $("#buscarCatInput").val(),
 	            },
 	            success: function (data)
 	            {
-	                var nombresArr = data.map( (obj) =>{ return {'label':obj.nombreCompleto,'id':obj.id_empleado} });
+	                var nombresArr = data.map( (obj) =>{ return {'label':obj.nombreCompleto,'id':obj.no_catalogo} });
 	            	response(nombresArr);
 	            }
 	        });
@@ -28,16 +26,14 @@ var empleadosController = function($scope, $http) {
 	    	$scope.selectedUserId = ui.item.id;
 	    	//Cargar el usuario con ese ID
 	    	$http({
-	    		url:'api/obtenerEmpleadoPorId.php',
+	    		url:'api/obtenerCatalogoPorNo.php',
 	    		data: {id:ui.item.id},
 	    		method: 'POST'
 	    	}).then(function ok(resp) {
 	    		//Convert timestamps to date
-	    		resp.data[0].f_nac = new Date(parseInt(resp.data[0].f_nac)*1000);
-	 	  		resp.data[0].f_ingreso = new Date(parseInt(resp.data[0].f_ingreso)*1000);
-	
-	    		$scope.cargarMunicipioPorCveEnt(resp.data[0].cve_ent);
-	    		$scope.emp = resp.data[0];
+	    		resp.data[0].anio = new Date(parseInt(resp.data[0].anio)*1000);
+	    		$scope.cargarIdProveedor(resp.data[0].id_prov);
+	    		$scope.cat = resp.data[0];
 	    	},function err(error) {
 	    		swal(error.data.msg, { icon: "error" } );
 	    	})
@@ -46,14 +42,12 @@ var empleadosController = function($scope, $http) {
 	});
 
 	$scope.agregar = function () {
-		$scope.emp.id = $scope.selectedUserId;
-        $scope.emp.nu; 
-		$scope.emp.f_nac_timestamp = $scope.emp.f_nac.getTime() / 1000;
-		$scope.emp.f_ingreso_timestamp = $scope.emp.f_ingreso.getTime() / 1000;
+		$scope.cat.no_catalogo = $scope.selectedCatNo;
+		$scope.cat.anio_timestamp = $scope.cat.anio.getYear();
 
-		var endpointUrl = "api/guardarUsuario.php";
+		var endpointUrl = "api/guardarCatalogo.php";
 		if($scope.selectedUserId != undefined) {
-			endpointUrl = "api/actualizarUsuario.php";
+			endpointUrl = "api/actualizarCatalogo.php";
 		}
 		$http({
 			headers: { 'Content-Transfer-Encoding': 'utf-8' },
@@ -63,7 +57,7 @@ var empleadosController = function($scope, $http) {
 		}).then(function ok(res) {
 			swal(res.data.msg, { icon: "success" } );
 			if($scope.selectedUserId == undefined) 
-				$scope.emp = {};
+				$scope.cat = {};
 			
 		}, function err(error) {
 			swal(error.data.msg, { icon: "error" } );
@@ -84,26 +78,26 @@ var empleadosController = function($scope, $http) {
 			$event.preventDefault();
 		$scope.empNuevo=false;
 		$scope.selectedUserId = undefined;
-		$("#buscarEmpInput").val("");
+		$("#buscarCatInput").val("");
 	} 
 
 	$scope.eliminar = function($event) {
 		$event.preventDefault();
 		swal({
 			title: 'Seguro que quieres borrar el registro?',
-			text: 'Si borrar el empleado toda su informacion se perderá',
+			text: 'Si borrar el catalogo toda su informacion se perderá',
 			icon:'warning',
 			buttons: ["Mmm... Mejor no!", true],}).then(
 				function(result) {
 					if(result) {
 						$http({
 							headers: { 'Content-Transfer-Encoding': 'utf-8' },
-							url: 'api/eliminarEmpleadoPorId.php',
+							url: 'api/eliminarCatalogoPorNo.php',
 							method: 'POST',
 							data: {id:$scope.selectedUserId}
 						}).then(function ok(res) {
 							swal("Registro eliminado!",
-								"El registro del empleado fue eliminado.",
+								"El registro del catlogo fue eliminado.",
 								"success");
 							$scope.cancelar();
 						}, function err(error) {
@@ -116,4 +110,4 @@ var empleadosController = function($scope, $http) {
 }
 
 empleadosController.$inject = ['$scope', '$http'];
-app.controller('empleadosController', empleadosController);
+app.controller('catalogoController', catalogoController);
