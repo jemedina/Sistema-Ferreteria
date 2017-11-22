@@ -64,7 +64,7 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
 			url: url,
 			method: 'POST',
 			data: {
-				id_prov: id_prov
+				id_prov: id_prov,
 				fecha: fech
 			}
 		}).then(function ok(res) {

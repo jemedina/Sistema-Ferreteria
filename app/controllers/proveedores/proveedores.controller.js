@@ -146,7 +146,7 @@ $scope.agregar = function () {
 			});
 			
 	}
-} 
+} /*
 
  // Esta función abre una ventana con tu propio contenido
 $scope.seleccionarFecha = function() {
@@ -156,7 +156,7 @@ $scope.seleccionarFecha = function() {
       var rfc=document.getElementById("rfc_oculto").value;        
       var fecha=newWindow.document.getElementById("fecha").value;    
       newWindow.document.write('<button ng-click="addUltimaVisitaFecha(fecha,rfc);" class="col col-xs-10 col-xs-offset-1 btn">Actualizar</button>');      
-    }
+    }*/
 
 proveedoresController.$inject = ['$scope', '$http'];
 app.controller('proveedoresController', proveedoresController);
