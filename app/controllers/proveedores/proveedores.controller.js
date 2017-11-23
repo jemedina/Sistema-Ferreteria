@@ -40,6 +40,7 @@ var proveedoresController = function($scope, $http) {
 	    		//resp.data[0].f_nac = new Date(parseInt(resp.data[0].fecha_ultima_visita)*1000);
 	    		$scope.cargarMunicipioPorCveEnt(resp.data[0].cve_ent);
 	    		$scope.prov = resp.data[0];
+                $scope.r_social = resp.data[0].razon_social; 
 	    	},function err(error) {
 	    		swal(error.data.msg, { icon: "error" } );
 	    	})
@@ -51,14 +52,13 @@ $scope.agregar = function () {
 		$scope.prov.id = $scope.selectedUserId;
 		var endpointUrl = "api/guardarProveedor.php";
 		if($scope.selectedUserId != undefined) {
-            $scope.prov.id = $scope.prov.rfc;
 			endpointUrl = "api/actualizarProveedor.php";
 		}
 		$http({
 			headers: { 'Content-Transfer-Encoding': 'utf-8' },
 			url: endpointUrl,
 			method: 'POST',
-			data: $scope.prov
+            data: $scope.prov
 		}).then(function ok(res) {
 			swal(res.data.msg, { icon: "success" } );
 			if($scope.selectedUserId == undefined) 

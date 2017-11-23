@@ -3,7 +3,7 @@
 
 	//Checar que recibimos los parametros obligatorios
 	if(
-		!property_exists($request,'id') ||
+        !property_exists($request,'id') ||
 		!property_exists($request,'nombre') ||
 		!property_exists($request,'r_social') ||
 		!property_exists($request,'telefono') ||
@@ -15,7 +15,8 @@
 		!property_exists($request,'cve_mun') ||
 		!property_exists($request,'cve_ent')
 	) {
-		echoError("No se pudo guardar el usuario: Parametros incompletos");
+		/*echoError("No se pudo guardar el proveedor: Parametros incompletos",$request->id," ",$request->nombre," ",$request->r_social," ",$request->telefono," ",$request->calle," ",$request->colonia," ",$request->email," ",$request->num_domicilio_ext," "+,request->cp," ",$request->cve_mun," ",$request->cve_ent); */
+        echoError("No se pudo guardar el proveedor: Parametros incompletos"); 
 	}
 
 	$num_domicilio_int = "NULL";
