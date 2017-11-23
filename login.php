@@ -29,7 +29,7 @@ background: linear-gradient(to right, #12D8FA, #1FA2FF); /* W3C, IE 10+/ Edge, F
 
                         <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
                             
-                        <form id="loginform" class="form-horizontal" role="form">
+                        <form id="loginform" class="form-horizontal" role="form" action="logic.php" method="post">
                                     
                             <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="pe-7s-user"></i>
@@ -58,7 +58,7 @@ background: linear-gradient(to right, #12D8FA, #1FA2FF); /* W3C, IE 10+/ Edge, F
                                     <!-- Button -->
 
                                     <div class="col-sm-12 controls">
-                                      <a id="btn-login" href="#" class="btn btn-success">Iniciar Sesion</a>
+                                      <button id="btn-login" type="submit" class="btn btn-success">Iniciar Sesion</button>
                                     </div>
                                 </div>
                             </form>     
