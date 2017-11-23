@@ -39,6 +39,41 @@ session_start();
     -->
         <?php
         if(!empty($_SESSION)){
+           if($_SESSION['usuario']=='vendedor'){
+                echo "<div class=\"sidebar-wrapper\">
+            <div class=\"logo\">
+                <a href=\"#\" class=\"simple-text\">
+                    <span ng-bind=\"nombreApp\"></span>
+                </a>
+            </div>
+            <ul class=\"nav\" id=\"menu\">
+            <li ng-repeat=\"item in menuItemsEmpleado\" class={{item.clase}}>
+                    <a href={{item.referencia}}>
+                        <i class= {{item.logo}}></i>
+                        <p>{{item.itemName}}</p>
+                    </a>
+                </li>
+            
+            </ul>
+    	</div>";
+            }elseif($_SESSION['usuario']=='almacenista'){
+                echo "<div class=\"sidebar-wrapper\">
+            <div class=\"logo\">
+                <a href=\"#\" class=\"simple-text\">
+                    <span ng-bind=\"nombreApp\"></span>
+                </a>
+            </div>
+            <ul class=\"nav\" id=\"menu\">
+            <li ng-repeat=\"item in menuItemsAlmacenista\" class={{item.clase}}>
+                    <a href={{item.referencia}}>
+                        <i class= {{item.logo}}></i>
+                        <p>{{item.itemName}}</p>
+                    </a>
+                </li>
+            
+            </ul>
+    	</div>";
+            }else{
             echo "<div class=\"sidebar-wrapper\">
             <div class=\"logo\">
                 <a href=\"#\" class=\"simple-text\">
@@ -55,6 +90,7 @@ session_start();
             
             </ul>
     	</div>";
+            }
         }else{
             echo "<div class=\"sidebar-wrapper\">
             <div class=\"logo\">
