@@ -199,7 +199,6 @@ session_start();
 
     <!-- App  -->
     <script src="app/app.js"></script>
-    <script src="MenuControl.js"></script>
 
     <!-- Components -->
     <script src="app/controllers/empleados/empleados.controller.js"></script>
