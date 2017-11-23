@@ -5,7 +5,7 @@
 	if(
         !property_exists($request,'id') ||
 		!property_exists($request,'nombre') ||
-		!property_exists($request,'r_social') ||
+		!property_exists($request,'razon_social') ||
 		!property_exists($request,'telefono') ||
 		!property_exists($request,'calle') ||
         !property_exists($request,'email') ||
@@ -30,7 +30,7 @@
 		UPDATE 
 		proveedor SET 
 		nombre='$request->nombre',
-		razon_social='$request->r_social',
+		razon_social='$request->razon_social',
 		telefono='$request->telefono',
 		email='$request->email',
 		calle='$request->calle',

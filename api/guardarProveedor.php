@@ -5,7 +5,7 @@
 	if(
 		!property_exists($request,'id') ||
 		!property_exists($request,'nombre') ||
-		!property_exists($request,'r_social') ||
+		!property_exists($request,'razon_social') ||
 		!property_exists($request,'telefono') ||
 		!property_exists($request,'calle') ||
 		!property_exists($request,'colonia') ||
@@ -29,8 +29,8 @@
 		SET 
 		id_prov = $request->id,
 		nombre='$request->nombre',
-		razon_social='$request->r_social',
-		email='$request->correo',
+		razon_social='$request->razon_social',
+		email='$request->email',
 		telefono='$request->telefono',
 		calle='$request->calle',
 		colonia='$request->colonia',
@@ -38,6 +38,7 @@
 		num_domicilio_int=$num_domicilio_int,
 		cp='$request->cp',
 		cve_mun='$request->cve_mun',
+		fecha_ultima_visita=curdate(),
 		cve_ent='$request->cve_ent';"; 
 
 	$result = $con->query($sql);

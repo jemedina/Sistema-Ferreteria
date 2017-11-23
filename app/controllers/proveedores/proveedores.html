@@ -11,7 +11,7 @@
 </div>
 <div ng-show="selectedUserId != undefined || provNuevo">
 	<form ng-submit="agregar()" name="provForm">
-		<div class="form-group" ng-show="selectedUserId != undefined">
+		<div class="form-group" ng-show="selectedUserId != undefined && !provNuevo">
 			<label for="nombre">
 				RFC:
 			</label>
@@ -34,7 +34,7 @@
 				<label for="r_social">
 					Razón Social:
 				</label>
-				<select required ng-model="r_social" class="form-control" name="r_social">
+				<select required ng-model="prov.razon_social" class="form-control" name="r_social">
 					<option value="S.A.">Sociedad Anónima</option>
 					<option value="S.C.">Sociedad Colectiva</option>
 					<option value="S.E.C">Sociedad en Comandita</option>
@@ -98,7 +98,7 @@
 			</div>
 			
 
-			<div class="col col-sm-6 form-group">
+			<div class="col col-sm-6 form-group" ng-show="!provNuevo">
 				<label for="cp">
 					Ultima visita:
 				</label>
@@ -129,23 +129,25 @@
 			<button ng-show="provNuevo" class="btn btn-success col-xs-10 col-xs-offset-1">Guardar</button>
 		</div>
 	<span isolate-click>
-		<div class="row">
-			<button ng-show="!provNuevo" class="btn btn-warning col-xs-10 col-xs-offset-1">Actualizar registro</button>
+		<div class="row" ng-show="!provNuevo" >
+			<button class="btn btn-warning col-xs-10 col-xs-offset-1">Actualizar registro</button>
 		</div>
 		<br/>
 
-		<div class="row">
-			<button ng-show="!provNuevo" ng-click="$event.preventDefault();mostrarDatePikerActalizarFecha = true" class="btn btn-warning col-xs-10 col-xs-offset-1">Actualizar fecha de última visita</button>
-		</div>
-		<div class="row animated fadeIn" ng-show="mostrarDatePikerActalizarFecha">
-			<br>
-			<div class="col col-xs-4 col-xs-offset-4 text-center">
-				<label>Nueva Fecha:</label>
-				<input ng-model="nuevaUltimaFecha" type="date" name="" class="form-control"/>
-				<button class="form-control btn btn-success" ng-click="actualizarUltimaVisita($event)">Guardar</button>
+		<div ng-show="!provNuevo">
+			<div class="row">
+				<button ng-click="$event.preventDefault();mostrarDatePikerActalizarFecha = !mostrarDatePikerActalizarFecha" class="btn btn-warning col-xs-10 col-xs-offset-1">Actualizar fecha de última visita</button>
 			</div>
+			<div class="row animated fadeIn" ng-show="mostrarDatePikerActalizarFecha">
+				<br>
+				<div class="col col-xs-4 col-xs-offset-4 text-center">
+					<label>Nueva Fecha:</label>
+					<input ng-model="nuevaUltimaFecha" type="date" name="" class="form-control"/>
+					<button class="form-control btn btn-success" ng-click="actualizarUltimaVisita($event)">Guardar</button>
+				</div>
+			</div>
+			<br/>			
 		</div>
-		<br/>
 
 		<div class="row">
 			<button ng-click="cancelar($event);" class="col col-xs-10 col-xs-offset-1 btn btn-danger">Cancelar</button>
