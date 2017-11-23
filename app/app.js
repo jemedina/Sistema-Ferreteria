@@ -97,5 +97,15 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
         {itemName: "Inventario", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#"},
         {itemName: "Catálogos", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#" }
     ]
+	$scope.menuItemsEmpleado=[
+        {itemName: "Dashboard", logo: "pe-7s-graph", clase: "menuItem active", referencia: "#"}, 
+        {itemName: "Ventas", logo: "pe-7s-note2", clase: "menuItem", referencia:"#"},
+        {itemName: "Catálogos", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#" }
+    ]
+     $scope.menuItemsAlmacenista=[
+        {itemName: "Dashboard", logo: "pe-7s-graph", clase: "menuItem active", referencia: "#"}, 
+        {itemName: "Proveedores", logo: "pe-7s-user", clase: "menuItem", referencia: "#!/proveedores"},
+        {itemName: "Inventario", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#"}
+    ]
 
 }]);
