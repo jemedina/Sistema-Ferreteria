@@ -109,7 +109,7 @@ lbd = {
             ul_content = ul_content + content_buff;
 
             ul_content = ul_content.replace(/menuItem/g,'menuItemSlick');
-            console.log(ul_content);
+            //console.log(ul_content);
             ul_content = '<div class="sidebar-wrapper">' +
                             '<ul class="nav navbar-nav">' +
                                 ul_content +

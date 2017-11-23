@@ -51,7 +51,7 @@ var proveedoresController = function($scope, $http) {
 $scope.agregar = function () {
 		$scope.prov.id = $scope.selectedUserId;
 		var endpointUrl = "api/guardarProveedor.php";
-		if($scope.selectedUserId != undefined) {
+		if(!$scope.provNuevo) {
 			endpointUrl = "api/actualizarProveedor.php";
 		}
 		$http({
@@ -61,7 +61,7 @@ $scope.agregar = function () {
             data: $scope.prov
 		}).then(function ok(res) {
 			swal(res.data.msg, { icon: "success" } );
-			if($scope.selectedUserId == undefined) 
+			if($scope.provNuevo) //Saber si insertamos un proveedor nuevo para limpiar el form
 				$scope.prov = {};
 			
 		}, function err(error) {
