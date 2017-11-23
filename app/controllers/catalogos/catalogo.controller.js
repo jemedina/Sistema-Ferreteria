@@ -4,7 +4,7 @@ var catalogoController = function($scope, $http) {
 	
 	$scope.catNuevo = false;
 
-	$("#buscarCatInput").autocomplete({
+	/*$("#buscarCatInput").autocomplete({
 		source: function (request, response)
 	    {
 	        $.ajax(
@@ -40,10 +40,10 @@ var catalogoController = function($scope, $http) {
 	    	
 	    }
 	});
-
+*/
 	$scope.agregar = function () {
-		$scope.cat.no_catalogo = $scope.selectedCatNo;
-		$scope.cat.anio_timestamp = $scope.cat.anio.getYear();
+		$scope.cat.no_catalogo = $scope.no_catalogo;
+		$scope.cat.anio_timestamp = Year($scope.anio);
 
 		var endpointUrl = "api/guardarCatalogo.php";
 		if($scope.selectedUserId != undefined) {
@@ -53,7 +53,7 @@ var catalogoController = function($scope, $http) {
 			headers: { 'Content-Transfer-Encoding': 'utf-8' },
 			url: endpointUrl,
 			method: 'POST',
-			data: $scope.emp
+			data: $scope.cat
 		}).then(function ok(res) {
 			swal(res.data.msg, { icon: "success" } );
 			if($scope.selectedUserId == undefined) 
@@ -66,9 +66,15 @@ var catalogoController = function($scope, $http) {
 
 
 	$scope.alta = function() {
-		$scope.empNuevo=true;
-		$scope.selectedUserId = undefined;
-		$scope.emp = {};
+		$scope.catNuevo=true;
+		$scope.no_catalogo = undefined;
+		$scope.cat = {};
+	} 
+    
+    $scope.buscar = function() {
+		$scope.catNuevo=false;
+		$scope.no_catalogo = undefined;
+		$scope.cat = {};
 	} 
     
 
@@ -76,8 +82,8 @@ var catalogoController = function($scope, $http) {
 	{ 	
 		if($event)
 			$event.preventDefault();
-		$scope.empNuevo=false;
-		$scope.selectedUserId = undefined;
+		$scope.catNuevo=false;
+		$scope.no_catalogo = undefined;
 		$("#buscarCatInput").val("");
 	} 
 
@@ -94,7 +100,7 @@ var catalogoController = function($scope, $http) {
 							headers: { 'Content-Transfer-Encoding': 'utf-8' },
 							url: 'api/eliminarCatalogoPorNo.php',
 							method: 'POST',
-							data: {id:$scope.selectedUserId}
+							data: {id:$scope.no_catalogo}
 						}).then(function ok(res) {
 							swal("Registro eliminado!",
 								"El registro del catlogo fue eliminado.",
