@@ -39,7 +39,7 @@ session_start();
     -->
         <?php
         if(!empty($_SESSION)){
-           if($_SESSION['usuario']=='vendedor'){
+           if($_SESSION['puesto']=='VENDEDOR'){
                 echo "<div class=\"sidebar-wrapper\">
             <div class=\"logo\">
                 <a href=\"#\" class=\"simple-text\">
@@ -56,7 +56,7 @@ session_start();
             
             </ul>
     	</div>";
-            }elseif($_SESSION['usuario']=='almacenista'){
+            }elseif($_SESSION['puesto']=='ALMACENISTA'){
                 echo "<div class=\"sidebar-wrapper\">
             <div class=\"logo\">
                 <a href=\"#\" class=\"simple-text\">
