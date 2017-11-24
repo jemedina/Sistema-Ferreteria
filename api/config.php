@@ -1,6 +1,6 @@
 <?php 
 
-	$env = "local"; //Cambiar local | prod
+	$env = "prod"; //Cambiar local | prod
 
 
 	function writeDefaultHeaders() {
@@ -42,10 +42,10 @@
 	$config["local"]["passwd"] = "";
 	//Configuracion servidor local
 	$config["prod"] = array();
-	$config["prod"]["host"] = "";
-	$config["prod"]["dbname"] = "";
-	$config["prod"]["user"] = "";
-	$config["prod"]["passwd"] = "";
+	$config["prod"]["host"] = "65.19.141.67";
+	$config["prod"]["dbname"] = "symb4d_bd_ferreteria";
+	$config["prod"]["user"] = "symb4d_root";
+	$config["prod"]["passwd"] = "holamundo";
 
 	writeDefaultHeaders();
 	
