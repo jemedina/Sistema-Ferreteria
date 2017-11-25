@@ -74,9 +74,8 @@ var catalogoController = function($scope, $http) {
 	{ 	
 		if($event)
 			$event.preventDefault();
+		$scope.cat.id_prov = undefined;
 		$scope.catNuevo=false;
-		$scope.selectedUserId = undefined;
-		$("#buscarCatInput").val("");
 	} 
 	
 
