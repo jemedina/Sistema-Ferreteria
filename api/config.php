@@ -1,6 +1,6 @@
 <?php 
 
-	$env = "prod"; //Cambiar local | prod
+	$env = "local"; //Cambiar local | prod
 
 
 	function writeDefaultHeaders() {

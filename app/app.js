@@ -11,7 +11,7 @@ app.config(function($routeProvider) {
         controller: 'proveedoresController'
     })
     .when('/catalogos', {
-        templateUrl: 'app/controllers/catalogos/catalogos.html',
+        templateUrl: 'app/controllers/catalogos/catalogo.html',
         controller: 'catalogoController'
     })
     .otherwise({
@@ -78,17 +78,32 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
 		});
 	}   
     
-     $scope.cargarProveedores = function() {
-        $http({
-            method: 'GET',
-            url: 'api/obtenerProveedores.php'
-        }).then(function ok(resp) {
-            $scope.provedores = resp.data;
-        },function err(argument) {
-            $scope.proveedores = {};
-            $scope.errorInminente();
-        });
+    $scope.cargarProveedores = function() {
+		$scope.proveedoreslista = [];
+		$http({
+			url: 'api/obtenerNombresProveedores.php',
+			method: 'get'
+		}).then(function(resp) {
+            $scope.proveedoreslista = resp.data;
+            console.log($scope.proveedoreslista );
+		},function(err) {
+			swal(err.data.msg, { icon: "error" } );			
+		})
     }
+    $scope.cargarCatalogoPorId = function(id_prov) {
+        console.log(id_prov);
+		$http({
+			url: 'api/obtenerCatalogoPorIdProveedor.php',
+            method: 'POST',
+            data: {id_prov: id_prov}
+		}).then(function(resp) {
+            $scope.catalogoslista = resp.data;
+            console.log($scope.proveedoreslista );
+		},function(err) {
+			swal(err.data.msg, { icon: "error" } );			
+		})
+    }
+    
      $scope.menuItems=[
         {itemName: "Dashboard", logo: "pe-7s-graph", clase: "menuItem active", referencia: "#"},
         {itemName: "Empleados", logo: "pe-7s-user", clase: "menuItem", referencia: "#!/empleados"}, 
