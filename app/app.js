@@ -91,14 +91,12 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
 		})
     }
     $scope.cargarCatalogoPorId = function(id_prov) {
-        console.log(id_prov);
 		$http({
 			url: 'api/obtenerCatalogoPorIdProveedor.php',
             method: 'POST',
             data: {id_prov: id_prov}
 		}).then(function(resp) {
             $scope.catalogoslista = resp.data;
-            console.log($scope.proveedoreslista );
 		},function(err) {
 			swal(err.data.msg, { icon: "error" } );			
 		})

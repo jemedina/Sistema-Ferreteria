@@ -5,24 +5,16 @@
 			</label>
 			<!--<input placeholder="Ingrese nombre del catalogo a buscar" class="form-control" type="text" id="buscarEmpInput" name="">-->
 			<div class="row">
-			<div class="col col-sm-6 form-group">
+			<div class="col col-sm-6 col-sm-offset-3 form-group">
 				<label for="proveedor">
 					Proveedor:
 				</label>
 				<select ng-change="cargarCatalogoPorId(cat.id_prov)" ng-model="cat.id_prov" class="form-control">
+					<option value="" selected="selected" disabled="disabled">Seleccione un proveedor</option>						
 					<option ng-repeat="proveedor in proveedoreslista" value="{{proveedor.id_prov}}">{{proveedor.nombreCompleto}}</option>
 				</select>
 			</div>
-		
-			<div class="col col-sm-6 form-group">
-				<label for="catalogo">
-					Catálogo:
-				</label>
-				<select ng-show="true" class="form-control">
-					<option ng-repeat="catalogo in catalogoslista" value="{{catalogo.id}}">{{catalogo.nombre}}</option>
-				</select>
-				<input ng-show="true" class="form-control" type="text" value="Seleccione un proveedor">
-			</div>
+
 		</div>
 		</div>
 </div>
@@ -36,7 +28,7 @@
 			<label>
 				Número de Catálogo
 			</label>
-			<input ng-model="cat.no_catalogo" class="form-control" type="text"/>
+			<input ng-model="cat.no_catalogo" class="form-control" type="number"/>
 		</div>
 		<div class="form-group">
 			<label for="nombre">
@@ -80,4 +72,33 @@
 
 	</span>
 	</form>
+</div>
+<br>
+<table class="table table-hover table-striped" ng-show="catalogoslista != undefined && catalogoslista.length > 0 && !catNuevo">
+	<thead class="thead-default">
+		<tr>
+		<th class="text-center">ID</th>
+		<th class="text-center">Nombre</th>
+		<th class="text-center">Año</th>
+		<th class="text-center"></th>
+		<th class="text-center"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="catalogo in catalogoslista">
+			<th scope="row" class="text-center">{{catalogo.id}}</th>
+			<td class="text-center">{{catalogo.nombre}}</td>
+			<td class="text-center">{{catalogo.anio}}</td>
+			<td class="text-center"><button class="btn btn-warning form-control">Editar</button></td>
+		</tr>
+	</tbody>
+</table>
+
+<div ng-show="cat.id_prov != undefined && catalogoslista.length == 0 && !catNuevo">
+	<br>
+	<div class="panel panel-danger text-center">
+		<br>
+		<div class="panel-body">Este proveedor no tiene catalogos</div>
+		<br>
+	</div>
 </div>
