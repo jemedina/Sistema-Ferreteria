@@ -9,8 +9,8 @@
 				<label for="proveedor">
 					Proveedor:
 				</label>
-				<select ng-change="cargarProveedorPorId(cat.id_prov); cat.no_catalogo=undefined; cat.anio=undefined;" ng-model="cat.id_prov" class="form-control">
-					<option ng-repeat="proveedor in proveedores" value="{{proveedor.id_prov}}">{{proveedor.nombre}}</option>
+				<select ng-change="cargarCatalogoPorId(cat.id_prov)" ng-model="cat.id_prov" class="form-control">
+					<option ng-repeat="proveedor in proveedoreslista" value="{{proveedor.id_prov}}">{{proveedor.nombreCompleto}}</option>
 				</select>
 			</div>
 		
@@ -18,10 +18,10 @@
 				<label for="catalogo">
 					Catálogo:
 				</label>
-				<select ng-show="cat.id_prov != undefined" ng-model="cat." class="form-control">
-					<option ng-repeat="catalogo in catalogos" value="{{catalogo.}}">{{catalogo.nombre}}</option>
+				<select ng-show="true" class="form-control">
+					<option ng-repeat="catalogo in catalogoslista" value="{{catalogo.id}}">{{catalogo.nombre}}</option>
 				</select>
-				<input ng-show="cat.id_prov == undefined" class="form-control" type="text" value="Seleccione un proveedor" disabled>
+				<input ng-show="true" class="form-control" type="text" value="Seleccione un proveedor">
 			</div>
 		</div>
 		</div>
@@ -32,11 +32,11 @@
 <div ng-show="selectedUserId != undefined || catNuevo">
 	<form ng-submit="agregar()" name="catForm">
 
-		<div class="form-group" ng-show="selectedUserId != undefined">
-			<label for="nombre">
+		<div class="form-group">
+			<label>
 				Número de Catálogo
 			</label>
-			<input readonly ng-model="selectedUserId" class="form-control" type="text"/>
+			<input ng-model="cat.no_catalogo" class="form-control" type="text"/>
 		</div>
 		<div class="form-group">
 			<label for="nombre">
@@ -44,121 +44,30 @@
 			</label>
 			<input required ng-model="cat.nombre" class="form-control" type="text" name="nombre">
 		</div>
-		<div class="row">
-			<div class="col col-sm-6 form-group">
-				<label for="a_paterno">
-					Apellido Paterno:
-				</label>
-				<input required ng-model="emp.a_paterno" class="form-control" type="text" name="a_paterno">
-			</div>
-
-			<div class="col col-sm-6 form-group">
-				<label for="a_materno">
-					Apellido Materno:
-				</label>
-				<input required ng-model="emp.a_materno" class="form-control" type="text" name="a_materno">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col col-sm-6 form-group">
-				<label for="correo">
-					Correo:
-				</label>
-				<input required ng-model="emp.correo" class="form-control" type="email" name="correo">
-			</div>
-
-			<div class="col col-sm-6 form-group">
-				<label for="telefono">
-					Telefono:
-				</label>
-				<input required ng-model="emp.telefono" class="form-control" type="text" name="telefono">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col col-sm-6 form-group">
-				<label for="f_nac">
-					Fecha de nacimiento:
-				</label>
-				<input class="form-control" required ng-model="emp.f_nac" type="date" name="f_nac">
-			</div>
-
-			<div class="col col-sm-6 form-group">
-				<label for="f_ingreso">
-					Fecha de ingreso:
-				</label>
-				<input required ng-model="emp.f_ingreso" class="form-control" type="date" name="f_ingreso">
-			</div>
-		</div>
-
-		<div class="form-group">
-			<label for="puesto">
-				Puesto:
-			</label>
-			<input required ng-model="emp.puesto" class="form-control" type="text" name="puesto">
-		</div>
-		<div class="row">
-			<div class="col col-sm-4 form-group">
-				<label for="calle">
-					Calle:
-				</label>
-				<input required ng-model="emp.calle" class="form-control" type="text" name="calle">
-			</div>
-
-			<div class="col col-sm-8 form-group">
-				<label for="colonia">
-					Colonia:
-				</label>
-				<input required ng-model="emp.colonia" class="form-control" type="text" name="colonia">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col col-sm-3 form-group">
-				<label for="num_domicilio_int">
-					Numero interior:
-				</label>
-				<input class="form-control" ng-model="emp.num_domicilio_int" type="text" name="num_domicilio_int">
-			</div>
-
-			<div class="col col-sm-3 form-group">
-				<label for="num_domicilio_ext">
-					Numero exterior:
-				</label>
-				<input required ng-model="emp.num_domicilio_ext" class="form-control" type="text" name="num_domicilio_ext">
-			</div>
-
-			<div class="col col-sm-6 form-group">
-				<label for="cp">
-					Codigo postal:
-				</label>
-				<input class="form-control" required ng-model="emp.cp" type="text" name="cp">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col col-sm-6 form-group">
-				<label for="cve_ent">
-					Estado:
-				</label>
-				<select ng-change="cargarMunicipioPorCveEnt(emp.cve_ent);emp.cve_mun=undefined;" ng-model="emp.cve_ent" class="form-control">
-					<option ng-repeat="estado in estados" value="{{estado.cve_ent}}">{{estado.nom_ent}}</option>
-				</select>
-			</div>
 		
-			<div class="col col-sm-6 form-group">
-				<label for="cve_mun">
-					Municipio:
+		<div class="row">
+			<div class="col col-xs-6 form-group">
+				<label for="cve_ent">
+					Proveedor:
 				</label>
-				<select ng-show="emp.cve_ent != undefined" ng-model="emp.cve_mun" class="form-control">
-					<option ng-repeat="municipio in municipios" value="{{municipio.cve_mun}}">{{municipio.nom_mun}}</option>
+				<select ng-model="cat.id_prov" class="form-control">
+					<option ng-repeat="proveedor in proveedoreslista" value="{{proveedor.id_prov}}">{{proveedor.nombreCompleto}}</option>
 				</select>
-				<input ng-show="emp.cve_ent == undefined" class="form-control" type="text" value="Seleccione una entidad" disabled>
+			</div>
+			<div class="col col-xs-6 form-group">
+				<label for="cve_ent">
+					Año:
+				</label>
+				<input type="number" min="2010" max="2100" class="form-control" ng-model="cat.anio">
 			</div>
 		</div>
 		<div class="row">
-			<button ng-show="empNuevo" class="btn btn-success col-xs-10 col-xs-offset-1">Guardar</button>
+			<button class="btn btn-success col-xs-10 col-xs-offset-1">Guardar</button>
 		</div>
+		<br>
 	<span isolate-click>
 		<div class="row">
-			<button ng-show="!empNuevo" class="btn btn-warning col-xs-10 col-xs-offset-1">Actualizar registro</button>
+			<button class="btn btn-warning col-xs-10 col-xs-offset-1">Actualizar registro</button>
 		</div>
 		<br/>
 		<div class="row">
