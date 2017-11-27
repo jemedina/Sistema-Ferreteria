@@ -51,7 +51,7 @@ var clientesController = function($scope, $http) {
 $scope.agregar = function () {
 		$scope.client.rfc = $scope.selectedUserId;
 		var endpointUrl = "api/guardarCliente.php";
-		if(!$scope.provNuevo) {
+		if(!$scope.clientNuevo) {
 			endpointUrl = "api/actualizarCliente.php";
 		}
 		$http({
@@ -76,39 +76,6 @@ $scope.agregar = function () {
         $scope.mostrar=false; 
 	}  
     
-   $scope.actualizarUltimaVisita = function($event) {
-		$event.preventDefault();
-		if($scope.nuevaUltimaFecha === undefined) {
-			swal("Por favor ingrese una nueva fecha",{icon:"error"});
-			return;
-		}
-		swal({
-			title: 'Seguro que quieres actualizar el registro de la ultima visita?',
-			text: 'Se sobreescribira la fecha de ultima visita con ' + $scope.nuevaUltimaFecha.toLocaleDateString(),
-			icon:'warning',
-			buttons: ["Mmm... Mejor no!", true]}).then(
-				function(result) {
-					if(result) {
-						$http({
-							headers: { 'Content-Transfer-Encoding': 'utf-8' },
-							url: 'api/agregarUltimaFechaProveedor.php',
-							method: 'POST',
-							data: {
-								id:$scope.selectedUserId,
-								nuevaFecha: $scope.nuevaUltimaFecha.getTime() / 1000
-							}
-						}).then(function ok(res) {
-							swal("Registro actualizado!",
-								"El registro del proveedor fue actualizado.",
-								"success");
-							mostrarDatePikerActalizarFecha = false;
-							$scope.cancelar();
-						}, function err(error) {
-							swal(error.data.msg, { icon: "error" } );
-						});
-					}
-			});
-	} 
 
 	$scope.cancelar = function($event) 
 	{ 	
@@ -146,17 +113,7 @@ $scope.agregar = function () {
 			});
 			
 	}
-} /*
-
- // Esta función abre una ventana con tu propio contenido
-$scope.seleccionarFecha = function() {
-      var newWindow = window.open('', '', 'width=250, height=120'); 
-      newWindow.document.write('<p>Ingrese nueva fecha:</p>');    
-      newWindow.document.write('<input type="date" id="fecha">');
-      var rfc=document.getElementById("rfc_oculto").value;        
-      var fecha=newWindow.document.getElementById("fecha").value;    
-      newWindow.document.write('<button ng-click="addUltimaVisitaFecha(fecha,rfc);" class="col col-xs-10 col-xs-offset-1 btn">Actualizar</button>');      
-    }*/
+} 
 
 clientesController.$inject = ['$scope', '$http'];
 app.controller('clientesController', clientesController);

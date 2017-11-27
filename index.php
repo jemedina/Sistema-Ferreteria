@@ -199,6 +199,7 @@ session_start();
     <script src="app/controllers/empleados/empleados.controller.js"></script>
     <script src="app/controllers/proveedores/proveedores.controller.js"></script>
     <script src="app/controllers/dashboard/dashboard.controller.js"></script>
+    <script src="app/controllers/clientes/clientes.controller.js"></script>
 
 
 </html>

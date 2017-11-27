@@ -12,7 +12,7 @@
 		!property_exists($request,'calle') ||
 		!property_exists($request,'colonia') ||
         !property_exists($request,'num_domicilio_ext') ||
-		!property_exists($request,'cp') ||
+		!property_exists($request,'cp') //||
 		!property_exists($request,'cve_mun') ||
 		!property_exists($request,'cve_ent')
 	) {
@@ -29,11 +29,11 @@
 		INSERT INTO 
 		cliente
 		SET 
-		RFC = $request->rfc,
+		RFC = '$request->rfc',
 		nombre='$request->nombre',
         a_paterno='$request->a_paterno',
         a_materno='$request->a_materno',
-		email='$request->email',
+		correo='$request->email',
 		telefono='$request->telefono',
 		calle='$request->calle',
 		colonia='$request->colonia',
@@ -48,6 +48,6 @@
 	if($result){ 
 		echoMessage("Insercion Correcta ");
 	} else {
-		echoError("Error al guardar el registro ");
+		echoError("Error al guardar el registro ".$sql);
 	}
 ?>
