@@ -1,0 +1,141 @@
+<div ng-show="clientNuevo == false">
+	<div class="form-group">
+			<label for="nombre">
+				Buscar Cliente:
+			</label>
+			<input placeholder="Ingrese nombre a buscar" class="form-control" type="text" id="buscarClientInput" name="">
+		</div>
+</div>
+<div class="row">
+	<button ng-click="alta()" ng-show="clientNuevo == false" class="col col-xs-10 col-xs-offset-1 btn btn-primary">Dar de alta un nuevo cliente</button>
+</div>
+<div ng-show="selectedUserId != undefined || clientNuevo">
+	<form ng-submit="agregar()" name="clientForm">
+		<div class="form-group" ng-show="selectedUserId != undefined && !clientNuevo">
+			<label for="nombre">
+				RFC:
+			</label>
+			<input readonly ng-model="selectedUserId" class="form-control" type="text" name="rfc_oculto" id="rfc_oculto"/>
+		</div>
+		<div class="form-group" ng-show="clientNuevo">
+			<label for="RFC">
+				RFC:
+			</label>
+			<input required ng-model="selectedUserId"  class="form-control" type="text" name="rfc" id="rfc">
+		</div>
+		<div class="row">
+		 <div class="col col-sm-6 form-group">
+		   <label for="nombre">
+				Nombre:
+			</label>
+			<input required ng-model="client.nombre" class="form-control" type="text" name="nombre">
+            
+		  </div>
+			<div class="col col-sm-6 form-group">
+				<label for="a_paterno">
+				    Apellido paterno:
+                </label>
+			     <input required ng-model="client.a_paterno" class="form-control" type="text" name="a_paterno">
+                <label for="a_materno">
+				    Apellido materno:
+			     </label>
+			     <input required ng-model="client.a_materno" class="form-control" type="text" name="a_materno">
+			</div>
+        </div>
+           <div class="row">
+			<div class="col col-sm-6 form-group">
+				<label for="correo">
+					Correo:
+				</label>
+				<input required ng-model="client.email" class="form-control" type="email" name="correo">
+			</div>
+
+			<div class="col col-sm-6 form-group">
+				<label for="telefono">
+					Telefono:
+				</label>
+				<input required ng-model="client.telefono" class="form-control" type="text" name="telefono">
+			</div>
+		</div>
+          
+		<div class="row">
+			<div class="col col-sm-6 form-group">
+				<label for="calle">
+					Calle:
+				</label>
+				<input required ng-model="client.calle" class="form-control" type="text" name="calle">
+			</div>
+
+			<div class="col col-sm-6 form-group">
+				<label for="colonia">
+					Colonia:
+				</label>
+				<input required ng-model="client.colonia" class="form-control" type="text" name="colonia">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col col-sm-3 form-group">
+				<label for="num_domicilio_int">
+					Numero interior:
+				</label>
+				<input class="form-control" ng-model="client.num_domicilio_int" type="text" name="num_domicilio_int">
+			</div>
+
+			<div class="col col-sm-3 form-group">
+				<label for="num_domicilio_ext">
+					Numero exterior:
+				</label>
+				<input required ng-model="client.num_domicilio_ext" class="form-control" type="text" name="num_domicilio_ext">
+			</div>
+
+			<div class="col col-sm-6 form-group">
+				<label for="cp">
+					Codigo postal:
+				</label>
+				<input class="form-control" required ng-model="client.cp" type="text" name="cp">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col col-sm-6 form-group">
+				<label for="cve_ent">
+					Estado:
+				</label>
+				<select ng-change="cargarMunicipioPorCveEnt(client.cve_ent);client.cve_mun=undefined;" ng-model="client.cve_ent" class="form-control">
+					<option ng-repeat="estado in estados" value="{{estado.cve_ent}}">{{estado.nom_ent}}</option>
+				</select>
+			</div>
+		
+			<div class="col col-sm-6 form-group">
+				<label for="cve_mun">
+					Municipio:
+				</label>
+				<select ng-show="client.cve_ent != undefined" ng-model="client.cve_mun" class="form-control">
+					<option ng-repeat="municipio in municipios" value="{{municipio.cve_mun}}">{{municipio.nom_mun}}</option>
+				</select>
+				<input ng-show="client.cve_ent == undefined" class="form-control" type="text" value="Seleccione una entidad" disabled>
+			</div>
+		</div>
+		<div class="row">
+			<button ng-show="clientNuevo" class="btn btn-success col-xs-10 col-xs-offset-1">Guardar</button>
+		</div>
+	<span isolate-click>
+		<div class="row" ng-show="!clientNuevo" >
+			<button class="btn btn-warning col-xs-10 col-xs-offset-1">Actualizar registro</button>
+		</div>
+		<br/>
+
+
+		<div class="row">
+			<button ng-click="cancelar($event);" class="col col-xs-10 col-xs-offset-1 btn btn-danger">Cancelar</button>
+		</div>
+		<br/>
+		<div ng-show="!clientNuevo" class="row">
+			<button ng-click="eliminar($event);" class="col col-xs-10 col-xs-offset-1 btn">Eliminar</button>
+		</div>
+
+	</span>
+	</form>
+</div>
+
+
+

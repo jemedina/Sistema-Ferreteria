@@ -92,12 +92,6 @@ session_start();
     	</div>";
             }
         }else{
-            echo "<div class=\"sidebar-wrapper\">
-            <div class=\"logo\">
-                <a href=\"#\" class=\"simple-text\">
-                    <span ng-bind=\"nombreApp\"></span>
-                </a>
-            </div></div>";
             header("location:login.php");
         }
         ?>

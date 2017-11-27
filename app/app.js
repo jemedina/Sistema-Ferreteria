@@ -14,6 +14,10 @@ app.config(function($routeProvider) {
         templateUrl: 'app/controllers/catalogos/catalogos.html',
         controller: 'catalogoController'
     })
+    .when('/clientes', {
+        templateUrl: 'app/controllers/clientes/clientes.html',
+        controller: 'clientesController'
+    })
     .otherwise({
         templateUrl: 'app/controllers/dashboard/dashboard.html',
         controller: 'dashboardController'
@@ -89,10 +93,12 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
             $scope.errorInminente();
         });
     }
+     
      $scope.menuItems=[
         {itemName: "Dashboard", logo: "pe-7s-graph", clase: "menuItem active", referencia: "#"},
         {itemName: "Empleados", logo: "pe-7s-user", clase: "menuItem", referencia: "#!/empleados"}, 
         {itemName: "Proveedores", logo: "pe-7s-user", clase: "menuItem", referencia: "#!/proveedores"},
+        {itemName: "Clientes", logo: "pe-7s-user", clase: "menuItem", referencia: "#!/clientes"},
         {itemName: "Ventas", logo: "pe-7s-note2", clase: "menuItem", referencia:"#"},
         {itemName: "Inventario", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#"},
         {itemName: "Catálogos", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#" }
