@@ -7,7 +7,7 @@
 		!property_exists($request,'nombre') ||
 		!property_exists($request,'a_paterno') ||
         !property_exists($request,'a_materno') ||
-        !property_exists($request,'email') ||
+        !property_exists($request,'correo') ||
 		!property_exists($request,'telefono') ||
 		!property_exists($request,'calle') ||
 		!property_exists($request,'colonia') ||
@@ -29,11 +29,11 @@
     
 	$sql = "
 		UPDATE 
-		proveedor SET 
+		cliente SET 
 		nombre='$request->nombre',
         a_paterno='$request->a_paterno',
         a_materno='$request->a_materno',
-		email='$request->email',
+		correo='$request->correo',
 		telefono='$request->telefono',
 		calle='$request->calle',
 		colonia='$request->colonia',

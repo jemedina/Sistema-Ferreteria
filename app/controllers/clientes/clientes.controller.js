@@ -33,7 +33,7 @@ var clientesController = function($scope, $http) {
 	    	//Cargar el usuario con ese ID
 	    	$http({
 	    		url:'api/obtenerClientePorId.php',
-	    		data: {id:ui.item.id},
+	    		data: {rfc:ui.item.id},
 	    		method: 'POST'
 	    	}).then(function ok(resp) {
 	    		//Convert timestamps to date
@@ -61,8 +61,10 @@ $scope.agregar = function () {
             data: $scope.client
 		}).then(function ok(res) {
 			swal(res.data.msg, { icon: "success" } );
-			if($scope.clientNuevo) //Saber si insertamos un proveedor nuevo para limpiar el form
+			if($scope.clientNuevo){ //Saber si insertamos un proveedor nuevo para limpiar el form
 				$scope.client = {};
+				$scope.selectedUserId = undefined;
+			}
 			
 		}, function err(error) {
 			swal(error.data.msg, { icon: "error" } );
@@ -100,7 +102,7 @@ $scope.agregar = function () {
 							headers: { 'Content-Transfer-Encoding': 'utf-8' },
 							url: 'api/eliminarClientePorId.php',
 							method: 'POST',
-							data: {id:$scope.selectedUserId}
+							data: {rfc:$scope.selectedUserId}
 						}).then(function ok(res) {
 							swal("Registro eliminado!",
 								"El registro del cliente fue eliminado.",

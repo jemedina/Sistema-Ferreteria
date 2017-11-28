@@ -7,12 +7,12 @@
 		!property_exists($request,'nombre') ||
 		!property_exists($request,'a_paterno') ||
         !property_exists($request,'a_materno') ||
-        !property_exists($request,'email') ||
+        !property_exists($request,'correo') ||
 		!property_exists($request,'telefono') ||
 		!property_exists($request,'calle') ||
 		!property_exists($request,'colonia') ||
         !property_exists($request,'num_domicilio_ext') ||
-		!property_exists($request,'cp') //||
+		!property_exists($request,'cp') ||
 		!property_exists($request,'cve_mun') ||
 		!property_exists($request,'cve_ent')
 	) {
@@ -33,7 +33,7 @@
 		nombre='$request->nombre',
         a_paterno='$request->a_paterno',
         a_materno='$request->a_materno',
-		correo='$request->email',
+		correo='$request->correo',
 		telefono='$request->telefono',
 		calle='$request->calle',
 		colonia='$request->colonia',
