@@ -3,49 +3,7 @@ var catalogoController = function($scope, $http) {
 	$scope.cat = {};
 	
 	$scope.catNuevo = false;
-
-	/*$("#buscarCatInput").autocomplete({
-=======
 	$scope.cargarProveedores();
-
-	$("#buscarCatInput").autocomplete({
->>>>>>> 14eed0a63cfb86d6350842d448468539ca40eb4b
-		source: function (request, response)
-	    {
-	        $.ajax(
-	        {
-	            url: 'api/obtenerNombresCatalogos.php',
-	            dataType: "json",
-	            data:
-	            {
-	                keyword: $("#buscarCatInput").val(),
-	            },
-	            success: function (data)
-	            {
-	                var nombresArr = data.map( (obj) =>{ return {'label':obj.nombreCompleto,'id':obj.no_catalogo} });
-	            	response(nombresArr);
-	            }
-	        });
-	    },
-	    select: function(evt, ui) {
-	    	$scope.selectedUserId = ui.item.id;
-	    	//Cargar el usuario con ese ID
-	    	$http({
-	    		url:'api/obtenerCatalogoPorNo.php',
-	    		data: {id:ui.item.id},
-	    		method: 'POST'
-	    	}).then(function ok(resp) {
-	    		//Convert timestamps to date
-	    		resp.data[0].anio = new Date(parseInt(resp.data[0].anio)*1000);
-	    		$scope.cargarIdProveedor(resp.data[0].id_prov);
-	    		$scope.cat = resp.data[0];
-	    	},function err(error) {
-	    		swal(error.data.msg, { icon: "error" } );
-	    	})
-	    	
-	    }
-	});
-*/
 	$scope.agregar = function () {
 		$scope.cat.no_catalogo = $scope.no_catalogo;
 		$scope.cat.anio_timestamp = Year($scope.anio);
