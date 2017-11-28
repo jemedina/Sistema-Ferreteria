@@ -32,7 +32,7 @@ session_start();
 <body ng-app="app">
 
 <div class="wrapper" ng-controller="mainController">
-    <div class="sidebar" data-color="azure" data-image="assets/img/sidebar-5.jpg">
+    <div class="sidebar" data-color="none" data-image="assets/img/sidebar-5.jpg">
     <!--
         data-color="blue | azure | green | orange | red | purple"
         data-image sidebar-1|2|3|4|5.jpg
