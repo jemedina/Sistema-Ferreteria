@@ -1,12 +1,13 @@
 <?php
-include("api/config.php");
+//include("api/config.php");
 session_start();
 if(!empty($_SESSION) and $_GET['logout']==1){
     session_destroy();
     header("location:index.php");
-}elseif(empty($_POST)){
+}/*elseif(empty($_SESSION)){
+    session_destroy();
     header("location:index.php");
-}
+}*/
 $conn=mysqli_connect("localhost","root","","bd_ferreteria");
 
 if (mysqli_connect_errno())
@@ -25,8 +26,9 @@ if($pass==$resultado[1]){
 	$_SESSION['puesto']=$resultado[0];
     header("location:index.php");
 }else{
-    header("location:index.php");
     session_destroy();
+    header("location:index.php");
+    //session_destroy();
 }
 //echo 'hola mundo';
 //echo $usuario;

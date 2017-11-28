@@ -92,12 +92,6 @@ session_start();
     	</div>";
             }
         }else{
-            echo "<div class=\"sidebar-wrapper\">
-            <div class=\"logo\">
-                <a href=\"#\" class=\"simple-text\">
-                    <span ng-bind=\"nombreApp\"></span>
-                </a>
-            </div></div>";
             header("location:login.php");
         }
         ?>
@@ -204,6 +198,8 @@ session_start();
     <script src="app/controllers/empleados/empleados.controller.js"></script>
     <script src="app/controllers/proveedores/proveedores.controller.js"></script>
     <script src="app/controllers/dashboard/dashboard.controller.js"></script>
+    <script src="app/controllers/clientes/clientes.controller.js"></script>
+    <script src="app/controllers/catalogos/catalogo.controller.js"></script>
 
 
 </html>
