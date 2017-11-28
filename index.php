@@ -1,4 +1,6 @@
-<!doctype html>
+<?php
+session_start();
+?>
 <html lang="es">
 <head>
 	<meta charset="utf-8" />
@@ -35,53 +37,71 @@
         data-color="blue | azure | green | orange | red | purple"
         data-image sidebar-1|2|3|4|5.jpg
     -->
-
-    	<div class="sidebar-wrapper">
-            <div class="logo">
-                <a href="#" class="simple-text">
-                    <span ng-bind="nombreApp"></span>
+        <?php
+        if(!empty($_SESSION)){
+           if($_SESSION['puesto']=='VENDEDOR'){
+                echo "<div class=\"sidebar-wrapper\">
+            <div class=\"logo\">
+                <a href=\"#\" class=\"simple-text\">
+                    <span ng-bind=\"nombreApp\"></span>
                 </a>
             </div>
-
-            <ul class="nav" id="menu">
-                <li class="menuItem active">
-                    <a href="#">
-                        <i class="pe-7s-graph"></i>
-                        <p>Dashboard</p>
+            <ul class=\"nav\" id=\"menu\">
+            <li ng-repeat=\"item in menuItemsEmpleado\" class={{item.clase}}>
+                    <a href={{item.referencia}}>
+                        <i class= {{item.logo}}></i>
+                        <p>{{item.itemName}}</p>
                     </a>
                 </li>
-                <li class="menuItem">
-                    <a href="#!/empleados">
-                        <i class="pe-7s-user"></i>
-                        <p>Empleados</p>
-                    </a>
-                </li>
-                <li class="menuItem">
-                    <a href="#!/proveedores">
-                        <i class="pe-7s-user"></i>
-                        <p>Proveedores</p>
-                    </a>
-                </li>
-                <li class="menuItem">
-                    <a href="#">
-                        <i class="pe-7s-note2"></i>
-                        <p>Ventas</p>
-                    </a>
-                </li>
-                <li class="menuItem">
-                    <a href="#!/catalogos">
-                        <i class="pe-7s-news-paper"></i>
-                        <p>Catálogos</p>
-                    </a>
-                </li>
-                <li class="menuItem">
-                    <a href="#">
-                        <i class="pe-7s-news-paper"></i>
-                        <p>Inventario</p>
-                    </a>
-                </li>
+            
             </ul>
-    	</div>
+    	</div>";
+            }elseif($_SESSION['puesto']=='ALMACENISTA'){
+                echo "<div class=\"sidebar-wrapper\">
+            <div class=\"logo\">
+                <a href=\"#\" class=\"simple-text\">
+                    <span ng-bind=\"nombreApp\"></span>
+                </a>
+            </div>
+            <ul class=\"nav\" id=\"menu\">
+            <li ng-repeat=\"item in menuItemsAlmacenista\" class={{item.clase}}>
+                    <a href={{item.referencia}}>
+                        <i class= {{item.logo}}></i>
+                        <p>{{item.itemName}}</p>
+                    </a>
+                </li>
+            
+            </ul>
+    	</div>";
+            }else{
+            echo "<div class=\"sidebar-wrapper\">
+            <div class=\"logo\">
+                <a href=\"#\" class=\"simple-text\">
+                    <span ng-bind=\"nombreApp\"></span>
+                </a>
+            </div>
+            <ul class=\"nav\" id=\"menu\">
+            <li ng-repeat=\"item in menuItems\" class={{item.clase}}>
+                    <a href={{item.referencia}}>
+                        <i class= {{item.logo}}></i>
+                        <p>{{item.itemName}}</p>
+                    </a>
+                </li>
+            
+            </ul>
+    	</div>";
+            }
+        }else{
+            echo "<div class=\"sidebar-wrapper\">
+            <div class=\"logo\">
+                <a href=\"#\" class=\"simple-text\">
+                    <span ng-bind=\"nombreApp\"></span>
+                </a>
+            </div></div>";
+            header("location:login.php");
+        }
+        ?>
+        <!--<div well-mess></div>-->
     </div>
 
     <div class="main-panel">
@@ -104,18 +124,30 @@
                                 <i class="fa fa-search"></i>
 								<p class="hidden-lg hidden-md">Search</p>
                             </a>
-                        </li>
-                    -->
-                    </ul>
-
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="#">
-                                <p>Log out</p>
+                        </li>-->
+                        <?php
+                        if(empty($_SESSION)){
+                        echo "<li>
+                            <a href=\"login.php\">
+                                <p>Sign in</p>
                             </a>
-                        </li>
-						<li class="separator hidden-lg hidden-md"></li>
+                        </li>";
+                        }
+                        ?>
                     </ul>
+                    <?php
+                    if(!empty($_SESSION)){
+                        echo "<ul class=\"nav navbar-nav navbar-right\">
+                            <li>
+                                <a href=\"logic.php?logout=1\">
+                                    <p>Log out</p>
+                                </a>
+                            </li>
+						  <li class=\"separator hidden-lg hidden-md\"></li>
+                        </ul>";
+                    }
+                    
+                    ?>
                 </div>
             </div>
         </nav>
@@ -171,7 +203,6 @@
     <!-- Components -->
     <script src="app/controllers/empleados/empleados.controller.js"></script>
     <script src="app/controllers/proveedores/proveedores.controller.js"></script>
-    <script src="app/controllers/catalogos/catalogo.controller.js"></script>
     <script src="app/controllers/dashboard/dashboard.controller.js"></script>
 
 

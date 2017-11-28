@@ -5,24 +5,16 @@
 			</label>
 			<!--<input placeholder="Ingrese nombre del catalogo a buscar" class="form-control" type="text" id="buscarEmpInput" name="">-->
 			<div class="row">
-			<div class="col col-sm-6 form-group">
+			<div class="col col-sm-6 col-sm-offset-3 form-group">
 				<label for="proveedor">
 					Proveedor:
 				</label>
-				<select ng-change="cargarProveedorPorId(cat.id_prov); cat.no_catalogo=undefined; cat.anio=undefined;" ng-model="cat.id_prov" class="form-control">
-					<option ng-repeat="proveedor in proveedores" value="{{proveedor.id_prov}}">{{proveedor.nombre}}</option>
+				<select ng-change="cargarCatalogoPorId(cat.id_prov)" ng-model="cat.id_prov" class="form-control">
+					<option value="" selected="selected" disabled="disabled">Seleccione un proveedor</option>						
+					<option ng-repeat="proveedor in proveedoreslista" value="{{proveedor.id_prov}}">{{proveedor.nombreCompleto}}</option>
 				</select>
 			</div>
-		
-			<div class="col col-sm-6 form-group">
-				<label for="catalogo">
-					Catálogo:
-				</label>
-				<select ng-show="cat.id_prov != undefined" ng-model="cat." class="form-control">
-					<option ng-repeat="catalogo in catalogos" value="{{catalogo.}}">{{catalogo.nombre}}</option>
-				</select>
-				<input ng-show="cat.id_prov == undefined" class="form-control" type="text" value="Seleccione un proveedor" disabled>
-			</div>
+
 		</div>
 		</div>
 </div>
@@ -35,11 +27,11 @@
 <div ng-show="catNuevo">
 	<form ng-submit="agregar()" name="catForm">
 
-		<div class="form-group" ng-show="selectedUserId != undefined">
-			<label for="nombre">
+		<div class="form-group">
+			<label>
 				Número de Catálogo
 			</label>
-			<input readonly ng-model="no_catalogo" class="form-control" type="text"/>
+			<input ng-model="cat.no_catalogo" class="form-control" type="number"/>
 		</div>
 		<div class="form-group">
 			<label for="nombre">
@@ -69,10 +61,29 @@
 		</div>
 		<div class="row">
 			<button ng-show="catNuevo" class="btn btn-success col-xs-10 col-xs-offset-1">Guardar</button>
+			<div class="col col-xs-6 form-group">
+				<label for="cve_ent">
+					Proveedor:
+				</label>
+				<select ng-model="cat.id_prov" class="form-control">
+					<option ng-repeat="proveedor in proveedoreslista" value="{{proveedor.id_prov}}">{{proveedor.nombreCompleto}}</option>
+				</select>
+			</div>
+			<div class="col col-xs-6 form-group">
+				<label for="cve_ent">
+					Año:
+				</label>
+				<input type="number" min="2010" max="2100" class="form-control" ng-model="cat.anio">
+			</div>
 		</div>
+		<div class="row">
+			<button class="btn btn-success col-xs-10 col-xs-offset-1">Guardar</button>
+		</div>
+		<br>
 	<span isolate-click>
 		<div class="row">
-			<button ng-show="!catNuevo" class="btn btn-warning col-xs-10 col-xs-offset-1">Actualizar registro</button>
+
+			<button class="btn btn-warning col-xs-10 col-xs-offset-1">Actualizar registro</button>
 		</div>
 		<br/>
 		<div class="row">
@@ -85,4 +96,33 @@
 
 	</span>
 	</form>
+</div>
+<br>
+<table class="table table-hover table-striped" ng-show="catalogoslista != undefined && catalogoslista.length > 0 && !catNuevo">
+	<thead class="thead-default">
+		<tr>
+		<th class="text-center">ID</th>
+		<th class="text-center">Nombre</th>
+		<th class="text-center">Año</th>
+		<th class="text-center"></th>
+		<th class="text-center"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="catalogo in catalogoslista">
+			<th scope="row" class="text-center">{{catalogo.id}}</th>
+			<td class="text-center">{{catalogo.nombre}}</td>
+			<td class="text-center">{{catalogo.anio}}</td>
+			<td class="text-center"><button class="btn btn-warning form-control">Editar</button></td>
+		</tr>
+	</tbody>
+</table>
+
+<div ng-show="cat.id_prov != undefined && catalogoslista.length == 0 && !catNuevo">
+	<br>
+	<div class="panel panel-danger text-center">
+		<br>
+		<div class="panel-body">Este proveedor no tiene catalogos</div>
+		<br>
+	</div>
 </div>

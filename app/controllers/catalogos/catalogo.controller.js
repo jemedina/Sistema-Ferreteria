@@ -5,6 +5,11 @@ var catalogoController = function($scope, $http) {
 	$scope.catNuevo = false;
 
 	/*$("#buscarCatInput").autocomplete({
+=======
+	$scope.cargarProveedores();
+
+	$("#buscarCatInput").autocomplete({
+>>>>>>> 14eed0a63cfb86d6350842d448468539ca40eb4b
 		source: function (request, response)
 	    {
 	        $.ajax(
@@ -44,11 +49,10 @@ var catalogoController = function($scope, $http) {
 	$scope.agregar = function () {
 		$scope.cat.no_catalogo = $scope.no_catalogo;
 		$scope.cat.anio_timestamp = Year($scope.anio);
+		//$scope.cat.anio_timestamp = $scope.cat.anio.getYear();
 
 		var endpointUrl = "api/guardarCatalogo.php";
-		if($scope.selectedUserId != undefined) {
-			endpointUrl = "api/actualizarCatalogo.php";
-		}
+		
 		$http({
 			headers: { 'Content-Transfer-Encoding': 'utf-8' },
 			url: endpointUrl,
@@ -56,8 +60,7 @@ var catalogoController = function($scope, $http) {
 			data: $scope.cat
 		}).then(function ok(res) {
 			swal(res.data.msg, { icon: "success" } );
-			if($scope.selectedUserId == undefined) 
-				$scope.cat = {};
+			$scope.cat = {};
 			
 		}, function err(error) {
 			swal(error.data.msg, { icon: "error" } );
@@ -75,6 +78,8 @@ var catalogoController = function($scope, $http) {
 		$scope.catNuevo=false;
 		$scope.no_catalogo = undefined;
 		$scope.cat = {};
+		$scope.selectedUserId = undefined;
+		$scope.emp = {};
 	} 
     
 
@@ -85,7 +90,10 @@ var catalogoController = function($scope, $http) {
 		$scope.catNuevo=false;
 		$scope.no_catalogo = undefined;
 		$("#buscarCatInput").val("");
+		$scope.cat.id_prov = undefined;
+		$scope.catNuevo=false;
 	} 
+	
 
 	$scope.eliminar = function($event) {
 		$event.preventDefault();
