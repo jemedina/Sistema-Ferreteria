@@ -3,10 +3,11 @@ var catalogoController = function($scope, $http) {
 	$scope.cat = {};
 	
 	$scope.catNuevo = false;
+
 	$scope.cargarProveedores();
+
+
 	$scope.agregar = function () {
-		$scope.cat.no_catalogo = $scope.no_catalogo;
-		$scope.cat.anio_timestamp = Year($scope.anio);
 		//$scope.cat.anio_timestamp = $scope.cat.anio.getYear();
 
 		var endpointUrl = "api/guardarCatalogo.php";
@@ -28,14 +29,6 @@ var catalogoController = function($scope, $http) {
 
 	$scope.alta = function() {
 		$scope.catNuevo=true;
-		$scope.no_catalogo = undefined;
-		$scope.cat = {};
-	} 
-    
-    $scope.buscar = function() {
-		$scope.catNuevo=false;
-		$scope.no_catalogo = undefined;
-		$scope.cat = {};
 		$scope.selectedUserId = undefined;
 		$scope.emp = {};
 	} 
@@ -45,9 +38,6 @@ var catalogoController = function($scope, $http) {
 	{ 	
 		if($event)
 			$event.preventDefault();
-		$scope.catNuevo=false;
-		$scope.no_catalogo = undefined;
-		$("#buscarCatInput").val("");
 		$scope.cat.id_prov = undefined;
 		$scope.catNuevo=false;
 	} 

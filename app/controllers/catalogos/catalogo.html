@@ -19,12 +19,9 @@
 		</div>
 </div>
 <div class="row">
-	<button ng-click="buscar()" ng-show="catNuevo == false" class="col col-xs-10 col-xs-offset-1 btn btn-primary">buscar catálogo</button>
+	<button ng-click="alta()" ng-show="catNuevo == false" class="col col-xs-10 col-xs-offset-1 btn btn-primary">Dar de alta un nuevo catalogo</button>
 </div>
-<div class="row">
-	<button ng-click="alta()" ng-show="catNuevo == false" class="col col-xs-10 col-xs-offset-1 btn btn-primary">Dar de alta un nuevo catálogo</button>
-</div>
-<div ng-show="catNuevo">
+<div ng-show="selectedUserId != undefined || catNuevo">
 	<form ng-submit="agregar()" name="catForm">
 
 		<div class="form-group">
@@ -41,26 +38,6 @@
 		</div>
 		
 		<div class="row">
-			<div class="col col-sm-6 form-group">
-				<label for="f_nac">
-					Fecha de emisión:
-				</label>
-				<input class="form-control" required ng-model="cat.anio" type="date" name="anio">
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col col-sm-6 form-group">
-				<label for="id_prov">
-					Proveedor:
-				</label>
-				<select ng-change="cargarProveedorPorId(cat.id_prov); cat.no_catalogo=undefined; cat.anio=undefined;" ng-model="cat.id_prov" class="form-control">
-					<option ng-repeat="proveedor in proveedores" value="{{prov.id_prov}}">{{proveedor.id_prov}}</option>
-				</select>
-			</div>
-		</div>
-		<div class="row">
-			<button ng-show="catNuevo" class="btn btn-success col-xs-10 col-xs-offset-1">Guardar</button>
 			<div class="col col-xs-6 form-group">
 				<label for="cve_ent">
 					Proveedor:
@@ -82,7 +59,6 @@
 		<br>
 	<span isolate-click>
 		<div class="row">
-
 			<button class="btn btn-warning col-xs-10 col-xs-offset-1">Actualizar registro</button>
 		</div>
 		<br/>
@@ -90,7 +66,7 @@
 			<button ng-click="cancelar($event);" class="col col-xs-10 col-xs-offset-1 btn btn-danger">Cancelar</button>
 		</div>
 		<br/>
-		<div ng-show="!catNuevo" class="row">
+		<div ng-show="!empNuevo" class="row">
 			<button ng-click="eliminar($event);" class="col col-xs-10 col-xs-offset-1 btn">Eliminar</button>
 		</div>
 
