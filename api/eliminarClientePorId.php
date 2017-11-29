@@ -1,6 +1,6 @@
 <?php 
 	require_once 'config.php';
-	$sql = "DELETE FROM cliente WHERE RFC = $request->rfc";
+	$sql = "DELETE FROM cliente WHERE RFC = '$request->rfc'";
 	$result = $con->query($sql);
 	if($result)
 		echoMessage("Proveedor eliminado satisfactoriamente");

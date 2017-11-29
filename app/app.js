@@ -10,6 +10,10 @@ app.config(function($routeProvider) {
         templateUrl: 'app/controllers/proveedores/proveedores.html',
         controller: 'proveedoresController'
     })
+    .when('/catalogos/:id', {
+        templateUrl: 'app/controllers/catalogos/catalogo.html',
+        controller: 'catalogoController'
+    })
     .when('/catalogos', {
         templateUrl: 'app/controllers/catalogos/catalogo.html',
         controller: 'catalogoController'
@@ -17,6 +21,10 @@ app.config(function($routeProvider) {
     .when('/clientes', {
         templateUrl: 'app/controllers/clientes/clientes.html',
         controller: 'clientesController'
+    })
+    .when('/productos', {
+        templateUrl: 'app/controllers/productos/productos.html',
+        controller: 'productosController'
     })
     .otherwise({
         templateUrl: 'app/controllers/dashboard/dashboard.html',
@@ -95,7 +103,7 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
 		})
     }
 
-    $scope.cargarCatalogoPorId = function(id_prov) {
+    $scope.cargarCatalogoPorIdProv = function(id_prov) {
 		$http({
 			url: 'api/obtenerCatalogoPorIdProveedor.php',
             method: 'POST',
@@ -114,12 +122,13 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
         {itemName: "Clientes", logo: "pe-7s-user", clase: "menuItem", referencia: "#!/clientes"},
         {itemName: "Ventas", logo: "pe-7s-note2", clase: "menuItem", referencia:"#"},
         {itemName: "Inventario", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#"},
-        {itemName: "Catálogos", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#!/catalogos" }
+        {itemName: "Catálogos", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#!/catalogos" },
+        {itemName: "Productos", logo: "pe-7s-tools", clase: "menuItem", referencia: "#!/productos" }
     ]
 	$scope.menuItemsEmpleado=[
         {itemName: "Dashboard", logo: "pe-7s-graph", clase: "menuItem active", referencia: "#"}, 
         {itemName: "Ventas", logo: "pe-7s-note2", clase: "menuItem", referencia:"#"},
-        {itemName: "Catálogos", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#" }
+        {itemName: "Catálogos", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#!/catalogos" }
     ]
      $scope.menuItemsAlmacenista=[
         {itemName: "Dashboard", logo: "pe-7s-graph", clase: "menuItem active", referencia: "#"}, 

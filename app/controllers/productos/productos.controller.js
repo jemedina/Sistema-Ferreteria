@@ -1,4 +1,4 @@
-var catalogoController = function($scope, $http, $routeParams) {
+var productosController = function($scope, $http, $routeParams) {
 
 	$scope.editando = false;
 	
@@ -78,7 +78,7 @@ var catalogoController = function($scope, $http, $routeParams) {
 	{ 	
 		if($event)
 			$event.preventDefault();
-		window.location.hash="#!/catalogos";
+		window.location.hash="#!/productos";
 		
 		$scope.cat.id_prov = undefined;
 		$scope.catNuevo=false;
@@ -126,5 +126,5 @@ var catalogoController = function($scope, $http, $routeParams) {
 	
 }
 
-empleadosController.$inject = ['$scope', '$http', '$routeParams'];
-app.controller('catalogoController', catalogoController);
+productosController.$inject = ['$scope', '$http', '$routeParams'];
+app.controller('productosController', productosController);

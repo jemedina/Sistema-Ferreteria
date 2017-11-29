@@ -6,6 +6,12 @@ var empleadosController = function($scope, $http) {
 
 	$scope.empNuevo = false;
 
+	$scope.puestos = [
+		"ADMINISTRADOR",
+		"VENDEDOR",
+		"ALMACENISTA"
+	];
+	
 	$("#buscarEmpInput").autocomplete({
 		source: function (request, response)
 	    {

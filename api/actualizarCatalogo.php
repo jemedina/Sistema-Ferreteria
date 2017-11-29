@@ -3,9 +3,8 @@
 
 	//Checar que recibimos los parametros obligatorios
 	if(
-        !property_exists($request,'no_catalogo') ||
-		!property_exists($request,'nombre') ||
-		!property_exists($request,'anio')
+        !property_exists($request,'id') ||
+		!property_exists($request,'nombre')
 	) {
         echoError("No se pudo guardar el catalogo: Parametros incompletos"); 
 	}
@@ -16,7 +15,7 @@
 		UPDATE 
 		catalogo SET 
 		nombre='$request->nombre' WHERE
-		no_catalogo = '$request->no_catalogo' and anio= '$request->anio'";
+		concat(no_catalogo,anio) = '$request->id';";
 
 	$result = $con->query($sql);
 
