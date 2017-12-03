@@ -114,6 +114,18 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
 			swal(err.data.msg, { icon: "error" } );			
 		})
     }
+
+    $scope.cargarCatalogoAniosPorNoCat = function(no_cat) {
+        var anios = [];
+        if($scope.catalogoslista != undefined)
+            $scope.catalogoslista.forEach( (cat) => {
+                if(cat.no_catalogo == no_cat) {
+                    anios.push(cat.anio);
+                }
+            });
+        if(anios.length > 0)
+            $scope.catalogosanioslista = anios;
+    }
     
      $scope.menuItems=[
         {itemName: "Dashboard", logo: "pe-7s-graph", clase: "menuItem active", referencia: "#"},

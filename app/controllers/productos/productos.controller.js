@@ -1,129 +1,94 @@
 var productosController = function($scope, $http, $routeParams) {
+	$scope.modo_busqueda = true;
+	$scope.modo_edicion = false;
+	$scope.modo_agregacion = false;   
+	$scope.setModoBusqueda = function() {
+		$scope.modo_busqueda = true;
+		$scope.modo_edicion = false;
+		$scope.modo_agregacion = false;   	
+	}	
 
-	$scope.editando = false;
-	
+	$scope.setModoEdicion = function() {
+		$scope.modo_busqueda = false;
+		$scope.modo_edicion = true;
+		$scope.modo_agregacion = false;   	
+	}	
 
-	$scope.cargarCatalogoPorId = function(id) {
-		$http({
-			url: 'api/obtenerCatalogoPorId.php',
-            method: 'POST',
-            data: {id: id}
-		}).then(function(resp) {
-            $scope.cat = resp.data[0];
-            $scope.cat.anio = parseInt($scope.cat.anio);
-            $scope.cat.no_catalogo = parseInt($scope.cat.no_catalogo);
-            $scope.selectedCatId = $scope.cat.id;
-		},function(err) {
-			swal(err.data.msg, { icon: "error" } );			
-		})
-    }
-
-
-	$scope.agregar = function () {
-		//$scope.cat.anio_timestamp = $scope.cat.anio.getYear();
-
-		var endpointUrl = "api/guardarCatalogo.php";
+	$scope.setModoAgregacion = function() {
+		$scope.modo_busqueda = false;
+		$scope.modo_edicion = false;
+		$scope.modo_agregacion = true;   	
 		
-		$http({
-			headers: { 'Content-Transfer-Encoding': 'utf-8' },
-			url: endpointUrl,
-			method: 'POST',
-			data: $scope.cat
-		}).then(function ok(res) {
-			swal(res.data.msg, { icon: "success" } );
-			$scope.cat = {};
-			
-		}, function err(error) {
-			swal(error.data.msg, { icon: "error" } );
-		});
-	}
+		$scope.cargarProveedores();
+		//TODO: Descomentar la siguiente linea
+		//$scope.prod = {};
 
+		//TODO: Borrar la siguiente linea
+		$scope.mockProducto();
+	}	
 
-	$scope.actualizar = function () {
-		//$scope.cat.anio_timestamp = $scope.cat.anio.getYear();
-
-		var endpointUrl = "api/actualizarCatalogo.php";
-		
-		$http({
-			headers: { 'Content-Transfer-Encoding': 'utf-8' },
-			url: endpointUrl,
-			method: 'POST',
-			data: $scope.cat
-		}).then(function ok(res) {
-			swal(res.data.msg, { icon: "success" } );
-			
-		}, function err(error) {
-			swal(error.data.msg, { icon: "error" } );
-		});
-	}
-
-	$scope.ensubmit = function() {
-		if($scope.editando) {
-			$scope.actualizar();
-		}
-		else {
-			$scope.agregar();
-		}
-	}
-
-
-	$scope.alta = function() {
-		$scope.catNuevo=true;
-		$scope.selectedUserId = undefined;
-		$scope.emp = {};
-	} 
-    
-
-	$scope.cancelar = function($event) 
-	{ 	
+	$scope.cancelar = function($event) {
 		if($event)
 			$event.preventDefault();
-		window.location.hash="#!/productos";
 		
-		$scope.cat.id_prov = undefined;
-		$scope.catNuevo=false;
-		$scope.editando = false;
-	} 
-	
-
-	$scope.eliminar = function($event) {
-		$event.preventDefault();
-		swal({
-			title: 'Seguro que quieres borrar el registro?',
-			text: 'Si borrar el catalogo toda su informacion se perderá',
-			icon:'warning',
-			buttons: ["Mmm... Mejor no!", true],}).then(
-				function(result) {
-					if(result) {
-						$http({
-							headers: { 'Content-Transfer-Encoding': 'utf-8' },
-							url: 'api/eliminarCatalogo.php',
-							method: 'POST',
-							data: {id:$scope.cat.id}
-						}).then(function ok(res) {
-							swal("Registro eliminado!",
-								"El registro del catlogo fue eliminado.",
-								"success");
-							$scope.cancelar();
-						}, function err(error) {
-							swal(error.data.msg, { icon: "error" } );
-						});
-					}
-			});
-			
+		$scope.prod = {};
+		$scope.setModoBusqueda();
+	}
+	//TODO: Borrar esto despues del testing
+	$scope.mockProducto = function () {
+		$scope.prod = {
+			codigo:Math.floor((Math.random()*1000) + 10000),
+			marca:"Trupper (test)",
+			nombre:"Desarmador trupper (test)",
+			unidades_medicion:"n/a (test)",
+			nombre_categoria:"Herramientas (test)",
+			no_serie:Math.floor((Math.random()*1000000) + 1000000),
+			descripcion:`Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo`,
+			precio_venta: 35.4,
+			no_caja:1,
+			no_seccion:2,
+			no_estante:3,
+			no_repisa:2,
+			existencia_bodega:20,
+			existencia_caja:2,
+			existencia_repisa:2,
+			limite_inferior:10,
+			limite_superior:40
+		}
+	}
+	$scope.mockResultadosBusqueda = function () {
+		$scope.busqueda = {
+			resultados: [{
+				codigo:Math.floor((Math.random()*1000) + 10000),
+				nombre:"Desarmador trupper (test)",
+				descripcion:`Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo`,
+				precio_venta: 35.4,
+				no_catalogo:20230,
+				anio:2017,
+				no_caja:1,
+				no_seccion:2,
+				no_estante:3,
+				no_repisa:2,
+				existencia: 3,
+			},
+			{
+				codigo:Math.floor((Math.random()*1000) + 10000),
+				nombre:"Prueba trupper (test)",
+				descripcion:`Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo`,
+				precio_venta:200,
+				no_catalogo:21231,
+				anio:2017,
+				no_caja:2,
+				no_seccion:1,
+				no_estante:4,
+				no_repisa:2,
+				existencia: 3,
+			}
+			]
+		}
 	}
 
-	$scope.cargarProveedores();
-	if(!$routeParams || !$routeParams.id) {
-		$scope.cat = {};
-		
-		$scope.catNuevo = false;
-	} else {
-		$scope.catNuevo = false;
-		$scope.editando = true;
-		$scope.cargarCatalogoPorId($routeParams.id);
-	}
-	
+	$scope.mockResultadosBusqueda();
 }
 
 productosController.$inject = ['$scope', '$http', '$routeParams'];

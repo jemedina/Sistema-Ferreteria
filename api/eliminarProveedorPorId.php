@@ -5,5 +5,5 @@
 	if($result)
 		echoMessage("Proveedor eliminado satisfactoriamente");
 	else
-		echoError("Se produjo un error al intentar eliminar");
+		echoError("Se produjo un error al intentar eliminar ".$sql);
 ?>
