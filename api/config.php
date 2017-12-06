@@ -28,11 +28,20 @@
 	function echoMysqlResults($result) {
 		$rows = array();
 		while($r = mysqli_fetch_assoc($result)) {
+
+		    $rows[] = $r;
+		}
+		echo json_encode($rows, JSON_NUMERIC_CHECK);
+	}
+
+	function echoMysqlResultsNoMandatory($result) {
+		$rows = array();
+		while($r = mysqli_fetch_assoc($result)) {
+
 		    $rows[] = $r;
 		}
 		echo json_encode($rows);
 	}
-
 	$config = array();
 	//Configuracion servidor local
 	$config["local"] = array(); 

@@ -3,7 +3,7 @@
 		<label for="nombre">
 			Buscar Producto:
 		</label>
-		<input placeholder="Ingrese nombre del producto a buscar" class="form-control" type="text" name="">
+		<input placeholder="Ingrese nombre, codigo o marca del producto" class="form-control" type="text" ng-model="busqueda.keyword" ng-change="onkeywordchanged()">
 	</div>
 
 	<div class="row">
@@ -11,20 +11,20 @@
 	</div>
 </div>
 <div ng-show="modo_agregacion || modo_edicion">
-	<form ng-submit="" name="">
+	<form ng-submit="onsumbit()" name="">
 		<div class="row">
 			<div class="form-group col col-xs-6">
 				<label>
 					Código:
 				</label>
-				<input ng-model="prod.codigo" class="form-control" type="text" />
+				<input ng-readonly="modo_edicion" name="codigo" ng-model="prod.codigo" required class="form-control" type="text" />
 			</div>
 
 			<div class="form-group col col-xs-6">
 				<label>
 					Marca:
 				</label>
-				<input ng-model="prod.marca" class="form-control" type="text" />
+				<input name="marca" ng-model="prod.marca" required class="form-control" type="text" />
 			</div>
 		</div>
 
@@ -32,48 +32,48 @@
 			<label>
 				Nombre:
 			</label>
-			<input ng-model="prod.nombre" class="form-control" type="text" />
+			<input name="nombre" ng-model="prod.nombre" required class="form-control" type="text" />
 		</div>
 		<div class="row">
 			<div class="form-group col col-xs-4">
 				<label>
 					Unidades de medicion:
 				</label>
-				<input ng-model="prod.unidades_medicion" class="form-control" type="text" />
+				<input required name="unidades_medicion" ng-model="prod.unidades_medicion" class="form-control" type="text" />
 			</div>
 
 			<div class="form-group col col-xs-4">
 				<label>
 					Nombre Categoría:
 				</label>
-				<input ng-model="prod.nombre_categoria" class="form-control" type="text" />
+				<input required name="nombre_categoria" ng-model="prod.nombre_categoria" class="form-control" type="text" />
 			</div>
 
 			<div class="form-group col col-xs-4">
 				<label>
 					Número de serie:
 				</label>
-				<input ng-model="prod.no_serie" class="form-control" type="text" />
+				<input name="no_serie" ng-model="prod.no_serie" class="form-control" type="text" />
 			</div>
 		</div>
 		<div class="form-group">
 			<label>
 				Descripción:
 			</label>
-			<textarea ng-model="prod.descripcion" class="form-control"></textarea>
+			<textarea required name="descripcion" ng-model="prod.descripcion" class="form-control"></textarea>
 		</div>
 		<div class="form-group">
 			<label>
 				Precio de venta:
 			</label>
-			<input ng-model="prod.precio_venta" class="form-control" type="text" />
+			<input required name="precio_venta" ng-model="prod.precio_venta" class="form-control" type="text" />
 		</div>
 
 		<div class="form-group">
 			<label for="proveedor">
 				Proveedor:
 			</label>
-			<select ng-change="cargarCatalogoPorIdProv(id_prov)" ng-model="id_prov" class="form-control" ng-show="proveedoreslista && proveedoreslista.length > 0">
+			<select required ng-change="cargarCatalogoPorIdProv(id_prov)" ng-model="id_prov" class="form-control" ng-show="proveedoreslista && proveedoreslista.length > 0">
 				<option value="" selected="selected" disabled="disabled">Seleccione un proveedor</option>						
 				<option ng-repeat="proveedor in proveedoreslista" value="{{proveedor.id_prov}}">{{proveedor.nombreCompleto}}</option>
 			</select>
@@ -87,7 +87,7 @@
 			<label>
 				Catálogo:
 			</label>
-			<select ng-show="catalogoslista && catalogoslista.length > 0" ng-change="cargarCatalogoAniosPorNoCat(prod.no_catalogo)" ng-model="prod.no_catalogo" class="form-control">
+			<select required ng-show="catalogoslista && catalogoslista.length > 0" ng-change="cargarCatalogoAniosPorNoCat(prod.no_catalogo)" name="no_catalogo" ng-model="prod.no_catalogo" class="form-control">
 				<option value="" selected="selected" disabled="disabled">Seleccione un catalogo</option>						
 				<option ng-repeat="cat in catalogoslista" value="{{cat.no_catalogo}}">{{cat.nombre}}</option>
 			</select>
@@ -97,12 +97,12 @@
 				</button>
 			</a>
 		</div>
-		<div class="form-group" ng-show="catalogosanioslista">
+		<div class="form-group" ng-show="catalogosanioslista || modo_edicion">
 			<label>
 				Año del catalogo:
 			</label>
-			<select ng-model="prod.anio" class="form-control">
-				<option value="" selected="selected" disabled="disabled">Seleccione un catalogo</option>						
+			<select required name="anio" ng-model="prod.anio" class="form-control">
+				<option value="" required selected="selected" disabled="disabled">Seleccione un catalogo</option>						
 				<option ng-repeat="anio in catalogosanioslista" value="{{anio}}">{{anio}}</option>
 			</select>
 		</div>
@@ -111,7 +111,7 @@
 			<label>
 				Número de caja:
 			</label>
-			<input ng-model="prod.no_caja" class="form-control" type="number" />
+			<input name="no_caja" ng-model="prod.no_caja" class="form-control" type="number" />
 		</div>
 	
 		<div class="row">
@@ -119,28 +119,28 @@
 				<label>
 					Número de sección:
 				</label>
-				<input ng-model="prod.no_seccion" class="form-control" type="number" />
+				<input name="no_seccion" ng-model="prod.no_seccion" class="form-control" type="number" />
 			</div>
 
 			<div class="form-group col col-sm-3 col-xs-6">
 				<label>
 					Número de estante:
 				</label>
-				<input ng-model="prod.no_estante" class="form-control" type="number" />
+				<input name="no_estante" ng-model="prod.no_estante" class="form-control" type="number" />
 			</div>
 
 			<div class="form-group col col-sm-3 col-xs-6">
 				<label>
 					Número de repisa:
 				</label>
-				<input ng-model="prod.no_repisa" class="form-control" type="number" />
+				<input name="no_repisa" ng-model="prod.no_repisa" class="form-control" type="number" />
 			</div>
 
 			<div class="form-group col col-sm-3 col-xs-6">
 				<label>
 					Existencia en bodega:
 				</label>
-				<input ng-model="prod.existencia_bodega" class="form-control" type="number" />
+				<input required name="existencia_bodega" ng-model="prod.existencia_bodega" class="form-control" type="number" />
 			</div>
 		</div>
 		<div class="row">
@@ -148,28 +148,28 @@
 				<label>
 					Existencia en caja:
 				</label>
-				<input ng-model="prod.existencia_caja" class="form-control" type="number" />
+				<input name="existencia_caja" ng-model="prod.existencia_caja" class="form-control" type="number" />
 			</div>
 
 			<div class="form-group col col-sm-3 col-xs-6">
 				<label>
 					Existencia en repisa:
 				</label>
-				<input ng-model="prod.existencia_repisa" class="form-control" type="number" />
+				<input name="existencia_repisa" ng-model="prod.existencia_repisa" class="form-control" type="number" />
 			</div>
 
 			<div class="form-group col col-sm-3 col-xs-6">
 				<label>
 					Límite inferior:
 				</label>
-				<input ng-model="prod.limite_inferior" class="form-control" type="number" />
+				<input required name="limite_inferior" ng-model="prod.limite_inferior" class="form-control" type="number" />
 			</div>
 
 			<div class="form-group col col-sm-3 col-xs-6">
 				<label>
 					Límite superior:
 				</label>
-				<input ng-model="prod.limite_superior" class="form-control" type="number" />
+				<input required name="limite_superior" ng-model="prod.limite_superior" class="form-control" type="number" />
 			</div>
 		</div>
 	<span isolate-click>
@@ -193,10 +193,10 @@
 	</form>
 </div>
 <br>
-<div ng-show="modo_busqueda && false" class="row text-center">
+<div ng-show="modo_busqueda && busqueda.keyword && busqueda.keyword!='' && busqueda.cargando" class="row text-center">
 	<img src="assets/img/loadinggif.gif" class="fluid-img">
 </div>
-<div ng-show="modo_busqueda && false">
+<div ng-show="modo_busqueda && busqueda.keyword && busqueda.keyword!='' && !busqueda.cargando && busqueda.resultados.length > 0">
 	<h4>Resultados:</h4>
 	<table class="table table-hover table-striped">
 		<thead class="thead-default">
@@ -212,24 +212,24 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="p in busqueda.resultados" title="{{p.descripcion}}">
+			<tr ng-repeat="p in busqueda.resultados track by $index" title="{{p.descripcion}}">
 				<th scope="row" class="text-center">{{p.codigo}}</th>
 				<td class="text-center">{{p.nombre}}</td>
 				<td class="text-center">{{p.no_seccion}}</td>
 				<td class="text-center">{{p.no_estante}}</td>
 				<td class="text-center">{{p.no_repisa}}</td>
-				<td class="text-center">{{p.existencia}}</td>
+				<td class="text-center">{{p.existencia_total}}</td>
 				<td class="text-center">{{p.precio_venta | currency}}</td>
-				<td class="text-center"><a href=""><button class="btn btn-info form-control">Ver detalles</button></a></td>
+				<td class="text-center"><a href=""><button class="btn btn-info form-control" ng-click="detalles($index)">Ver detalles</button></a></td>
 			</tr>
 		</tbody>
 	</table>
 </div>
-<div ng-show="modo_busqueda && false">
+<div ng-show="modo_busqueda && busqueda.keyword && busqueda.keyword!='' && !busqueda.cargando && busqueda.resultados.length == 0">
 	<br>
 	<div class="panel panel-danger text-center">
 		<br>
-		<div class="panel-body">No se encontraron resultados con tus terminos de búsqueda</div>
+		<div class="panel-body">No se encontraron resultados con el terminos de búsqueda: <strong ng-bind="busqueda.keyword"></strong></div>
 		<br>
 	</div>
 </div>

@@ -32,7 +32,7 @@ app.config(function($routeProvider) {
     });
 });
 
-app.controller('mainController', ['$scope','$http', function($scope, $http) {
+app.controller('mainController', ['$scope','$http','$q', function($scope, $http, $q) {
     $scope.nombreApp = "Sistema Ferretería";
 
     $scope.cargarEstados = function() {
@@ -64,9 +64,12 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
     $scope.errorInminente = function(msg) {
         msg = msg || "Se produjo un error inminente! Estamos trabajando para solucionarlo...";
         swal(msg, { icon: "error" } ).then(function() {
-        	window.location.pathname="Sistema-Ferreteria/login.php";
+            window.location.pathname="Sistema-Ferreteria/login.php";
         });
         
+    } 
+    $scope.commonError = function() {
+        swal("Se produjo un error desconocido! Estamos trabajando para solucionarlo...", { icon: "error" } );
     } 
     
    $scope.addUltimaVisitaFecha = function(fech,id_prov) {
@@ -90,40 +93,51 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
 		});
 	}   
     
-    $scope.cargarProveedores = function() {
+    $scope.cargarProveedores = function(callback) {
 		$scope.proveedoreslista = [];
 		$http({
 			url: 'api/obtenerNombresProveedores.php',
 			method: 'get'
 		}).then(function(resp) {
             $scope.proveedoreslista = resp.data;
-            console.log($scope.proveedoreslista );
+            if(callback && typeof callback == 'function') {
+                callback();
+            }
 		},function(err) {
 			swal(err.data.msg, { icon: "error" } );			
 		})
     }
 
-    $scope.cargarCatalogoPorIdProv = function(id_prov) {
-		$http({
-			url: 'api/obtenerCatalogoPorIdProveedor.php',
-            method: 'POST',
-            data: {id_prov: id_prov}
-		}).then(function(resp) {
-            $scope.catalogoslista = resp.data;
-		},function(err) {
-			swal(err.data.msg, { icon: "error" } );			
-		})
+    $scope.cargarCatalogoPorIdProv = function(id_prov, callback) {
+        if(id_prov && id_prov.toString() != '' )
+    		$http({
+    			url: 'api/obtenerCatalogoPorIdProveedor.php',
+                method: 'POST',
+                data: {id_prov: id_prov}
+    		}).then(function(resp) {
+                if(resp && resp.data){
+                    $scope.catalogoslista = resp.data;
+                    if(callback && typeof callback == 'function'){
+                        callback();
+                    }
+                }
+    		},function(err) {
+    			swal(err.data.msg, { icon: "error" } );			
+    		})
     }
 
     $scope.cargarCatalogoAniosPorNoCat = function(no_cat) {
-        var anios = [];
-        if($scope.catalogoslista != undefined)
+        if($scope.catalogoslista != undefined){
+            var anios = [];
+        
             $scope.catalogoslista.forEach( (cat) => {
-                if(cat.no_catalogo == no_cat) {
+                if(cat.no_catalogo.toString() == no_cat.toString()) {
                     anios.push(cat.anio);
                 }
             });
-        if(anios.length > 0)
+        } 
+
+        if(anios && anios.length > 0)
             $scope.catalogosanioslista = anios;
     }
     

@@ -46,6 +46,6 @@
 	if($result){ 
 		echoMessage("Insercion Correcta ");
 	} else {
-		echoError("Error al guardar el registro ");
+		echoError("Error al guardar el registro ".$sql);
 	}
 ?>
