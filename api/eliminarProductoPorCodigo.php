@@ -1,9 +1,9 @@
 <?php 
 	require_once 'config.php';
-	$sql = "DELETE FROM cliente WHERE RFC = '$request->rfc'";
+	$sql = "DELETE FROM producto WHERE codigo = '$request->id'";
 	$result = $con->query($sql);
 	if($result)
-		echoMessage("Proveedor eliminado satisfactoriamente");
+		echoMessage("Producto eliminado satisfactoriamente");
 	else
 		echoError("Se produjo un error al intentar eliminar");
 ?>

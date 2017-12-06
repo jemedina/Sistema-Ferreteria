@@ -1,4 +1,4 @@
-<div ng-show="catNuevo == false">
+<div ng-show="catNuevo == false && !editando">
 	<div class="form-group">
 			<label for="nombre">
 				Buscar Cátalogo:
@@ -9,7 +9,7 @@
 				<label for="proveedor">
 					Proveedor:
 				</label>
-				<select ng-change="cargarCatalogoPorId(cat.id_prov)" ng-model="cat.id_prov" class="form-control">
+				<select ng-change="cargarCatalogoPorIdProv(cat.id_prov)" ng-model="cat.id_prov" class="form-control">
 					<option value="" selected="selected" disabled="disabled">Seleccione un proveedor</option>						
 					<option ng-repeat="proveedor in proveedoreslista" value="{{proveedor.id_prov}}">{{proveedor.nombreCompleto}}</option>
 				</select>
@@ -19,16 +19,16 @@
 		</div>
 </div>
 <div class="row">
-	<button ng-click="alta()" ng-show="catNuevo == false" class="col col-xs-10 col-xs-offset-1 btn btn-primary">Dar de alta un nuevo catalogo</button>
+	<button ng-click="alta()" ng-show="catNuevo == false && !editando" class="col col-xs-10 col-xs-offset-1 btn btn-primary">Dar de alta un nuevo catalogo</button>
 </div>
-<div ng-show="selectedUserId != undefined || catNuevo">
-	<form ng-submit="agregar()" name="catForm">
+<div ng-show="selectedCatId != undefined || catNuevo">
+	<form ng-submit="ensubmit()" name="catForm">
 
 		<div class="form-group">
 			<label>
 				Número de Catálogo
 			</label>
-			<input ng-model="cat.no_catalogo" class="form-control" type="number"/>
+			<input ng-model="cat.no_catalogo" class="form-control" type="number" ng-readonly="editando"/>
 		</div>
 		<div class="form-group">
 			<label for="nombre">
@@ -42,31 +42,34 @@
 				<label for="cve_ent">
 					Proveedor:
 				</label>
-				<select ng-model="cat.id_prov" class="form-control">
+				<select ng-disabled="editando" ng-model="cat.id_prov" class="form-control">
 					<option ng-repeat="proveedor in proveedoreslista" value="{{proveedor.id_prov}}">{{proveedor.nombreCompleto}}</option>
 				</select>
 			</div>
 			<div class="col col-xs-6 form-group">
-				<label for="cve_ent">
+				<label for="cve_ent" >
 					Año:
 				</label>
-				<input type="number" min="2010" max="2100" class="form-control" ng-model="cat.anio">
+				<input type="number" min="2010" max="2100" class="form-control" ng-model="cat.anio" ng-readonly="editando">
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" ng-show="!editando" >
 			<button class="btn btn-success col-xs-10 col-xs-offset-1">Guardar</button>
 		</div>
 		<br>
 	<span isolate-click>
-		<div class="row">
+		<div class="row" ng-show="editando">
 			<button class="btn btn-warning col-xs-10 col-xs-offset-1">Actualizar registro</button>
-		</div>
-		<br/>
+		
+		
+	</div>
+		<br ng-show="editando"/>
 		<div class="row">
+
 			<button ng-click="cancelar($event);" class="col col-xs-10 col-xs-offset-1 btn btn-danger">Cancelar</button>
 		</div>
 		<br/>
-		<div ng-show="!empNuevo" class="row">
+		<div ng-show="editando" class="row">
 			<button ng-click="eliminar($event);" class="col col-xs-10 col-xs-offset-1 btn">Eliminar</button>
 		</div>
 
@@ -89,12 +92,12 @@
 			<th scope="row" class="text-center">{{catalogo.id}}</th>
 			<td class="text-center">{{catalogo.nombre}}</td>
 			<td class="text-center">{{catalogo.anio}}</td>
-			<td class="text-center"><button class="btn btn-warning form-control">Editar</button></td>
+			<td class="text-center"><a href="#!/catalogos/{{catalogo.id}}"><button class="btn btn-warning form-control">Editar</button></a></td>
 		</tr>
 	</tbody>
 </table>
 
-<div ng-show="cat.id_prov != undefined && catalogoslista.length == 0 && !catNuevo">
+<div ng-show="cat.id_prov != undefined && catalogoslista.length == 0 && !catNuevo && !editando">
 	<br>
 	<div class="panel panel-danger text-center">
 		<br>

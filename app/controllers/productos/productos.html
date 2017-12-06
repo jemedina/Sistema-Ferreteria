@@ -1,0 +1,235 @@
+<div ng-show="modo_busqueda">
+	<div class="form-group">
+		<label for="nombre">
+			Buscar Producto:
+		</label>
+		<input placeholder="Ingrese nombre, codigo o marca del producto" class="form-control" type="text" ng-model="busqueda.keyword" ng-change="onkeywordchanged()">
+	</div>
+
+	<div class="row">
+		<button ng-click="setModoAgregacion()" ng-show="true" class="col col-xs-10 col-xs-offset-1 btn btn-primary">Dar de alta un nuevo producto</button>
+	</div>
+</div>
+<div ng-show="modo_agregacion || modo_edicion">
+	<form ng-submit="onsumbit()" name="">
+		<div class="row">
+			<div class="form-group col col-xs-6">
+				<label>
+					Código:
+				</label>
+				<input ng-readonly="modo_edicion" name="codigo" ng-model="prod.codigo" required class="form-control" type="text" />
+			</div>
+
+			<div class="form-group col col-xs-6">
+				<label>
+					Marca:
+				</label>
+				<input name="marca" ng-model="prod.marca" required class="form-control" type="text" />
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label>
+				Nombre:
+			</label>
+			<input name="nombre" ng-model="prod.nombre" required class="form-control" type="text" />
+		</div>
+		<div class="row">
+			<div class="form-group col col-xs-4">
+				<label>
+					Unidades de medicion:
+				</label>
+				<input required name="unidades_medicion" ng-model="prod.unidades_medicion" class="form-control" type="text" />
+			</div>
+
+			<div class="form-group col col-xs-4">
+				<label>
+					Nombre Categoría:
+				</label>
+				<input required name="nombre_categoria" ng-model="prod.nombre_categoria" class="form-control" type="text" />
+			</div>
+
+			<div class="form-group col col-xs-4">
+				<label>
+					Número de serie:
+				</label>
+				<input name="no_serie" ng-model="prod.no_serie" class="form-control" type="text" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label>
+				Descripción:
+			</label>
+			<textarea required name="descripcion" ng-model="prod.descripcion" class="form-control"></textarea>
+		</div>
+		<div class="form-group">
+			<label>
+				Precio de venta:
+			</label>
+			<input required name="precio_venta" ng-model="prod.precio_venta" class="form-control" type="text" />
+		</div>
+
+		<div class="form-group">
+			<label for="proveedor">
+				Proveedor:
+			</label>
+			<select required ng-change="cargarCatalogoPorIdProv(id_prov)" ng-model="id_prov" class="form-control" ng-show="proveedoreslista && proveedoreslista.length > 0">
+				<option value="" selected="selected" disabled="disabled">Seleccione un proveedor</option>						
+				<option ng-repeat="proveedor in proveedoreslista" value="{{proveedor.id_prov}}">{{proveedor.nombreCompleto}}</option>
+			</select>
+			<a href="#!/proveedores">
+				<button class="form-control btn btn-danger" ng-show="!proveedoreslista || proveedoreslista.length <= 0">No hay proveedores (Click aquí para ir al modulo de proveedores)
+				</button>
+			</a>
+		</div>
+
+		<div class="form-group" ng-show="id_prov">
+			<label>
+				Catálogo:
+			</label>
+			<select required ng-show="catalogoslista && catalogoslista.length > 0" ng-change="cargarCatalogoAniosPorNoCat(prod.no_catalogo)" name="no_catalogo" ng-model="prod.no_catalogo" class="form-control">
+				<option value="" selected="selected" disabled="disabled">Seleccione un catalogo</option>						
+				<option ng-repeat="cat in catalogoslista" value="{{cat.no_catalogo}}">{{cat.nombre}}</option>
+			</select>
+
+			<a href="#!/catalogos">
+				<button class="form-control btn btn-danger" ng-show="!catalogoslista || catalogoslista.length <= 0">Este proveedor no tiene catalogos (Click aquí para ir a 'Catalogos')
+				</button>
+			</a>
+		</div>
+		<div class="form-group" ng-show="catalogosanioslista || modo_edicion">
+			<label>
+				Año del catalogo:
+			</label>
+			<select required name="anio" ng-model="prod.anio" class="form-control">
+				<option value="" required selected="selected" disabled="disabled">Seleccione un catalogo</option>						
+				<option ng-repeat="anio in catalogosanioslista" value="{{anio}}">{{anio}}</option>
+			</select>
+		</div>
+
+		<div class="form-group">
+			<label>
+				Número de caja:
+			</label>
+			<input name="no_caja" ng-model="prod.no_caja" class="form-control" type="number" />
+		</div>
+	
+		<div class="row">
+			<div class="form-group col col-sm-3 col-xs-6">
+				<label>
+					Número de sección:
+				</label>
+				<input name="no_seccion" ng-model="prod.no_seccion" class="form-control" type="number" />
+			</div>
+
+			<div class="form-group col col-sm-3 col-xs-6">
+				<label>
+					Número de estante:
+				</label>
+				<input name="no_estante" ng-model="prod.no_estante" class="form-control" type="number" />
+			</div>
+
+			<div class="form-group col col-sm-3 col-xs-6">
+				<label>
+					Número de repisa:
+				</label>
+				<input name="no_repisa" ng-model="prod.no_repisa" class="form-control" type="number" />
+			</div>
+
+			<div class="form-group col col-sm-3 col-xs-6">
+				<label>
+					Existencia en bodega:
+				</label>
+				<input required name="existencia_bodega" ng-model="prod.existencia_bodega" class="form-control" type="number" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col col-sm-3 col-xs-6">
+				<label>
+					Existencia en caja:
+				</label>
+				<input name="existencia_caja" ng-model="prod.existencia_caja" class="form-control" type="number" />
+			</div>
+
+			<div class="form-group col col-sm-3 col-xs-6">
+				<label>
+					Existencia en repisa:
+				</label>
+				<input name="existencia_repisa" ng-model="prod.existencia_repisa" class="form-control" type="number" />
+			</div>
+
+			<div class="form-group col col-sm-3 col-xs-6">
+				<label>
+					Límite inferior:
+				</label>
+				<input required name="limite_inferior" ng-model="prod.limite_inferior" class="form-control" type="number" />
+			</div>
+
+			<div class="form-group col col-sm-3 col-xs-6">
+				<label>
+					Límite superior:
+				</label>
+				<input required name="limite_superior" ng-model="prod.limite_superior" class="form-control" type="number" />
+			</div>
+		</div>
+	<span isolate-click>
+		<div class="row" ng-show="modo_agregacion">
+			<button class="btn btn-success col-xs-10 col-xs-offset-1">Guardar</button>
+			<br>
+		</div>
+		<div class="row" ng-show="modo_edicion">
+			<button class="btn btn-warning col-xs-10 col-xs-offset-1">Actualizar registro</button>
+		</div>
+		<br ng-show="true"/>
+		<div class="row">
+
+			<button ng-click="cancelar($event);" class="col col-xs-10 col-xs-offset-1 btn btn-danger">Cancelar</button>
+		</div>
+		<br/>
+		<div ng-show="modo_edicion" class="row">
+			<button ng-click="eliminar($event);" class="col col-xs-10 col-xs-offset-1 btn">Eliminar</button>
+		</div>
+	</span>
+	</form>
+</div>
+<br>
+<div ng-show="modo_busqueda && busqueda.keyword && busqueda.keyword!='' && busqueda.cargando" class="row text-center">
+	<img src="assets/img/loadinggif.gif" class="fluid-img">
+</div>
+<div ng-show="modo_busqueda && busqueda.keyword && busqueda.keyword!='' && !busqueda.cargando && busqueda.resultados.length > 0">
+	<h4>Resultados:</h4>
+	<table class="table table-hover table-striped">
+		<thead class="thead-default">
+			<tr>
+			<th class="text-center">Código</th>
+			<th class="text-center">Nombre</th>
+			<th class="text-center">Sección</th>
+			<th class="text-center">Estante</th>
+			<th class="text-center">Repisa</th>
+			<th class="text-center">Existencia</th>
+			<th class="text-center">Precio:</th>
+			<th class="text-center">Detalles</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="p in busqueda.resultados track by $index" title="{{p.descripcion}}">
+				<th scope="row" class="text-center">{{p.codigo}}</th>
+				<td class="text-center">{{p.nombre}}</td>
+				<td class="text-center">{{p.no_seccion}}</td>
+				<td class="text-center">{{p.no_estante}}</td>
+				<td class="text-center">{{p.no_repisa}}</td>
+				<td class="text-center">{{p.existencia_total}}</td>
+				<td class="text-center">{{p.precio_venta | currency}}</td>
+				<td class="text-center"><a href=""><button class="btn btn-info form-control" ng-click="detalles($index)">Ver detalles</button></a></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div ng-show="modo_busqueda && busqueda.keyword && busqueda.keyword!='' && !busqueda.cargando && busqueda.resultados.length == 0">
+	<br>
+	<div class="panel panel-danger text-center">
+		<br>
+		<div class="panel-body">No se encontraron resultados con el terminos de búsqueda: <strong ng-bind="busqueda.keyword"></strong></div>
+		<br>
+	</div>
+</div>

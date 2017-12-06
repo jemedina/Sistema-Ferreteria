@@ -42,7 +42,7 @@
 		cp='$request->cp',
 		cve_mun='$request->cve_mun',
 		cve_ent='$request->cve_ent' WHERE
-		RFC = $request->rfc";
+		RFC = '$request->rfc'";
 
 
 	$result = $con->query($sql);

@@ -1,6 +1,6 @@
 <?php 
 	require_once 'config.php';
-	$sql = "DELETE FROM catalogo WHERE no_catalogo = '$request->no_catalogo' and anio = '$request->anio' ";
+	$sql = "DELETE FROM catalogo WHERE concat(no_catalogo,anio)='$request->id'; ";
 	$result = $con->query($sql);
 	if($result)
 		echoMessage("Catalogo eliminado satisfactoriamente");

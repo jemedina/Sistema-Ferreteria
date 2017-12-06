@@ -1,10 +1,22 @@
-var catalogoController = function($scope, $http) {
-	
-	$scope.cat = {};
-	
-	$scope.catNuevo = false;
+var catalogoController = function($scope, $http, $routeParams) {
 
-	$scope.cargarProveedores();
+	$scope.editando = false;
+	
+
+	$scope.cargarCatalogoPorId = function(id) {
+		$http({
+			url: 'api/obtenerCatalogoPorId.php',
+            method: 'POST',
+            data: {id: id}
+		}).then(function(resp) {
+            $scope.cat = resp.data[0];
+            $scope.cat.anio = parseInt($scope.cat.anio);
+            $scope.cat.no_catalogo = parseInt($scope.cat.no_catalogo);
+            $scope.selectedCatId = $scope.cat.id;
+		},function(err) {
+			swal(err.data.msg, { icon: "error" } );			
+		})
+    }
 
 
 	$scope.agregar = function () {
@@ -27,6 +39,34 @@ var catalogoController = function($scope, $http) {
 	}
 
 
+	$scope.actualizar = function () {
+		//$scope.cat.anio_timestamp = $scope.cat.anio.getYear();
+
+		var endpointUrl = "api/actualizarCatalogo.php";
+		
+		$http({
+			headers: { 'Content-Transfer-Encoding': 'utf-8' },
+			url: endpointUrl,
+			method: 'POST',
+			data: $scope.cat
+		}).then(function ok(res) {
+			swal(res.data.msg, { icon: "success" } );
+			
+		}, function err(error) {
+			swal(error.data.msg, { icon: "error" } );
+		});
+	}
+
+	$scope.ensubmit = function() {
+		if($scope.editando) {
+			$scope.actualizar();
+		}
+		else {
+			$scope.agregar();
+		}
+	}
+
+
 	$scope.alta = function() {
 		$scope.catNuevo=true;
 		$scope.selectedUserId = undefined;
@@ -38,8 +78,11 @@ var catalogoController = function($scope, $http) {
 	{ 	
 		if($event)
 			$event.preventDefault();
+		window.location.hash="#!/catalogos";
+		
 		$scope.cat.id_prov = undefined;
 		$scope.catNuevo=false;
+		$scope.editando = false;
 	} 
 	
 
@@ -54,9 +97,9 @@ var catalogoController = function($scope, $http) {
 					if(result) {
 						$http({
 							headers: { 'Content-Transfer-Encoding': 'utf-8' },
-							url: 'api/eliminarCatalogoPorNo.php',
+							url: 'api/eliminarCatalogo.php',
 							method: 'POST',
-							data: {id:$scope.no_catalogo}
+							data: {id:$scope.cat.id}
 						}).then(function ok(res) {
 							swal("Registro eliminado!",
 								"El registro del catlogo fue eliminado.",
@@ -69,7 +112,19 @@ var catalogoController = function($scope, $http) {
 			});
 			
 	}
+
+	$scope.cargarProveedores();
+	if(!$routeParams || !$routeParams.id) {
+		$scope.cat = {};
+		
+		$scope.catNuevo = false;
+	} else {
+		$scope.catNuevo = false;
+		$scope.editando = true;
+		$scope.cargarCatalogoPorId($routeParams.id);
+	}
+	
 }
 
-empleadosController.$inject = ['$scope', '$http'];
+empleadosController.$inject = ['$scope', '$http', '$routeParams'];
 app.controller('catalogoController', catalogoController);

@@ -10,6 +10,10 @@ app.config(function($routeProvider) {
         templateUrl: 'app/controllers/proveedores/proveedores.html',
         controller: 'proveedoresController'
     })
+    .when('/catalogos/:id', {
+        templateUrl: 'app/controllers/catalogos/catalogo.html',
+        controller: 'catalogoController'
+    })
     .when('/catalogos', {
         templateUrl: 'app/controllers/catalogos/catalogo.html',
         controller: 'catalogoController'
@@ -18,13 +22,17 @@ app.config(function($routeProvider) {
         templateUrl: 'app/controllers/clientes/clientes.html',
         controller: 'clientesController'
     })
+    .when('/productos', {
+        templateUrl: 'app/controllers/productos/productos.html',
+        controller: 'productosController'
+    })
     .otherwise({
         templateUrl: 'app/controllers/dashboard/dashboard.html',
         controller: 'dashboardController'
     });
 });
 
-app.controller('mainController', ['$scope','$http', function($scope, $http) {
+app.controller('mainController', ['$scope','$http','$q', function($scope, $http, $q) {
     $scope.nombreApp = "Sistema Ferretería";
 
     $scope.cargarEstados = function() {
@@ -56,9 +64,12 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
     $scope.errorInminente = function(msg) {
         msg = msg || "Se produjo un error inminente! Estamos trabajando para solucionarlo...";
         swal(msg, { icon: "error" } ).then(function() {
-        	window.location.pathname="Sistema-Ferreteria/login.php";
+            window.location.pathname="Sistema-Ferreteria/login.php";
         });
         
+    } 
+    $scope.commonError = function() {
+        swal("Se produjo un error desconocido! Estamos trabajando para solucionarlo...", { icon: "error" } );
     } 
     
    $scope.addUltimaVisitaFecha = function(fech,id_prov) {
@@ -82,29 +93,52 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
 		});
 	}   
     
-    $scope.cargarProveedores = function() {
+    $scope.cargarProveedores = function(callback) {
 		$scope.proveedoreslista = [];
 		$http({
 			url: 'api/obtenerNombresProveedores.php',
 			method: 'get'
 		}).then(function(resp) {
             $scope.proveedoreslista = resp.data;
-            console.log($scope.proveedoreslista );
+            if(callback && typeof callback == 'function') {
+                callback();
+            }
 		},function(err) {
 			swal(err.data.msg, { icon: "error" } );			
 		})
     }
 
-    $scope.cargarCatalogoPorId = function(id_prov) {
-		$http({
-			url: 'api/obtenerCatalogoPorIdProveedor.php',
-            method: 'POST',
-            data: {id_prov: id_prov}
-		}).then(function(resp) {
-            $scope.catalogoslista = resp.data;
-		},function(err) {
-			swal(err.data.msg, { icon: "error" } );			
-		})
+    $scope.cargarCatalogoPorIdProv = function(id_prov, callback) {
+        if(id_prov && id_prov.toString() != '' )
+    		$http({
+    			url: 'api/obtenerCatalogoPorIdProveedor.php',
+                method: 'POST',
+                data: {id_prov: id_prov}
+    		}).then(function(resp) {
+                if(resp && resp.data){
+                    $scope.catalogoslista = resp.data;
+                    if(callback && typeof callback == 'function'){
+                        callback();
+                    }
+                }
+    		},function(err) {
+    			swal(err.data.msg, { icon: "error" } );			
+    		})
+    }
+
+    $scope.cargarCatalogoAniosPorNoCat = function(no_cat) {
+        if($scope.catalogoslista != undefined){
+            var anios = [];
+        
+            $scope.catalogoslista.forEach( (cat) => {
+                if(cat.no_catalogo.toString() == no_cat.toString()) {
+                    anios.push(cat.anio);
+                }
+            });
+        } 
+
+        if(anios && anios.length > 0)
+            $scope.catalogosanioslista = anios;
     }
     
      $scope.menuItems=[
@@ -114,12 +148,13 @@ app.controller('mainController', ['$scope','$http', function($scope, $http) {
         {itemName: "Clientes", logo: "pe-7s-user", clase: "menuItem", referencia: "#!/clientes"},
         {itemName: "Ventas", logo: "pe-7s-note2", clase: "menuItem", referencia:"#"},
         {itemName: "Inventario", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#"},
-        {itemName: "Catálogos", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#!/catalogos" }
+        {itemName: "Catálogos", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#!/catalogos" },
+        {itemName: "Productos", logo: "pe-7s-tools", clase: "menuItem", referencia: "#!/productos" }
     ]
 	$scope.menuItemsEmpleado=[
         {itemName: "Dashboard", logo: "pe-7s-graph", clase: "menuItem active", referencia: "#"}, 
         {itemName: "Ventas", logo: "pe-7s-note2", clase: "menuItem", referencia:"#"},
-        {itemName: "Catálogos", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#" }
+        {itemName: "Catálogos", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#!/catalogos" }
     ]
      $scope.menuItemsAlmacenista=[
         {itemName: "Dashboard", logo: "pe-7s-graph", clase: "menuItem active", referencia: "#"}, 
