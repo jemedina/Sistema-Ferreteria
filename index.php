@@ -151,6 +151,14 @@ session_start();
             <div class="container-fluid">
                 <div class="row">
                     <!-- AQUI VA EL CONTENIDO DE ANGULAR -->
+                    <?php 
+                    echo "
+                    <script>
+                        var GLOBAL_ID_EMPLEADO = ".$_SESSION['id_empleado'].";
+                        var GLOBAL_NOMBRE_EMPLEADO = '".$_SESSION['nombre']."';
+                    </script>";
+
+                    ?>
                     <div ng-view></div>
                 </div>
             </div>
@@ -201,6 +209,7 @@ session_start();
     <script src="app/controllers/clientes/clientes.controller.js"></script>
     <script src="app/controllers/catalogos/catalogo.controller.js"></script>
     <script src="app/controllers/productos/productos.controller.js"></script>
+    <script src="app/controllers/ventas/ventas.controller.js"></script>
 
 
 </html>
