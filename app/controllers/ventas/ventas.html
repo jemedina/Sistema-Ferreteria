@@ -53,7 +53,7 @@
 				<label>
 					Requiere factura?:
 				</label>
-				<input name="requiere_factura" ng-model="venta.requiere_factura" class="form-control" type="checkbox" />
+				<input name="requiere_factura" ng-model="venta.requiere_factura" class="form-control" type="checkbox"/>
 			</div>
 
 			<div class="form-group col col-xs-6">
@@ -92,22 +92,58 @@
 						
 		</div>	
 			</div>
-			<div class="col col-xs-4">
+			<div class="col col-xs-6">
+				<div class="row">
+					<div class="col col-xs-8">
+					
+					<div class="form-group">
+						<label>
+							Producto:
+						</label>
+						<input name="product" placeholder="Nombre o codigo" class="form-control" type="text" id="buscarProdcutos"/>		
+					</div>
+					</div>
+					<div class="col col-xs-2">
+						<div class="form-group">
+							<br>
+							<button class="btn btn-success" ng-click="addProductoList($event)">Agregar</button>
+						</div>
+					</div>
+				</div>
+				<div class="row listaDeCompras">
+					<div class="col col-xs-12">
+  <table class="table table-dark table-striped ">
+    <thead>
+      <tr>
+        <th>Nombre:</th>
+        <th>Precio:</th>
+        <th>Cantidad:</th>
+        <th>Unidades:</th>
+        <th>Descartar:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="p in carritocompras track by $index">
+        <td>{{p.nombre}}</td>
+        <td>{{p.precio | currency}}</td>
+        <td><input type="number" style="width: 40px" name="" ng-change="updateTotales()" ng-model="p.cantidad"></td>
+        <td><input type="text" style="width: 60px" name="" ng-model="p.unidades"></td>
+        <td><button class="btn btn-danger" ng-click="$event.preventDefault();carritocompras.splice($index,1)">X</button></td>
+      </tr>
+      <tr>
+        <td><strong>Total:</strong></td>
+        <td>{{totalVenta | currency}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+				</div>
 				
-				<div class="form-group" class>
-					<label>
-						Cliente:
-					</label>
-					<input name="precio_venta" id="buscarClientInput" class="form-control" type="text" />
-								
-				</div>
 			</div>
-			<div class="col col-xs-2">
-				<div class="form-group">
-				<button class="btn btn-success">Agregar</button>
-				</div>
-			</div>
-		
+				
 	<span isolate-click>
 		<div class="row" ng-show="modo_agregacion">
 			<button class="btn btn-success col-xs-10 col-xs-offset-1">Guardar</button>

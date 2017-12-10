@@ -3,6 +3,8 @@ var ventasController = function($scope, $http, $routeParams) {
 	$scope.modo_edicion = false;
 	$scope.modo_agregacion = false; 
 
+	$scope.carritocompras = [];
+
 	$scope.onsumbit = function() {
 		if($scope.modo_agregacion) {
 			$scope.alta();
@@ -34,6 +36,37 @@ var ventasController = function($scope, $http, $routeParams) {
 	    	$scope.$apply();	    	
 	    }
 	});
+
+	$("#buscarProdcutos").autocomplete({
+		source: function (request, response)
+	    {
+	        $.ajax(
+	        {
+	            url: 'api/obtenerNombresProductos.php',
+	            dataType: "json",
+	            data:
+	            {
+	                keyword: $("#buscarProdcutos").val(),
+	            },
+	            success: function (data)
+	            {
+	                var nombresArr = data.map( (obj) =>{ return {'label':obj.nombreCompleto,'id':obj.cod ,'precio':obj.precio_venta} });
+	            	response(nombresArr);
+	            }
+	        });
+	    },
+	    select: function(evt, ui) {
+	    	var iid = ui.item.id.split("||");
+	    	$scope.nuevoProducto = {
+	    		codigo: iid[0],
+	    		marca: iid[1],
+	    		nombre: ui.item.label,
+	    		precio: ui.item.precio,
+	    		cantidad: 1
+	    	};
+	    	$scope.$apply();
+	    }
+	});
     
 	
 	$scope.valoresPorDefecto = function(){
@@ -50,6 +83,22 @@ var ventasController = function($scope, $http, $routeParams) {
 		};
 
 	}
+	$scope.addProductoList = function($event) {
+		$event.preventDefault();
+		$scope.carritocompras.push($scope.nuevoProducto);
+		$scope.nuevoProducto = {};
+		document.getElementById("buscarProdcutos").value = "";
+
+	}
+	$scope.updateTotales = function() {
+		$scope.totalVenta = 0;
+    	for(var i = 0; i < $scope.carritocompras.length; i++) {
+    		$scope.totalVenta+=$scope.carritocompras[i].precio * $scope.carritocompras[i].cantidad;
+    	}
+	}
+	$scope.$watchCollection('carritocompras', function() {
+    	$scope.updateTotales();
+	});
 
 	$scope.setModoBusqueda = function() {
 		$scope.modo_busqueda = true;

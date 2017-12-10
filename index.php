@@ -15,6 +15,7 @@ session_start();
 
     <!-- Bootstrap core CSS     -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/global.css" rel="stylesheet" />
     <link href="assets/css/jquery-ui.min.css" rel="stylesheet" />
 
     <!-- Animation library for notifications   -->
