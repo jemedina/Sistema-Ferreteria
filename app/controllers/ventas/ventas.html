@@ -3,7 +3,7 @@
 		<label for="nombre">
 			Buscar Venta:
 		</label>
-		<input placeholder="Ingrese nombre, codigo o marca del producto" class="form-control" type="text" ng-model="busqueda.keyword" ng-change="onkeywordchanged()">
+		<input placeholder="Ingrese fecha para buscar ventas de ese dia" class="form-control" type="date" ng-model="busqueda.fecha" ng-change="cargarVentas(busqueda.fecha)">
 	</div>
 
 	<div class="row">
@@ -13,95 +13,94 @@
 <div ng-show="modo_edicion || modo_agregacion">
 	<form ng-submit="onsumbit()" name="">
 		<div class="row">
-			
 			<div class="col col-xs-6">
-			<div class="row">
-			<div class="form-group col col-xs-6">
-				<label>
-					No. Venta:
-				</label>
-				<input ng-readonly="modo_edicion" name="codigo" ng-model="venta.no_venta" required class="form-control" type="text" />
-			</div>
+				<div class="row">
+					<div class="form-group col col-xs-6">
+						<label>
+							No. Venta:
+						</label>
+						<input ng-readonly="modo_edicion" name="codigo" ng-model="venta.no_venta" class="form-control" type="text" />
+					</div>
 
-			<div class="form-group col col-xs-6">
-				<label>
-					Monto:
-				</label>
-				<input name="monto" ng-model="venta.monto" required class="form-control" type="number" step="any" />
-			</div>
-		</div>
+					<div class="form-group col col-xs-6">
+						<label>
+							Monto:
+						</label>
+						<input name="monto" ng-model="venta.monto" class="form-control" type="number" step="any" />
+					</div>
+				</div>
 
-		<div class="form-group">
-			<label>
-				Tipo:
-			</label>
-			<select required class="form-control" ng-model="venta.tipo" ng-show="true">
-				<option value="" selected="selected" disabled="disabled">Seleccione mayoreo o menudeo</option>						
-				<option value="MAYOREO">Mayoreo</option>
-				<option value="MENUDEO">Menudeo</option>
-			</select>
-			
-		</div>
-		<div class="row">
-			<div class="form-group col col-xs-6">
-				<label>
-					Es a credito?:
-				</label>
-				<input name="es_a_credito" ng-model="venta.es_a_credito" class="form-control" type="checkbox" />
-			</div>
-			<div class="form-group col col-xs-6">
-				<label>
-					Requiere factura?:
-				</label>
-				<input name="requiere_factura" ng-model="venta.requiere_factura" class="form-control" type="checkbox"/>
-			</div>
+				<div class="form-group">
+					<label>
+						Tipo:
+					</label>
+					<select required class="form-control" ng-model="venta.tipo" ng-show="true">
+						<option value="" selected="selected" disabled="disabled">Seleccione mayoreo o menudeo</option>						
+						<option value="MAYOREO">Mayoreo</option>
+						<option value="MENUDEO">Menudeo</option>
+					</select>
+					
+				</div>
+				<div class="row">
+					<div class="form-group col col-xs-6">
+						<label>
+							Es a credito?:
+						</label>
+						<input name="es_a_credito" ng-model="venta.es_a_credito" class="form-control" type="checkbox" />
+					</div>
+					<div class="form-group col col-xs-6">
+						<label>
+							Requiere factura?:
+						</label>
+						<input name="requiere_factura" ng-model="venta.requiere_factura" class="form-control" type="checkbox"/>
+					</div>
 
-			<div class="form-group col col-xs-6">
-				<label>
-					Descuento:
-				</label>
-				<input name="nombre_categoria" ng-model="venta.descuento" class="form-control" type="number" min="0" max="70" />
-			</div>
+					<div class="form-group col col-xs-6">
+						<label>
+							Descuento:
+						</label>
+						<input name="nombre_categoria" ng-model="venta.descuento" class="form-control" type="number" min="0" max="70" />
+					</div>
 
-			<div class="form-group col col-xs-6">
-				<label>
-					Fecha Limite Pago:
-				</label>
-				<input name="no_serie" ng-model="venta.fecha_limite_pago" class="form-control" type="date" />
-			</div>
-		</div>
-		<div class="form-group">
-			<label>
-				Empleado:
-			</label>
-			<input type="text" readonly name="empleado" ng-model="venta.nombre_empleado" class="form-control">
-		</div>
-		<div class="form-group" ng-show="venta.es_a_credito == true || venta.requiere_factura == true">
-			<label>
-				Cliente:
-			</label>
-			<input name="precio_venta" id="buscarClientInput" class="form-control" type="text" />
-						
-		</div>
+					<div class="form-group col col-xs-6">
+						<label>
+							Fecha Limite Pago:
+						</label>
+						<input name="no_serie" ng-model="venta.fecha_limite_pago" class="form-control" type="date" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label>
+						Empleado:
+					</label>
+					<input type="text" readonly name="empleado" ng-model="venta.nombre_empleado" class="form-control">
+				</div>
+				<div class="form-group" ng-show="venta.es_a_credito == true || venta.requiere_factura == true">
+					<label>
+						Cliente:
+					</label>
+					<input name="precio_venta" id="buscarClientInput" class="form-control" type="text" />
+								
+				</div>
 
-		<div class="form-group" ng-show="venta.rfc  && (venta.es_a_credito == true || venta.requiere_factura == true)">
-			<label>
-				RFC Seleccionado:
-			</label>
-			<input name="precio_venta" ng-model="venta.rfc" class="form-control" type="text" />
-						
-		</div>	
+				<div class="form-group" ng-show="venta.rfc  && (venta.es_a_credito == true || venta.requiere_factura == true)">
+					<label>
+						RFC Seleccionado:
+					</label>
+					<input name="precio_venta" ng-model="venta.rfc" class="form-control" type="text" />
+								
+				</div>	
 			</div>
 			<div class="col col-xs-6">
 				<div class="row">
 					<div class="col col-xs-8">
 					
-					<div class="form-group">
-						<label>
-							Producto:
-						</label>
-						<input name="product" placeholder="Nombre o codigo" class="form-control" type="text" id="buscarProdcutos"/>		
-					</div>
+						<div class="form-group">
+							<label>
+								Producto:
+							</label>
+							<input name="product" placeholder="Nombre o codigo" class="form-control" type="text" id="buscarProdcutos"/>		
+						</div>
 					</div>
 					<div class="col col-xs-2">
 						<div class="form-group">
@@ -112,96 +111,93 @@
 				</div>
 				<div class="row listaDeCompras">
 					<div class="col col-xs-12">
-  <table class="table table-dark table-striped ">
-    <thead>
-      <tr>
-        <th>Nombre:</th>
-        <th>Precio:</th>
-        <th>Cantidad:</th>
-        <th>Unidades:</th>
-        <th>Descartar:</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="p in carritocompras track by $index">
-        <td>{{p.nombre}}</td>
-        <td>{{p.precio | currency}}</td>
-        <td><input type="number" style="width: 40px" name="" ng-change="updateTotales()" ng-model="p.cantidad"></td>
-        <td><input type="text" style="width: 60px" name="" ng-model="p.unidades"></td>
-        <td><button class="btn btn-danger" ng-click="$event.preventDefault();carritocompras.splice($index,1)">X</button></td>
-      </tr>
-      <tr>
-        <td><strong>Total:</strong></td>
-        <td>{{totalVenta | currency}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+					  <table class="table table-dark table-striped ">
+					    <thead>
+					      <tr>
+					        <th>Nombre:</th>
+					        <th>Precio:</th>
+					        <th>Cantidad:</th>
+					        <th>Unidades:</th>
+					        <th>Descartar:</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+					      <tr ng-repeat="p in carritocompras track by $index">
+					        <td>{{p.nombre}}</td>
+					        <td>{{p.precio | currency}}</td>
+					        <td><input type="number" style="width: 40px" name="" ng-change="updateTotales()" ng-model="p.cantidad"></td>
+					        <td><input type="text" style="width: 60px" name="" ng-model="p.unidades"></td>
+					        <td><button class="btn btn-danger" ng-click="$event.preventDefault();carritocompras.splice($index,1)">X</button></td>
+					      </tr>
+					      <tr>
+					        <td><strong>Total:</strong></td>
+					        <td>{{totalVenta | currency}}</td>
+					        <td></td>
+					        <td></td>
+					        <td></td>
+					      </tr>
+					    </tbody>
+					  </table>
+					</div>
 				</div>
 				
 			</div>
 				
-	<span isolate-click>
-		<div class="row" ng-show="modo_agregacion">
-			<button class="btn btn-success col-xs-10 col-xs-offset-1">Guardar</button>
-			<br>
-		</div>
-		<div class="row" ng-show="modo_edicion">
-			<button class="btn btn-warning col-xs-10 col-xs-offset-1">Actualizar registro</button>
-		</div>
-		<br ng-show="true"/>
-		<div class="row">
+			<span isolate-click>
+				<div class="row" ng-show="modo_agregacion">
+					<button class="btn btn-success col-xs-10 col-xs-offset-1">Guardar</button>
+					<br>
+				</div>
+				<div class="row" ng-show="modo_edicion">
+					<button class="btn btn-warning col-xs-10 col-xs-offset-1">Actualizar registro</button>
+				</div>
+				<br ng-show="true"/>
+				<div class="row">
 
-			<button ng-click="cancelar($event);" class="col col-xs-10 col-xs-offset-1 btn btn-danger">Cancelar</button>
+					<button ng-click="cancelar($event);" class="col col-xs-10 col-xs-offset-1 btn btn-danger">Cancelar</button>
+				</div>
+				<br/>
+				<div ng-show="modo_edicion" class="row">
+					<button ng-click="eliminar($event);" class="col col-xs-10 col-xs-offset-1 btn">Eliminar</button>
+				</div>
+			</span>
 		</div>
-		<br/>
-		<div ng-show="modo_edicion" class="row">
-			<button ng-click="eliminar($event);" class="col col-xs-10 col-xs-offset-1 btn">Eliminar</button>
-		</div>
-	</span>
 	</form>
 </div>
 <br>
-<div ng-show="true && busqueda.keyword && busqueda.keyword!='' && busqueda.cargando" class="row text-center">
+<div ng-show="busqueda.fecha !== undefined && busqueda.cargando" class="row text-center">
 	<img src="assets/img/loadinggif.gif" class="fluid-img">
 </div>
-<div ng-show="true && busqueda.keyword && busqueda.keyword!='' && !busqueda.cargando && busqueda.resultados.length > 0">
+<div ng-show="busqueda.fecha !== undefined && busqueda.resultados.length > 0">
 	<h4>Resultados:</h4>
 	<table class="table table-hover table-striped">
 		<thead class="thead-default">
 			<tr>
-			<th class="text-center">Código</th>
-			<th class="text-center">Nombre</th>
-			<th class="text-center">Sección</th>
-			<th class="text-center">Estante</th>
-			<th class="text-center">Repisa</th>
-			<th class="text-center">Existencia</th>
-			<th class="text-center">Precio:</th>
-			<th class="text-center">Detalles</th>
+			<th class="text-center">No. Venta</th>
+			<th class="text-center">Hora</th>
+			<th class="text-center">Monto</th>
+			<th class="text-center">Tipo</th>
+			<th class="text-center">Descuento</th>
+			<th class="text-center">Empleado</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="p in busqueda.resultados track by $index" title="{{p.descripcion}}">
-				<th scope="row" class="text-center">{{p.codigo}}</th>
+				<th scope="row" class="text-center">{{p.no_venta}}</th>
+				<td class="text-center">{{p.hora}}</td>
+				<td class="text-center">{{p.monto | currency}}</td>
+				<td class="text-center">{{p.tipo}}</td>
+				<td class="text-center">{{p.descuento}}%</td>
 				<td class="text-center">{{p.nombre}}</td>
-				<td class="text-center">{{p.no_seccion}}</td>
-				<td class="text-center">{{p.no_estante}}</td>
-				<td class="text-center">{{p.no_repisa}}</td>
-				<td class="text-center">{{p.existencia_total}}</td>
-				<td class="text-center">{{p.precio_venta | currency}}</td>
-				<td class="text-center"><a href=""><button class="btn btn-info form-control" ng-click="detalles($index)">Ver detalles</button></a></td>
 			</tr>
 		</tbody>
 	</table>
 </div>
-<div ng-show="true && busqueda.keyword && busqueda.keyword!='' && !busqueda.cargando && busqueda.resultados.length == 0">
+<div ng-show="busqueda.fecha !== undefined && busqueda.resultados.length == 0">
 	<br>
 	<div class="panel panel-danger text-center">
 		<br>
-		<div class="panel-body">No se encontraron resultados con el terminos de búsqueda: <strong ng-bind="busqueda.keyword"></strong></div>
+		<div class="panel-body">No se encontraron ventas en esta fecha</div>
 		<br>
 	</div>
 </div>

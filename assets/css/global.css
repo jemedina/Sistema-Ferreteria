@@ -4,5 +4,5 @@
 	overflow: auto;
 }
 .main-panel {
-	overflow: hidden !important;
+	overflow-x: hidden !important;
 }

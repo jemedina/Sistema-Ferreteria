@@ -4,7 +4,7 @@ var ventasController = function($scope, $http, $routeParams) {
 	$scope.modo_agregacion = false; 
 
 	$scope.carritocompras = [];
-
+	$scope.busqueda = {};
 	$scope.onsumbit = function() {
 		if($scope.modo_agregacion) {
 			$scope.alta();
@@ -62,7 +62,8 @@ var ventasController = function($scope, $http, $routeParams) {
 	    		marca: iid[1],
 	    		nombre: ui.item.label,
 	    		precio: ui.item.precio,
-	    		cantidad: 1
+	    		cantidad: 1,
+	    		unidades: "pz"
 	    	};
 	    	$scope.$apply();
 	    }
@@ -86,7 +87,10 @@ var ventasController = function($scope, $http, $routeParams) {
 	$scope.addProductoList = function($event) {
 		$event.preventDefault();
 		$scope.carritocompras.push($scope.nuevoProducto);
-		$scope.nuevoProducto = {};
+		$scope.nuevoProducto = {
+	    		cantidad: 1,
+	    		unidades: "pz"
+		};
 		document.getElementById("buscarProdcutos").value = "";
 
 	}
@@ -117,7 +121,7 @@ var ventasController = function($scope, $http, $routeParams) {
 		$scope.modo_edicion = false;
 		$scope.modo_agregacion = true;   	
 		$scope.valoresPorDefecto();
-	}	
+	}
 
 	$scope.cancelar = function($event) {
 		if($event)
@@ -128,6 +132,8 @@ var ventasController = function($scope, $http, $routeParams) {
 	$scope.alta = function () {
 		$scope.venta.fecha_limite_pago.setDate($scope.venta.fecha_limite_pago.getDate()-1);
 		$scope.venta.fecha_limite_pago_timestamp = Math.floor($scope.venta.fecha_limite_pago.getTime() / 1000);
+		$scope.venta.carritocompras = $scope.carritocompras;
+		$scope.venta.monto = $scope.totalVenta;
 		$http({
 			url:'api/guardarVenta.php',
 			method:'POST',
@@ -135,7 +141,9 @@ var ventasController = function($scope, $http, $routeParams) {
 		}).then(function (res) {
 			if(res && res.data  && res.data.msg){
 				swal(res.data.msg, { icon: "success" } );
+				
 				$scope.valoresPorDefecto();
+				$scope.carritocompras = [];
 			}
 			else 
 				$scope.commonError();
@@ -147,7 +155,23 @@ var ventasController = function($scope, $http, $routeParams) {
 				$scope.commonError();
 		});
 	}
-	
+	$scope.cargarVentas = function(fparam) {
+		$scope.busqueda.cargando = true;
+		$http({
+			url:'api/obtenerVentas.php',
+			method:'POST',
+			data: {fecha: fparam.getTime()/1000}
+		}).then(function(msg) {
+			$scope.busqueda.cargando = false;
+			$scope.busqueda.resultados = msg.data;
+			console.log(msg.data);
+		},function(err) {
+			if(error != undefined && error.data  != undefined && error.data.msg  != undefined)
+				swal(error.data.msg, { icon: "error" } );
+			else
+				$scope.commonError();
+		});
+	}
 }
 
 ventasController.$inject = ['$scope', '$http', '$routeParams'];
