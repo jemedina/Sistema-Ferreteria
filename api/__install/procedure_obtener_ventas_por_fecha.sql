@@ -1,3 +1,5 @@
+use bd_ferreteria;
+
 delimiter //
 create procedure obtener_ventas_por_fecha(in f DATE)
 	begin
