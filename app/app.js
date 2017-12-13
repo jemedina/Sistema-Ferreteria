@@ -169,6 +169,8 @@ app.controller('mainController', ['$scope','$http','$q','$location', function($s
                 method: 'POST',
                 data: {id_prov: id_prov}
     		}).then(function(resp) {
+
+                console.log(resp);
                 if(resp && resp.data){
                     $scope.ordenlista = resp.data;
                     if(callback && typeof callback == 'function'){
