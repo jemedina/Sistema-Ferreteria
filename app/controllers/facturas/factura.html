@@ -1,0 +1,92 @@
+<div ng-show="facNuevo == false && !editando">
+	<div class="form-group">
+			<label for="nombre">
+				Buscar Factura por fecha:
+			</label>
+			<input placeholder="Ingrese fecha inicial de la factura a buscar" class="form-control" type="date" ng-model="fac.fecha_factura1"  name="">
+			<br>
+			<input placeholder="Ingrese fecha inicial de la factura a buscar" class="form-control" type="date" ng-change="cargarFacturaPorFecha(fac.fecha_factura1, fac.fecha_factura2)" ng-model="fac.fecha_factura2"  name="">
+		</div>
+</div>
+<div class="row">
+	<button ng-click="alta()" ng-show="facNuevo == false && !editando" class="col col-xs-10 col-xs-offset-1 btn btn-primary">Dar de alta una nueva factura de proveedor</button>
+</div>
+<div ng-show="facNuevo">
+	<form ng-submit="ensubmit()" name="facForm">
+
+		<div class="form-group">
+			<label>
+				Número de folio
+			</label>
+			<input ng-model="fac.no_folio" class="form-control" type="text" ng-readonly="editando"/>
+		</div>
+		<div class="col col-xs-6 form-group">
+				<label for="cve_ent" >
+					Fecha:
+				</label>
+				<input required type="date" class="form-control" ng-model="fac.fecha_factura" ng-readonly="editando">
+			</div>
+		<div class="col col-xs-6 form-group">
+			<label>
+				No. Orden de compra:
+			</label>
+			<select required ng-show="ordeneslista && ordeneslista.length > 0" ng-change="cargarOrden(fac.no_orden)" name="no_orden" ng-model="fac.no_orden_indice" class="form-control">
+				<option value="{{$index}}" selected="selected" disabled="disabled">Seleccione una orden de compra</option>						
+				<option ng-repeat="oc in ordeneslista" value="{{oc.no_orden}}">{{oc.no_orden}} [{{oc.fecha_orden}}]</option>
+			</select>
+		</div>
+		  <div class="form-group">
+			<label>
+				Monto 
+			</label>
+			<input required ng-model="fac.monto" class="form-control" type="number" min="0" step="any" ng-readonly="editando"/>
+		</div>   
+        <div class="col col-xs-6 form-group">
+				<label for="cve_ent" >
+					Fecha Limite de pago (opcional):
+				</label>
+				<input type="date" class="form-control" ng-model="fac.fecha_limite_pago" ng-readonly="editando">
+			</div>
+		<div class="row" ng-show="!editando" >
+			<button class="btn btn-success col-xs-10 col-xs-offset-1">Guardar</button>
+		</div>
+		<br>
+	<span isolate-click>
+		<div class="row" ng-show="editando">
+			<button class="btn btn-warning col-xs-10 col-xs-offset-1">Actualizar registro</button>
+		
+		
+	</div>
+		<br ng-show="editando"/>
+		<div class="row">
+
+			<button ng-click="cancelar($event);" class="col col-xs-10 col-xs-offset-1 btn btn-danger">Cancelar</button>
+		</div>
+		<br/>
+		<div ng-show="editando" class="row">
+			<button ng-click="eliminar($event);" class="col col-xs-10 col-xs-offset-1 btn">Eliminar</button>
+		</div>
+
+	</span>
+	</form>
+</div>
+<br>
+<table class="table table-hover table-striped" ng-show="facturalista != undefined && facturalista.length > 0 && !facNuevo">
+	<thead class="thead-default">
+		<tr>
+		<th class="text-center">Folio</th>
+		<th class="text-center">Fecha</th>
+		<th class="text-center">Fecha limite de pago</th>
+		<th class="text-center"></th>
+		<th class="text-center"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="factura in facturalista track by $index">
+			<th scope="row" class="text-center">{{factura.no_folio}}</th>
+			<td class="text-center">{{factura.fecha_factura}}</td>
+			<td class="text-center">{{factura.fecha_limite_pago}}</td>
+			<td class="text-center"><a href="#!/facturas/{{factura.no_folio}}"><button class="btn btn-warning form-control">Editar</button></a></td>
+		</tr>
+	</tbody>
+</table>

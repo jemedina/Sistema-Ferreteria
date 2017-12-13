@@ -1,0 +1,94 @@
+<div ng-show="ocNuevo == false && !editando">
+	<div class="form-group">
+			<label for="nombre">
+				Buscar Orden de compra:
+			</label>
+			<!--<input placeholder="Ingrese nombre del catalogo a buscar" class="form-control" type="text" id="buscarEmpInput" name="">-->
+			<div class="row">
+			<div class="col col-sm-6 col-sm-offset-3 form-group">
+				<label for="proveedor">
+					Proveedor:
+				</label>
+				<select ng-change="cargarOrdenPorIdProv(oc.id_prov)" ng-model="oc.id_prov" class="form-control">
+					<option value="" selected="selected" disabled="disabled">Seleccione un proveedor</option>						
+					<option ng-repeat="proveedor in proveedoreslista" value="{{proveedor.id_prov}}">{{proveedor.nombreCompleto}}</option>
+				</select>
+			</div>
+
+		</div>
+		</div>
+</div>
+<div class="row">
+	<button ng-click="alta()" ng-show="ocNuevo == false && !editando" class="col col-xs-10 col-xs-offset-1 btn btn-primary">Dar de alta una nueva orden de compra</button>
+</div>
+<div ng-show="selectedOCId != undefined || ocNuevo">
+	<form ng-submit="ensubmit()" name="ocForm">
+
+		<!--<div class="form-group">
+			<label>
+				Número de orden:
+			</label>
+			<input ng-model="oc.no_orden" class="form-control" type="number" ng-readonly="editando"/>
+		</div> --> 
+		<div class="row">
+			<div class="col col-xs-6 form-group">
+				<label for="cve_ent">
+					Proveedor:
+				</label>
+				<select ng-disabled="editando" ng-model="oc.id_prov" class="form-control">
+					<option ng-repeat="proveedor in proveedoreslista" value="{{proveedor.id_prov}}">{{proveedor.nombreCompleto}}</option>
+				</select>
+			</div>
+			<div class="col col-xs-6 form-group">
+				<label for="cve_ent" >
+					Fecha:
+				</label>
+				<input type="date" class="form-control" ng-model="oc.fecha_orden" ng-readonly="editando">
+			</div>
+		</div>
+		<div class="row" ng-show="!editando" >
+			<button class="btn btn-success col-xs-10 col-xs-offset-1">Guardar</button>
+		</div>
+		<br>
+	<span isolate-click>
+		
+		<br ng-show="editando"/>
+		<div class="row">
+
+			<button ng-click="cancelar($event);" class="col col-xs-10 col-xs-offset-1 btn btn-danger">Cancelar</button>
+		</div>
+		<br/>
+		<div ng-show="editando" class="row">
+			<button ng-click="eliminar($event);" class="col col-xs-10 col-xs-offset-1 btn">Eliminar</button>
+		</div>
+
+	</span>
+	</form>
+</div>
+<br>
+<table class="table table-hover table-striped" ng-show="ordenlista != undefined && ordenlista.length > 0 && !ocNuevo">
+	<thead class="thead-default">
+		<tr>
+        <th class="text-center">No</th>
+		<th class="text-center">Fecha</th>
+		<th class="text-center"></th>
+		<th class="text-center"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="orden in ordenlista track by $index">
+            <th scope="row" class="text-center">{{orden.no_orden}}</th>
+			<td class="text-center">{{orden.fecha_orden}}</td>
+			<td class="text-center"><button class="btn btn-warning form-control" ng-click="eliminar($event,$index);">Eliminar</button></td>
+		</tr>
+	</tbody>
+</table>
+
+<div ng-show="oc.id_prov != undefined && ordenlista.length == 0 && !ocNuevo && !editando">
+	<br>
+	<div class="panel panel-danger text-center">
+		<br>
+		<div class="panel-body">Este proveedor no tiene ordenes de compra</div>
+		<br>
+	</div>
+</div>
