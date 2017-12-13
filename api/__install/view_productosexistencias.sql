@@ -1,0 +1,1 @@
+create view productosexistencias as SELECT ta.*,tb.id_prov,(ta.existencia_bodega + ta.existencia_caja + ta.existencia_repisa) as existencia_total FROM producto as ta, catalogo as tb WHERE ta.no_catalogo = tb.no_catalogo and ta.anio = tb.anio;
