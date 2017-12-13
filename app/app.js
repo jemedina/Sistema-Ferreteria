@@ -6,7 +6,7 @@ app.config(function($routeProvider) {
         templateUrl: 'app/controllers/empleados/empleados.html',
         controller: 'empleadosController'
     })
-     .when('/proveedores', {
+    .when('/proveedores', {
         templateUrl: 'app/controllers/proveedores/proveedores.html',
         controller: 'proveedoresController'
     })
@@ -41,6 +41,10 @@ app.config(function($routeProvider) {
     .when('/productos', {
         templateUrl: 'app/controllers/productos/productos.html',
         controller: 'productosController'
+    })
+    .when('/ventas', {
+        templateUrl: 'app/controllers/ventas/ventas.html',
+        controller: 'ventasController'
     })
     .otherwise({
         templateUrl: 'app/controllers/dashboard/dashboard.html',
@@ -225,7 +229,7 @@ app.controller('mainController', ['$scope','$http','$q', function($scope, $http,
         {itemName: "Empleados", logo: "pe-7s-user", clase: "menuItem", referencia: "#!/empleados"}, 
         {itemName: "Proveedores", logo: "pe-7s-user", clase: "menuItem", referencia: "#!/proveedores"},
         {itemName: "Clientes", logo: "pe-7s-user", clase: "menuItem", referencia: "#!/clientes"},
-        {itemName: "Ventas", logo: "pe-7s-note2", clase: "menuItem", referencia:"#"},
+        {itemName: "Ventas", logo: "pe-7s-note2", clase: "menuItem", referencia:"#!/ventas"},
         {itemName: "Inventario", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#"},
         {itemName: "Catálogos", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#!/catalogos" },
         {itemName: "Órdenes de compra", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#!/ordenes_compra" },  

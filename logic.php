@@ -19,10 +19,12 @@ if (mysqli_connect_errno())
 $usuario=$_POST['username'];
 $pass=$_POST['password'];
 
-$resp=mysqli_query($conn,"select puesto,pass from empleado where correo='$usuario'");
+$resp=mysqli_query($conn,"select puesto,pass,id_empleado,nombre from empleado where correo='$usuario'");
 $resultado=$resp->fetch_array(MYSQLI_NUM);
 if($pass==$resultado[1]){
     $_SESSION['usuario']=$usuario;
+    $_SESSION['id_empleado']=$resultado[2];
+    $_SESSION['nombre']=$resultado[3];
 	$_SESSION['puesto']=$resultado[0];
     header("location:index.php");
 }else{
