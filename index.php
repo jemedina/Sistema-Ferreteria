@@ -201,6 +201,8 @@ session_start();
     <script src="app/controllers/clientes/clientes.controller.js"></script>
     <script src="app/controllers/catalogos/catalogo.controller.js"></script>
     <script src="app/controllers/productos/productos.controller.js"></script>
+    <script src="app/controllers/ordenes_compra/orden.controller.js"></script>
+    <script src="app/controllers/facturas/factura.controller.js"></script>
 
 
 </html>
