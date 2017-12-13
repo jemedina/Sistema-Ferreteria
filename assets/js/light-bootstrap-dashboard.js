@@ -23,6 +23,8 @@ var fixedTop = false;
 var navbar_initialized = false;
 
 $(document).ready(function(){
+    
+    $("#viewname").html($(".menuItem")[0].innerHTML);
     $(".menuItem").click(function() {
         var index = $(".menuItem").index(this);
         $(".menuItem, .menuItemSlick").each(function() {
@@ -30,6 +32,7 @@ $(document).ready(function(){
         });
         $($('.menuItem')[index]).addClass('active');
         $($('.menuItemSlick')[index]).addClass('active');
+        $("#viewname").html(this.innerHTML);
     });
     window_width = $(window).width();
 
@@ -129,6 +132,8 @@ lbd = {
                 });
                 $($('.menuItem')[index]).addClass('active');
                 $($('.menuItemSlick')[index]).addClass('active');
+                        $("#viewname").html(this.innerHTML);
+
             });
             background_image = $sidebar.data('image');
             if(background_image != undefined){

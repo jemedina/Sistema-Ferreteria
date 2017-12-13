@@ -13,85 +13,7 @@
 <div ng-show="modo_edicion || modo_agregacion">
 	<form ng-submit="onsumbit()" name="">
 		<div class="row">
-			<div class="col col-xs-6">
-				<div class="row">
-					<div class="form-group col col-xs-6" ng-show="modo_edicion">
-						<label>
-							No. Venta:
-						</label>
-						<input ng-readonly="modo_edicion" name="codigo" ng-model="venta.no_venta" class="form-control" type="text" />
-					</div>
-
-					<div class="form-group col col-xs-6">
-						<label>
-							Monto:
-						</label>
-						<input name="monto" ng-model="venta.monto" class="form-control" type="number" step="any" />
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label>
-						Tipo:
-					</label>
-					<select required class="form-control" ng-model="venta.tipo" ng-show="true">
-						<option value="" selected="selected" disabled="disabled">Seleccione mayoreo o menudeo</option>						
-						<option value="MAYOREO">Mayoreo</option>
-						<option value="MENUDEO">Menudeo</option>
-					</select>
-					
-				</div>
-				<div class="row">
-					<div class="form-group col col-xs-6">
-						<label>
-							Es a credito?:
-						</label>
-						<input name="es_a_credito" ng-model="venta.es_a_credito" class="form-control" type="checkbox" />
-					</div>
-					<div class="form-group col col-xs-6">
-						<label>
-							Requiere factura?:
-						</label>
-						<input name="requiere_factura" ng-model="venta.requiere_factura" class="form-control" type="checkbox"/>
-					</div>
-
-					<div class="form-group col col-xs-6">
-						<label>
-							Descuento:
-						</label>
-						<input name="nombre_categoria" ng-model="venta.descuento" class="form-control" type="number" min="0" max="70" />
-					</div>
-
-					<div class="form-group col col-xs-6">
-						<label>
-							Fecha Limite Pago:
-						</label>
-						<input name="no_serie" ng-model="venta.fecha_limite_pago" class="form-control" type="date" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label>
-						Empleado:
-					</label>
-					<input type="text" readonly name="empleado" ng-model="venta.nombre_empleado" class="form-control">
-				</div>
-				<div class="form-group" ng-show="venta.es_a_credito == true || venta.requiere_factura == true">
-					<label>
-						Cliente:
-					</label>
-					<input name="precio_venta" id="buscarClientInput" class="form-control" type="text" />
-								
-				</div>
-
-				<div class="form-group" ng-show="venta.rfc  && (venta.es_a_credito == true || venta.requiere_factura == true)">
-					<label>
-						RFC Seleccionado:
-					</label>
-					<input name="precio_venta" ng-model="venta.rfc" class="form-control" type="text" />
-								
-				</div>	
-			</div>
-			<div class="col col-xs-6">
+			<div class="col col-sm-6 col-xs-12">
 				<div class="row">
 					<div class="col col-xs-8">
 					
@@ -141,6 +63,86 @@
 					</div>
 				</div>
 				
+			</div>
+			
+			<div class="col col-sm-6 col-xs-12">
+				<div class="row">
+					<div class="form-group col col-xs-6" ng-show="modo_edicion">
+						<label>
+							No. Venta:
+						</label>
+						<input ng-readonly="modo_edicion" name="codigo" ng-model="venta.no_venta" class="form-control" type="text" />
+					</div>
+
+					<div class="form-group col col-xs-6" ng-show="modo_edicion">
+						<label>
+							Monto:
+						</label>
+						<input name="monto" ng-model="venta.monto" class="form-control" type="number" step="any" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label>
+						Tipo:
+					</label>
+					<select required class="form-control" ng-model="venta.tipo" ng-show="true">
+						<option value="" selected="selected" disabled="disabled">Seleccione mayoreo o menudeo</option>						
+						<option value="MAYOREO">Mayoreo</option>
+						<option value="MENUDEO">Menudeo</option>
+					</select>
+					
+				</div>
+				<div class="row">
+					<div class="form-group col col-xs-4">
+						<label>
+							Es a credito?:
+						</label>
+						<input name="es_a_credito" ng-model="venta.es_a_credito" class="form-control" type="checkbox" />
+					</div>
+					<div class="form-group col col-xs-4">
+						<label>
+							Requiere factura?:
+						</label>
+						<input name="requiere_factura" ng-model="venta.requiere_factura" class="form-control" type="checkbox"/>
+					</div>
+
+					<div class="form-group col col-xs-4">
+						<label>
+							Descuento:
+						</label>
+						<input name="nombre_categoria" ng-model="venta.descuento" class="form-control" type="number" min="0" max="70" step="5"/>
+					</div>
+
+					<div class="form-group col col-xs-12" ng-show="venta.es_a_credito == true || venta.requiere_factura == true">
+						<label>
+							Fecha Limite Pago:
+						</label>
+						<input name="no_serie" ng-model="venta.fecha_limite_pago" class="form-control" type="date" />
+					</div>
+				</div>
+				<div class="form-group" ng-show="venta.es_a_credito == true || venta.requiere_factura == true">
+					<label>
+						Cliente:
+					</label>
+					<input name="precio_venta" id="buscarClientInput" class="form-control" type="text" />
+								
+				</div>
+				
+				<div class="form-group">
+					<label>
+						Empleado:
+					</label>
+					<input type="text" readonly name="empleado" ng-model="venta.nombre_empleado" class="form-control">
+				</div>
+
+				<div class="form-group" ng-show="venta.rfc  && (venta.es_a_credito == true || venta.requiere_factura == true)">
+					<label>
+						RFC Seleccionado:
+					</label>
+					<input name="precio_venta" ng-model="venta.rfc" class="form-control" type="text" />
+								
+				</div>	
 			</div>
 				
 			<span isolate-click>
