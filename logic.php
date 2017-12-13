@@ -21,9 +21,11 @@ $pass=$_POST['password'];
 
 $resp=mysqli_query($conn,"select puesto,pass,id_empleado,nombre from empleado where correo='$usuario'");
 $resultado=$resp->fetch_array(MYSQLI_NUM);
-$checa=mysql_query($conn,"call password('$pass','$usuario')");
+$checa=mysqli_query($conn,"call password('$pass','$usuario')");
 //if($pass==$resultado[1]){
-if($checa==1){
+$resultadologin=$checa->fetch_array(MYSQLI_NUM);
+
+if($resultadologin[0]){
     $_SESSION['usuario']=$usuario;
     $_SESSION['id_empleado']=$resultado[2];
     $_SESSION['nombre']=$resultado[3];
