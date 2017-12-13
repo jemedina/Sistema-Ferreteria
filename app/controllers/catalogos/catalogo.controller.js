@@ -1,7 +1,6 @@
 var catalogoController = function($scope, $http, $routeParams) {
 
 	$scope.editando = false;
-	
 
 	$scope.cargarCatalogoPorId = function(id) {
 		$http({
@@ -79,7 +78,6 @@ var catalogoController = function($scope, $http, $routeParams) {
 		if($event)
 			$event.preventDefault();
 		window.location.hash="#!/catalogos";
-		
 		$scope.cat.id_prov = undefined;
 		$scope.catNuevo=false;
 		$scope.editando = false;
@@ -116,7 +114,7 @@ var catalogoController = function($scope, $http, $routeParams) {
 	$scope.cargarProveedores();
 	if(!$routeParams || !$routeParams.id) {
 		$scope.cat = {};
-		
+				
 		$scope.catNuevo = false;
 	} else {
 		$scope.catNuevo = false;

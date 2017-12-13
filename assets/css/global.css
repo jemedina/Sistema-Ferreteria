@@ -1,0 +1,8 @@
+.listaDeCompras {
+	max-height: 300px !important;
+	height: 300px !important;
+	overflow: auto;
+}
+.main-panel {
+	overflow-x: hidden !important;
+}

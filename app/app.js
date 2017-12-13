@@ -1,6 +1,7 @@
 var app = angular.module('app', ['ngRoute']);
 
-app.config(function($routeProvider) {
+app.config(function($routeProvider,$locationProvider) {
+    console.log($locationProvider);
     $routeProvider
     .when('/empleados', {
         templateUrl: 'app/controllers/empleados/empleados.html',
@@ -52,7 +53,7 @@ app.config(function($routeProvider) {
     });
 });
 
-app.controller('mainController', ['$scope','$http','$q', function($scope, $http, $q) {
+app.controller('mainController', ['$scope','$http','$q','$location', function($scope, $http, $q,$location) {
     $scope.nombreApp = "Sistema Ferretería";
 
     $scope.cargarEstados = function() {
