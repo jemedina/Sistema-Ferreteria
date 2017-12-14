@@ -47,6 +47,10 @@ app.config(function($routeProvider,$locationProvider) {
         templateUrl: 'app/controllers/ventas/ventas.html',
         controller: 'ventasController'
     })
+    .when('/devoluciones', {
+        templateUrl: 'app/controllers/devoluciones/devoluciones.html',
+        controller: 'devolucionesController'
+    })
     .otherwise({
         templateUrl: 'app/controllers/dashboard/dashboard.html',
         controller: 'dashboardController'
@@ -237,13 +241,15 @@ app.controller('mainController', ['$scope','$http','$q','$location', function($s
         {itemName: "Catálogos", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#!/catalogos" },
         {itemName: "Órdenes de compra", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#!/ordenes_compra" },  
         {itemName: "Facturas de Proveedores", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#!/facturas" }, 
-        {itemName: "Productos", logo: "pe-7s-tools", clase: "menuItem", referencia: "#!/productos" }
+        {itemName: "Productos", logo: "pe-7s-tools", clase: "menuItem", referencia: "#!/productos" },
+	{itemName: "Devoluciones", logo:"pe-7s-albums", clase:"menuItem", referencia:"#!/devoluciones"}
     ]
 	$scope.menuItemsEmpleado=[
         {itemName: "Dashboard", logo: "pe-7s-graph", clase: "menuItem active", referencia: "#"}, 
         {itemName: "Ventas", logo: "pe-7s-note2", clase: "menuItem", referencia:"#"},
         {itemName: "Catálogos", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#!/catalogos" },
-        {itemName: "Facturas de Proveedores", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#!/facturas" }
+        {itemName: "Facturas de Proveedores", logo: "pe-7s-news-paper", clase: "menuItem", referencia: "#!/facturas" },
+	{itemName: "Devoluciones", logo:"pe-7s-albums", clase:"menuItem", referencia:"#!/devoluciones"}
     ]
      $scope.menuItemsAlmacenista=[
         {itemName: "Dashboard", logo: "pe-7s-graph", clase: "menuItem active", referencia: "#"}, 
