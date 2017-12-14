@@ -77,6 +77,9 @@
 		<th class="text-center">Folio</th>
 		<th class="text-center">Fecha</th>
 		<th class="text-center">Fecha limite de pago</th>
+		<th class="text-center">Monto</th>
+		<th class="text-center">No. Orden</th>
+		<th class="text-center">Fecha de Orden</th>
 		<th class="text-center"></th>
 		<th class="text-center"></th>
 		</tr>
@@ -86,7 +89,10 @@
 			<th scope="row" class="text-center">{{factura.no_folio}}</th>
 			<td class="text-center">{{factura.fecha_factura}}</td>
 			<td class="text-center">{{factura.fecha_limite_pago}}</td>
-			<td class="text-center"><a href="#!/facturas/{{factura.no_folio}}"><button class="btn btn-warning form-control">Editar</button></a></td>
+			<td class="text-center">{{factura.monto}}</td>
+            <td class="text-center">{{factura.no_orden}}</td>
+            <td class="text-center">{{factura.fecha_orden}}</td>
+			<td class="text-center"><button ng-click="eliminar($event,$index);" class="btn btn-warning form-control">Eliminar</button></td>
 		</tr>
 	</tbody>
 </table>
