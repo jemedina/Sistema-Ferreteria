@@ -1,0 +1,90 @@
+<div ng-show="devNueva == false && devSelect==false">
+	<div class="form-group">
+			<label for="nombre">
+				Buscar Devolucion:
+			</label>
+                <!--<p><input class="form-control datepicker " type="text" id="buscarEmpInput" id="datepicker"></p>-->
+			 	<p><input class="form-control datepicker " type="text" id="buscarDevInput"></p>
+		</div>
+</div>
+
+<div class="row">
+	<button ng-click="buscar()" ng-show="devNueva == false && devSelect==false" class="col col-xs-10 col-xs-offset-1 btn btn-primary">Buscar venta</button>
+</div>
+<br>
+<div class="row">
+	<button ng-show="devNueva == false && devSelect==false" ng-click="alta()" class="col col-xs-10 col-xs-offset-1 btn btn-primary">Nueva devolucion</button>
+</div>
+<br>
+<hr>
+<div class="row" ng-show="devSelect==true">
+	<div class="col col-xs-6 col-xs-offset-1">
+		<label class="form-group"> No. devolucion</label>
+		<br><br>
+		<div class="row" >
+			<div class="form-group">
+			<input type="text" name="no_devolucion" class="col col-xs-5 col-xs-offset-1">
+			<button class="col col-xs-2 col-xs-offset-1 btn btn-primary">Ir</button>
+		</div>
+</div>
+</div>
+</div>
+
+<!--<script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+</script>-->
+
+
+<div class="row" ng-show="devNueva==true">
+
+	<div>
+		<br>
+	    <label for="NoVenta"  class="col-xs-10 col-xs-offset-1 form-group">No Venta</label>
+	    <br>
+	</div>
+
+	<div class="form-group">
+	    <input  id="buscarVenta" name="" type="text" placeholder="numero de venta" class="col-xs-10 col-xs-offset-1">
+	    <br>
+	</div>
+	 <br>
+	 <br>
+	 <br>
+
+	            <!--aqui empieza el ng repeat-->
+    <div ng-repeat="item in dev">
+	 <div class="form-group" class="row">
+         <label for="{{item.codigo}}">seleccionado</label>
+         <input type="checkbox" name="{{item.codigo}}" id="{{item.codigo}}" class="col-xs-2 col-xs-offset-1 form-group">
+         <br>
+	        <input id="NameProd" name="NameProd" type="text" placeholder="{{item.codigo}}" class="col-xs-4 col-xs-offset-1 form-group">
+
+	        <input type="number" placeholder="Cantidad" max={{item.cantidad}} min="0" class="col-xs-2 col-xs-offset-1 form-group">
+	        <input type="text" placeholder={{item.unidades}} name="unidades" id="unidades" class="col  col-xs-2 col-xs-offset-1 form-group">
+	        <br>
+	        <br><br>
+	        <select id="motivo" placehoder="" name="motivo" class="col-xs-4  col-xs-offset-1 form-group">
+	        	<option selected="selected" disabled="true">Seleccione un motivo</option>
+	        	<option>Defecto</option>
+	        	<option>Error</option>
+	        </select>
+	        <br>
+	        <br>
+	        <textarea id="desc_motivo"  placeholder="Descripcion de motivo de devolucion" class="col-xs-5 col-xs-offset-1 form-group"></textarea>
+            <br>
+	</div>
+        <br>
+    </div>
+            <!--aqui termina-->
+	 <br>
+	 <br>
+	<div class="row">
+		<button ng-show="devNueva" class="btn btn-success col-xs-10 col-xs-offset-1">Guardar</button>
+	</div>
+	<br>
+	<div class="row">
+		<button ng-click="cancelar($event);" class="col col-xs-10 col-xs-offset-1 btn btn-danger">Cancelar</button>
+	</div>
+</div>
