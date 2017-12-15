@@ -13,6 +13,12 @@ var ventasController = function($scope, $http, $routeParams) {
 		}
 	}
 	
+    $scope.generarNota=function($event){
+        $event.preventDefault();
+        window.open("app/ventas/generarNota.php","_blank")
+        
+    }
+    
 	$("#buscarClientInput").autocomplete({
 		source: function (request, response)
 	    {
