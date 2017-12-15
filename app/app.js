@@ -131,6 +131,21 @@ app.controller('mainController', ['$scope','$http','$q','$location', function($s
 		},function(err) {
 			swal(err.data.msg, { icon: "error" } );			
 		})
+    } 
+    
+     $scope.cargarFacturas = function(callback) {
+		$scope.facturaslista = [];
+		$http({
+			url: 'api/obtenerFacturas.php',
+			method: 'get'
+		}).then(function(resp) {
+            $scope.facturaslista = resp.data;
+            if(callback && typeof callback == 'function') {
+                callback();
+            }
+		},function(err) {
+			swal(err.data.msg, { icon: "error" } );			
+		})
     }
     
     $scope.cargarOrdenes = function(callback) {

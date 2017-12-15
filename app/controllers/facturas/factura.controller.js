@@ -91,9 +91,9 @@ var facturaController = function($scope, $http, $routeParams) {
 							headers: { 'Content-Transfer-Encoding': 'utf-8' },
 							url: 'api/eliminarFactura.php',
 							method: 'POST',
-							data: $scope.ordenlista[$index]						}).then(function ok(res) {
+							data: $scope.facturalista[$index]						}).then(function ok(res) {
 							swal("Registro eliminado!",
-								"El registro de la orden de compra fue eliminada.",
+								"El registro de la factura fue eliminada.",
 								"success");
 							$scope.cancelar();
 						}, function err(error) {
@@ -104,6 +104,34 @@ var facturaController = function($scope, $http, $routeParams) {
 			
 	}
 
+    
+    $scope.cargarFacturaPorFolio = function(id) {
+		$http({
+			url: 'api/obtenerFacturaPorFolio.php',
+            method: 'POST',
+            data: {id: id}
+		}).then(function(resp) {
+            $scope.fac = resp.data[0];
+            $scope.fac.fecha_factura = parseInt($scope.fac.fecha_factura);
+            $scope.fac.no_folio = parseInt($scope.fac.no_folio);
+            $scope.selectedFacId = $scope.fac.no_folio;
+		},function(err) {
+			swal(err.data.msg, { icon: "error" } );			
+		})
+    }
+    
+	$scope.cargarFacturas();
+	if(!$routeParams || !$routeParams.id) {
+		$scope.fac = {};
+				
+		$scope.facNuevo = false;
+	} else {
+		$scope.facNuevo = false;
+		$scope.editando = true;
+		$scope.cargarFacturaPorFolio($routeParams.id);
+	} 
+    
+    
 	
 }
 

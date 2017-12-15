@@ -1,8 +1,3 @@
-<div class="form-group">
-			<label for="nombre">
-				<h2>Productos a surtir:</h2>
-			</label>		 
-</div>			
 <table class="table table-hover table-striped" ng-show="surtirlista != undefined && surtirlista.length > 0">
 	<thead class="thead-default">
 		<tr>
@@ -22,10 +17,10 @@
 			<th scope="row" class="text-center">{{surtir.codigo}}</th>
 			<td class="text-center">{{surtir.marca}}</td>
 			<td class="text-center">{{surtir.nombre}}</td>
-			<td class="text-center">{{surtir.no_catalogo}}</td>
-            <td class="text-center">{{surtir.anio}}</td>
-            <td class="text-center">{{surtir.existencia_bodega}}</td>
-            <td class="text-center">{{surtir.limite_inferior}}</td>
+			<td class="text-center">{{factura.no_catalogo}}</td>
+            <td class="text-center">{{factura.anio}}</td>
+            <td class="text-center">{{factura.existencia_bodega}}</td>
+            <td class="text-center">{{factura.limite_inferior}}</td>
 		</tr>
 	</tbody>
 </table>
