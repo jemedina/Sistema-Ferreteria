@@ -6,6 +6,7 @@ var devolucionesController = function($scope, $http) {
 
 	$scope.devNueva = false;
     $scope.devSelect = false;
+    $scope.preview = false;
 
 	$scope.puestos = [
 		"ADMINISTRADOR",
@@ -26,31 +27,36 @@ var devolucionesController = function($scope, $http) {
 	            },
 	            success: function (data)
 	            {
-	                var nombresArr = data.map( (obj) =>{ return {'label':obj.numeroDev,'id':obj.id_empleado} });
+	                var nombresArr = data.map( (obj) =>{ return {'label':obj.numeroDev,'id':obj.id_empleado, 'alldata':obj } });
 	            	response(nombresArr);
 	            }
 	        });
 	    },
 	    select: function(evt, ui) {
+	    	console.log(ui.item.alldata);
 	    	$scope.selectedUserId = ui.item.id;
-	    	//Cargar el usuario con ese ID
+	    	/*$scope.dev = ui.item;
+	    	$scope.preview = true;
+	    	$scope.$apply();*/
 	    	$http({
-	    		url:'api/obtenerEmpleadoPorId.php',
-	    		data: {id:ui.item.id},
-	    		method: 'POST'
-	    	}).then(function ok(resp) {
-	    		//Convert timestamps to date
-	    		resp.data[0].f_nac = new Date(parseInt(resp.data[0].f_nac)*1000);
-	 	  		resp.data[0].f_ingreso = new Date(parseInt(resp.data[0].f_ingreso)*1000);
-	
-	    		$scope.cargarMunicipioPorCveEnt(resp.data[0].cve_ent);
-	    		$scope.emp = resp.data[0];
-	    	},function err(error) {
-	    		swal(error.data.msg, { icon: "error" } );
-	    	})
+	    		url:'api/obtenerDevolucionesPorId.php',
+	    		method:'post',
+	    		data: ui.item.alldata
+	    	}).then(function (resp) {
+	    		console.log(resp.data);
+	    		$scope.dev = resp.data;
+	    		$scope.preview = true;
+	    		// body...
+	    	}, function (err) {
+	    		// body...
+	    	});
 	    	
 	    }
 	});
+	$scope.cerrar = function ($event) {
+		$event.preventDefault();
+		$scope.preview = false;
+	}
     
     $("#buscarVenta").autocomplete({
 		source: function (request, response)
@@ -73,9 +79,10 @@ var devolucionesController = function($scope, $http) {
 	    select: function(evt, ui) {
 	    	$scope.selectedUserId = ui.item.id;
 	    	//Cargar el usuario con ese ID
+	    	$scope.no_venta = ui.item.label;
 	    	$http({
 	    		url:'api/obtenerProductosParaDevolucion.php',
-	    		data: {id:ui.item.id},
+	    		data: {id:ui.item.label},
 	    		method: 'POST'
 	    	}).then(function ok(resp) {
 	    		//Convert timestamps to date
@@ -88,27 +95,19 @@ var devolucionesController = function($scope, $http) {
 	});
 
 	$scope.agregar = function () {
-		$scope.emp.id = $scope.selectedUserId;
-        $scope.emp.nu; 
-		$scope.emp.f_nac_timestamp = $scope.emp.f_nac.getTime() / 1000;
-		$scope.emp.f_ingreso_timestamp = $scope.emp.f_ingreso.getTime() / 1000;
-
-		var endpointUrl = "api/guardarUsuario.php";
-		if($scope.selectedUserId != undefined) {
-			endpointUrl = "api/actualizarUsuario.php";
-		}
+		console.log($scope.dev);
 		$http({
-			headers: { 'Content-Transfer-Encoding': 'utf-8' },
-			url: endpointUrl,
-			method: 'POST',
-			data: $scope.emp
-		}).then(function ok(res) {
-			swal(res.data.msg, { icon: "success" } );
-			if($scope.selectedUserId == undefined) 
-				$scope.emp = {};
-			
-		}, function err(error) {
-			swal(error.data.msg, { icon: "error" } );
+			url: "api/guardarDevolucion.php",
+			method: "POST",
+			data: {
+				resp: $scope.dev,
+				no_venta: $scope.no_venta
+			}
+		}).then(function (res) {
+			swal(res.data.msg,{icon: "success"});
+			$scope.cancelar();
+		},function(err) {
+			swal(err.data.msg,{icon:"error"});
 		});
 	}
 
@@ -131,7 +130,7 @@ var devolucionesController = function($scope, $http) {
 			$event.preventDefault();
 		$scope.devNueva=false;
 		$scope.selectedUserId = undefined;
-		$("#buscarEmpInput").val("");
+		$("#buscarDevInput").val("");
 	} 
 
 	$scope.eliminar = function($event) {

@@ -1,16 +1,31 @@
 <?php
 require_once 'config.php';
+    $prox_no_dev=$con->query("call prox_no_devolucion();");
+    $res_procedure = $prox_no_dev->fetch_array(MYSQLI_NUM);
 
-    $conteo=sizeof($request)-1;
-    $venta=(explode(' ',$numeroVenta,2));
+    mysqli_next_result($con);
+    $conteo=sizeof($request->resp)-1;
+    $venta=(explode(' ',$request->no_venta,2));
     $sql="insert into devolucion (no_devolucion,fecha,hora,no_venta,fecha_venta) values
-    ('2',curdate(),curtime(),'$venta[0]','$venta[1]');";
+    ('$res_procedure[0]',curdate(),curtime(),'$venta[0]','$venta[1]');";
     $con->query($sql);
+    $resp=$request->resp;
     while($conteo>=0){
-        $resp=$request->fetch_array(MYSQLI_NUM);
-        $sql="insert into devolucion_producto (codigo,marca,no_devolucion,fecha,cantidad,unidades,motivo,descripcion) values
-        ('$resp[0]','$resp[1]',curdate(),'$resp[3]','$resp[4]','$resp[5]','$resp[6]');";
-        $con->query($sql);
+
+        $producto = $resp[$conteo];
+        if(property_exists($producto, "seleccionado") && $producto->seleccionado == true){
+            $motivo = "";
+            if(property_exists($producto, "motivo")) 
+                $motivo = $producto->motivo;
+            $descripcion = "";
+            if(property_exists($producto, "descripcion")) 
+                $descripcion = $producto->descripcion;
+            
+            $sql="insert into devolucion_producto (codigo,marca,no_devolucion,fecha,cantidad,unidades,motivo,descripcion_motivo) values
+            ('$producto->codigo','$producto->marca','$res_procedure[0]',curdate(),'$producto->cantidad','$producto->unidades','$motivo','$descripcion');";
+            $result = $con->query($sql);
+        }
+        $conteo = $conteo-1;
     }
 
 
