@@ -24,7 +24,12 @@ require_once 'config.php';
             $sql="insert into devolucion_producto (codigo,marca,no_devolucion,fecha,cantidad,unidades,motivo,descripcion_motivo) values
             ('$producto->codigo','$producto->marca','$res_procedure[0]',curdate(),'$producto->cantidad','$producto->unidades','$motivo','$descripcion');";
             $result = $con->query($sql);
+            if(!$result) {
+
+                echoError("Errors al guardar el registro ".$sql);
+            }
         }
+        $result = true;
         $conteo = $conteo-1;
     }
 
