@@ -42,9 +42,10 @@
 				<label for="cve_ent">
 					Proveedor:
 				</label>
-				<select ng-disabled="editando" ng-model="cat.id_prov" class="form-control">
+				<select ng-if="!editando" ng-model="cat.id_prov" class="form-control">
 					<option ng-repeat="proveedor in proveedoreslista" value="{{proveedor.id_prov}}">{{proveedor.nombreCompleto}}</option>
 				</select>
+				<input ng-if="editando" type="text" class="form-control" ng-model="proveedoreslista[0].nombreCompleto" ng-readonly="editando">
 			</div>
 			<div class="col col-xs-6 form-group">
 				<label for="cve_ent" >
