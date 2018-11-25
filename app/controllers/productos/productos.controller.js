@@ -140,11 +140,11 @@ var productosController = function($scope, $http, $routeParams) {
 		$scope.modo_agregacion = true;   	
 		
 		$scope.cargarProveedores();
-		//TODO: Descomentar la siguiente linea
-		//$scope.prod = {};
+		
+		$scope.prod = {};
 
-		//TODO: Borrar la siguiente linea
-		$scope.mockProducto();
+		//Uncomment this line only to testing ends
+		//$scope.mockProducto();
 	}	
 
 	$scope.cancelar = function($event) {
@@ -153,64 +153,21 @@ var productosController = function($scope, $http, $routeParams) {
 		$scope.buscarProductos();
 		$scope.setModoBusqueda();
 	}
-	//TODO: Borrar esto despues del testing
-	$scope.mockProducto = function () {
-		$scope.id_prov = 2525225;
-		$scope.prod = {
-			codigo:Math.floor((Math.random()*1000) + 10000),
-			marca:"Trupper (test)",
-			nombre:"Desarmador trupper (test)",
-			unidades_medicion:"n/a (test)",
-			nombre_categoria:"Herramientas (test)",
-			no_serie:Math.floor((Math.random()*1000000) + 1000000),
-			descripcion:`Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo`,
-			precio_venta: 35.4,
-			no_caja:1,
-			no_seccion:1,
-			no_estante:1,
-			no_repisa:1,
-			existencia_bodega:20,
-			existencia_caja:2,
-			existencia_repisa:2,
-			no_catalogo: 123,
-			anio: 2010,
-			limite_inferior:10,
-			limite_superior:40
-		}
-	}
-	$scope.mockResultadosBusqueda = function () {
-		$scope.busqueda = {
-			resultados: [{
-				codigo:Math.floor((Math.random()*1000) + 10000),
-				nombre:"Desarmador trupper (test)",
-				descripcion:`Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo`,
-				precio_venta: 35.4,
-				no_catalogo:20230,
-				anio:2017,
-				no_caja:1,
-				no_seccion:2,
-				no_estante:3,
-				no_repisa:2,
-				existencia: 3,
-			},
-			{
-				codigo:Math.floor((Math.random()*1000) + 10000),
-				nombre:"Prueba trupper (test)",
-				descripcion:`Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo`,
-				precio_venta:200,
-				no_catalogo:21231,
-				anio:2017,
-				no_caja:2,
-				no_seccion:1,
-				no_estante:4,
-				no_repisa:2,
-				existencia: 3,
-			}
-			]
-		}
-	}
 
-	$scope.mockResultadosBusqueda();
+	$scope.loadCajasInfo = function() {
+		$http({
+			url: 'api/obtenerCajas.php',
+			method: 'GET'
+		}).then(function(resp) {
+			$scope.cajas = resp.data;
+		}, function(err) {
+			swal("No se pudo cargar la informacion de la cajas: "+error.data.msg, { icon: "error" } );
+		});
+	}
+	$scope.updateCajaInfo = function() {
+		console.log("INDEX: ");
+	}
+	$scope.loadCajasInfo();
 }
 
 productosController.$inject = ['$scope', '$http', '$routeParams'];
