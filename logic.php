@@ -1,5 +1,5 @@
 <?php
-//include("api/config.php");
+include("api/config.php");
 session_start();
 if(!empty($_SESSION) and $_GET['logout']==1){
     session_destroy();
