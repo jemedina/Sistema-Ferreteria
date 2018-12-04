@@ -39,8 +39,8 @@ var facturaController = function($scope, $http, $routeParams) {
 
 		var endpointUrl = "api/guardarFactura.php";
         $scope.fac.fecha_factura_timestamp = $scope.fac.fecha_factura.getTime()/1000;
-        $scope.fac.no_orden=$scope.ordeneslista[$scope.fac.no_orden_indice].no_orden; 
-        $scope.fac.fecha_orden=$scope.ordeneslista[$scope.fac.no_orden_indice].fecha_orden; 
+        $scope.fac.no_orden=$scope.ordeneslista.find(elem=> elem.no_orden == $scope.fac.no_orden_indice).no_orden; 
+        $scope.fac.fecha_orden=$scope.ordeneslista.find(elem=> elem.no_orden == $scope.fac.no_orden_indice).fecha_orden; 
         $scope.fac.fecha_limite_pago_timestamp = $scope.fac.fecha_limite_pago.getTime()/1000;
 		$http({
 			headers: { 'Content-Transfer-Encoding': 'utf-8' },

@@ -1,5 +1,4 @@
 delimiter //
-drop trigger if exists resta_producto;//
 create trigger resta_producto after insert on producto_venta
 	for each row
 	begin

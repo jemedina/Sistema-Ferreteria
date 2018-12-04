@@ -71,6 +71,12 @@ var productosController = function($scope, $http, $routeParams) {
 	}
 
 	$scope.alta = function () {
+		let caja = $scope.cajas[$scope.selectedCaja];
+		$scope.prod.no_caja = caja.no_caja;
+		$scope.prod.no_seccion = caja.no_seccion;
+		$scope.prod.no_estante = caja.no_estante;
+		$scope.prod.no_repisa = caja.no_repisa;
+
 		$http({
 			url:'api/guardarProducto.php',
 			method:'POST',
@@ -79,6 +85,7 @@ var productosController = function($scope, $http, $routeParams) {
 			if(res && res.data  && res.data.msg){
 				swal(res.data.msg, { icon: "success" } );
 				$scope.prod = {};
+				$scope.fac.no_orden_indice = undefined;
 			}
 			else 
 				$scope.commonError();
@@ -165,7 +172,7 @@ var productosController = function($scope, $http, $routeParams) {
 		});
 	}
 	$scope.updateCajaInfo = function() {
-		console.log("INDEX: ");
+		//console.log("Caja",caja);
 	}
 	$scope.loadCajasInfo();
 }
